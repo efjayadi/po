@@ -54,10 +54,12 @@
           Download: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
           LogOut: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>,
           Google: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>,
-          Loader: ({size=24, className=""}) => <svg className={`animate-spin ${className}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+          Loader: ({size=24, className=""}) => <svg className={`animate-spin ${className}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>,
+          Building: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>,
+          UserPlus: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
         };
 
-        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, LogOut, Google, Loader } = Icons;
+        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, LogOut, Google, Loader, Building, UserPlus } = Icons;
 
         const renderApp = () => {
             const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, getFirestore, collection, doc, setDoc, getDoc, onSnapshot, deleteDoc } = window.firebaseAPI;
@@ -72,7 +74,8 @@
                 appId: "1:744030550441:web:b60090ce280cceb1c1acb8"
             };
 
-            const appId = 'Aplikasi_PO_YenBangunan'; 
+            // Master ID untuk routing profile pengguna ke Company yang benar
+            const GLOBAL_ROUTER_ID = 'PO_GLOBAL_ROUTER_V1'; 
             
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
@@ -117,17 +120,6 @@
                 }
               };
 
-              const handleAnonAuth = async () => {
-                setError('');
-                setLoading(true);
-                try {
-                  await signInAnonymously(auth);
-                } catch (err) {
-                  setError(err.message);
-                  setLoading(false);
-                }
-              };
-
               return (
                 <div className="min-h-screen bg-[#F2F2F7] flex flex-col justify-center items-center p-4 font-sans text-[#1C1C1E]">
                   <div className="bg-white w-full max-w-md rounded-3xl shadow-lg p-8 relative overflow-hidden border border-[#E5E5EA]">
@@ -138,7 +130,6 @@
                       <p className="text-[#8E8E93] text-sm mt-1">Sistem Manajemen Purchase Order</p>
                     </div>
 
-                    {/* Tabs */}
                     <div className="flex bg-[#F2F2F7] rounded-xl p-1 mb-6">
                       <button onClick={() => setIsLogin(true)} className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${isLogin ? 'bg-white shadow-sm text-[#1C1C1E]' : 'text-[#8E8E93]'}`}>Masuk</button>
                       <button onClick={() => setIsLogin(false)} className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${!isLogin ? 'bg-white shadow-sm text-[#1C1C1E]' : 'text-[#8E8E93]'}`}>Daftar</button>
@@ -148,30 +139,12 @@
 
                     <form onSubmit={handleEmailAuth} className="space-y-4">
                       <div>
-                        <input 
-                          type="email" 
-                          placeholder="Alamat Email" 
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
-                          required
-                        />
+                        <input type="email" placeholder="Alamat Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all" required />
                       </div>
                       <div>
-                        <input 
-                          type="password" 
-                          placeholder="Password" 
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all"
-                          required
-                        />
+                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all" required />
                       </div>
-                      <button 
-                        type="submit" 
-                        disabled={loading}
-                        className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm flex justify-center items-center"
-                      >
+                      <button type="submit" disabled={loading} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm flex justify-center items-center">
                         {loading ? <Loader size={20} /> : (isLogin ? 'Masuk' : 'Buat Akun')}
                       </button>
                     </form>
@@ -183,17 +156,8 @@
                     </div>
 
                     <div className="space-y-3">
-                      <button 
-                        onClick={handleGoogleAuth}
-                        className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E] font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-3"
-                      >
+                      <button onClick={handleGoogleAuth} className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E] font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-3">
                         <Google size={20} /> Lanjutkan dengan Google
-                      </button>
-                      <button 
-                        onClick={handleAnonAuth}
-                        className="w-full bg-transparent hover:bg-black/5 text-[#8E8E93] hover:text-[#1C1C1E] font-semibold py-3.5 rounded-xl transition-colors text-sm"
-                      >
-                        Masuk Sebagai Tamu (Tanpa Akun)
                       </button>
                     </div>
 
@@ -202,23 +166,140 @@
               );
             }
 
+            // --- KOMPONEN ONBOARDING (PILIH BUAT ATAU GABUNG PERUSAHAAN) ---
+            function OnboardingScreen({ user, onComplete, onLogout }) {
+               const [loading, setLoading] = useState(false);
+               const [joinCode, setJoinCode] = useState('');
+               const [mode, setMode] = useState('select'); // 'select', 'join'
+
+               const generateCompanyId = () => "COMP-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+               const handleCreateCompany = async () => {
+                  setLoading(true);
+                  const newCompanyId = generateCompanyId();
+                  try {
+                     // Simpan profile pengguna sebagai Boss dari company baru
+                     await setDoc(doc(db, 'artifacts', GLOBAL_ROUTER_ID, 'users', user.uid, 'profile', 'main'), { 
+                         companyId: newCompanyId, 
+                         role: 'Boss' 
+                     });
+                     
+                     // Setup pengaturan default untuk company tersebut
+                     await setDoc(doc(db, 'artifacts', newCompanyId, 'public', 'data', 'settings', 'main'), {
+                         companyName: 'NAMA PERUSAHAAN',
+                         branchName: 'NAMA CABANG',
+                         branchAddress: 'Alamat Cabang Perusahaan Anda',
+                         username: 'PO',
+                         nextNumber: 1,
+                         signatureName: 'Nama Boss',
+                         webhookUrl: ''
+                     });
+                     
+                     onComplete({ companyId: newCompanyId, role: 'Boss' });
+                  } catch(e) {
+                     console.error(e);
+                     alert("Gagal membuat perusahaan. Cek koneksi Anda.");
+                     setLoading(false);
+                  }
+               };
+
+               const handleJoinCompany = async (e) => {
+                  e.preventDefault();
+                  if(!joinCode.trim()) return;
+                  setLoading(true);
+                  try {
+                     // Ubah format agar seragam uppercase
+                     const formattedCode = joinCode.trim().toUpperCase();
+                     
+                     // Simpan profile pengguna sebagai Staff
+                     await setDoc(doc(db, 'artifacts', GLOBAL_ROUTER_ID, 'users', user.uid, 'profile', 'main'), { 
+                         companyId: formattedCode, 
+                         role: 'Staff' 
+                     });
+                     
+                     onComplete({ companyId: formattedCode, role: 'Staff' });
+                  } catch(e) {
+                     console.error(e);
+                     alert("Gagal bergabung. Cek koneksi Anda.");
+                     setLoading(false);
+                  }
+               };
+
+               return (
+                <div className="min-h-screen bg-[#F2F2F7] flex flex-col justify-center items-center p-4 font-sans text-[#1C1C1E]">
+                  <div className="bg-white w-full max-w-md rounded-3xl shadow-lg p-8 relative border border-[#E5E5EA]">
+                    
+                    <div className="text-center mb-8">
+                      <h2 className="text-2xl font-bold tracking-tight mb-2">Selamat Datang!</h2>
+                      <p className="text-[#8E8E93] text-sm">Masuk sebagai: <b>{user.email}</b></p>
+                    </div>
+
+                    {mode === 'select' && (
+                        <div className="space-y-4 mb-8">
+                           <button 
+                              onClick={handleCreateCompany} 
+                              disabled={loading}
+                              className="w-full border-2 border-[#007AFF] bg-blue-50/50 hover:bg-blue-50 rounded-2xl p-4 flex items-center gap-4 transition-colors text-left"
+                            >
+                              <div className="bg-[#007AFF] text-white p-3 rounded-full"><Building size={24}/></div>
+                              <div>
+                                 <div className="font-bold text-[#1C1C1E] text-lg">Buat Perusahaan Baru</div>
+                                 <div className="text-sm text-[#8E8E93]">Saya adalah Boss / Pengelola.</div>
+                              </div>
+                           </button>
+
+                           <button 
+                              onClick={() => setMode('join')} 
+                              disabled={loading}
+                              className="w-full border-2 border-[#34C759] bg-green-50/50 hover:bg-green-50 rounded-2xl p-4 flex items-center gap-4 transition-colors text-left"
+                            >
+                              <div className="bg-[#34C759] text-white p-3 rounded-full"><UserPlus size={24}/></div>
+                              <div>
+                                 <div className="font-bold text-[#1C1C1E] text-lg">Gabung Perusahaan</div>
+                                 <div className="text-sm text-[#8E8E93]">Saya memiliki Kode Invite dari Boss.</div>
+                              </div>
+                           </button>
+                        </div>
+                    )}
+
+                    {mode === 'join' && (
+                        <form onSubmit={handleJoinCompany} className="mb-8">
+                            <p className="text-sm font-medium mb-2 text-center text-[#8E8E93]">Masukkan Kode Perusahaan (Minta ke Boss Anda)</p>
+                            <input 
+                                type="text" 
+                                placeholder="Contoh: COMP-XXXXX" 
+                                value={joinCode}
+                                onChange={(e) => setJoinCode(e.target.value)}
+                                className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-center font-bold text-lg tracking-widest uppercase outline-none focus:ring-2 focus:ring-[#34C759] transition-all mb-4"
+                                required
+                            />
+                            <div className="flex gap-2">
+                                <button type="button" onClick={() => setMode('select')} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3.5 rounded-xl transition-colors">Batal</button>
+                                <button type="submit" disabled={loading} className="flex-1 bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm">Gabung</button>
+                            </div>
+                        </form>
+                    )}
+
+                    <button onClick={onLogout} className="w-full text-[#FF3B30] font-semibold py-2 hover:bg-[#FFE5E5] rounded-xl transition-colors">
+                      Keluar Akun
+                    </button>
+                  </div>
+                </div>
+               );
+            }
+
             // --- MAIN APP COMPONENT ---
             function App() {
               const [user, setUser] = useState(null);
+              const [userProfile, setUserProfile] = useState(null); // { companyId, role }
               const [isLoadingAuth, setIsLoadingAuth] = useState(true);
               
               const [activeTab, setActiveTab] = useState('create');
               const [editingPo, setEditingPo] = useState(null);
               
-              // Global States
+              // Global States (Default akan ditimpa oleh data server)
               const [settings, setSettings] = useState({
-                companyName: 'YEN BANGUNAN',
-                branchName: 'PT. YEN SEJAHTERA',
-                branchAddress: 'Jl.Raya Cibarusah No.33, Sukaresmi, Lippo Cikarang',
-                username: 'YENPO01',
-                nextNumber: 1,
-                signatureName: 'Fajar Jayadi',
-                webhookUrl: ''
+                companyName: 'NAMA PERUSAHAAN', branchName: 'CABANG', branchAddress: '', username: 'PO', nextNumber: 1, signatureName: '', webhookUrl: ''
               });
               const [suppliers, setSuppliers] = useState([]);
               const [pos, setPos] = useState([]);
@@ -227,52 +308,89 @@
               useEffect(() => {
                 const unsubscribe = onAuthStateChanged(auth, (u) => {
                   setUser(u);
-                  setIsLoadingAuth(false);
+                  if(!u) setIsLoadingAuth(false);
                 });
                 return () => unsubscribe();
               }, []);
 
-              // 2. Fetch Data dari Firestore setelah login
+              // 2. Fetch Profile dari Global Router
               useEffect(() => {
                 if (!user) return;
 
-                const setRef = doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'main');
+                const profileRef = doc(db, 'artifacts', GLOBAL_ROUTER_ID, 'users', user.uid, 'profile', 'main');
+                const unsubProfile = onSnapshot(profileRef, (snap) => {
+                  if (snap.exists() && snap.data().companyId) {
+                    setUserProfile({
+                        companyId: snap.data().companyId,
+                        role: snap.data().role
+                    });
+                  } else {
+                    setUserProfile('UNASSIGNED');
+                  }
+                  setIsLoadingAuth(false);
+                }, console.error);
+
+                return () => unsubProfile();
+              }, [user]);
+
+              // 3. Fetch Data Perusahaan Spesifik (Berdasarkan CompanyId)
+              useEffect(() => {
+                if (!userProfile || userProfile === 'UNASSIGNED') return;
+
+                const companyId = userProfile.companyId;
+
+                // Sync Pengaturan
+                const setRef = doc(db, 'artifacts', companyId, 'public', 'data', 'settings', 'main');
                 const unsubSet = onSnapshot(setRef, (snap) => {
                   if (snap.exists()) setSettings(snap.data());
                 }, console.error);
 
-                const supRef = collection(db, 'artifacts', appId, 'users', user.uid, 'suppliers');
+                // Sync Supplier
+                const supRef = collection(db, 'artifacts', companyId, 'public', 'data', 'suppliers');
                 const unsubSup = onSnapshot(supRef, (snap) => {
                   setSuppliers(snap.docs.map(d => ({ id: d.id, ...d.data() })));
                 }, console.error);
 
-                const posRef = collection(db, 'artifacts', appId, 'users', user.uid, 'pos');
+                // Sync POs
+                const posRef = collection(db, 'artifacts', companyId, 'public', 'data', 'pos');
                 const unsubPos = onSnapshot(posRef, (snap) => {
                   const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                   setPos(data.sort((a,b) => new Date(b.date) - new Date(a.date))); 
                 }, console.error);
 
                 return () => { unsubSet(); unsubSup(); unsubPos(); };
-              }, [user]);
+              }, [userProfile]);
+
+              // Fungsi Logout
+              const handleLogout = async () => {
+                 if(confirm("Apakah Anda yakin ingin keluar?")) {
+                    await signOut(auth);
+                    setUserProfile(null);
+                 }
+              };
 
               if (isLoadingAuth) {
                   return <div className="h-screen w-full flex flex-col items-center justify-center bg-[#F2F2F7] text-[#8E8E93]"><Loader size={40} className="mb-4 text-[#007AFF]"/>Memuat Sistem...</div>;
               }
 
-              // Jika belum login, tampilkan AuthScreen
-              if (!user) {
-                  return <AuthScreen />;
+              if (!user) return <AuthScreen />;
+
+              if (userProfile === 'UNASSIGNED') {
+                 return <OnboardingScreen user={user} onComplete={setUserProfile} onLogout={handleLogout} />;
               }
+
+              // Data Perusahaan
+              const { companyId, role: userRole } = userProfile;
 
               // Fungsi Generate PO
               const generatePoNumber = (num) => {
                 const date = new Date();
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
-                return `${settings.username}/${year}/${month}/${String(num).padStart(3, '0')}`;
+                return `${settings.username || 'PO'}/${year}/${month}/${String(num).padStart(3, '0')}`;
               };
 
-              // --- FUNGSI MUTASI FIREBASE ---
+              // --- FUNGSI MUTASI FIREBASE KE COMPANY DATA ---
               const syncToSpreadsheet = async (poData) => {
                  if (!settings.webhookUrl || settings.webhookUrl.trim() === '') return;
                  try {
@@ -287,10 +405,10 @@
 
               const onSavePO = async (poData, isUpdate) => {
                 try {
-                  await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'pos', poData.id), poData);
+                  await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'pos', poData.id), poData);
                   if (!isUpdate) {
-                    const newSettings = { ...settings, nextNumber: settings.nextNumber + 1 };
-                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'main'), newSettings);
+                    const newSettings = { ...settings, nextNumber: (settings.nextNumber || 1) + 1 };
+                    await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'settings', 'main'), newSettings);
                   }
                   syncToSpreadsheet(poData);
                   alert(isUpdate ? "PO Berhasil Diperbarui!" : "PO Berhasil Disimpan & Menunggu Persetujuan!");
@@ -298,33 +416,29 @@
               };
 
               const onUpdateStatusPO = async (id, status) => {
+                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya Boss yang dapat mengubah status.");
                  try {
                    const poToUpdate = pos.find(p => p.id === id);
                    if (poToUpdate) {
                       const updatedPO = { ...poToUpdate, status };
-                      await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'pos', id), updatedPO);
+                      await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'pos', id), updatedPO);
                       syncToSpreadsheet(updatedPO);
                    }
                  } catch(err) { console.error(err); }
               };
 
               const onAddSupplier = async (newSup) => {
-                 await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'suppliers', newSup.id.toString()), newSup);
+                 await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'suppliers', newSup.id.toString()), newSup);
               };
 
               const onDeleteSupplier = async (id) => {
-                 await deleteDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'suppliers', id.toString()));
+                 await deleteDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'suppliers', id.toString()));
               };
 
               const onSaveSettings = async (newSettings) => {
-                 await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'main'), newSettings);
+                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya Boss yang dapat mengubah pengaturan.");
+                 await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'settings', 'main'), newSettings);
                  alert("Pengaturan Berhasil Disimpan!");
-              };
-
-              const handleLogout = async () => {
-                 if(confirm("Apakah Anda yakin ingin keluar?")) {
-                    await signOut(auth);
-                 }
               };
 
               return (
@@ -342,14 +456,18 @@
                       <div className="flex justify-between items-center h-16">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-[#007AFF] rounded-lg flex items-center justify-center text-white font-bold text-sm">PO</div>
-                          <span className="font-bold text-gray-800 tracking-tight text-lg">System</span>
+                          <span className="font-bold text-gray-800 tracking-tight text-lg hidden sm:block">System</span>
+                          {/* Role Badge Indicator */}
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${userRole === 'Boss' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'}`}>
+                             {userRole}
+                          </span>
                         </div>
                         
                         <div className="flex gap-2 sm:gap-6 overflow-x-auto hide-scrollbar h-full items-end">
                           <NavButton active={activeTab === 'create'} onClick={() => { setActiveTab('create'); setEditingPo(null); }} icon={<FileText size={16} />} label="Buat PO" />
                           <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label="Persetujuan" badge={pos.filter(p => p.status === 'Pending').length} />
                           <NavButton active={activeTab === 'suppliers'} onClick={() => setActiveTab('suppliers')} icon={<Users size={16} />} label="Supplier" />
-                          <NavButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} icon={<Settings size={16} />} label="Pengaturan" />
+                          <NavButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} icon={<Settings size={16} />} label={userRole === 'Boss' ? "Pengaturan" : "Profil"} />
                         </div>
                       </div>
                     </div>
@@ -360,17 +478,17 @@
                     {activeTab === 'create' && (
                       <CreatePOView 
                         suppliers={suppliers} settings={settings} setSettings={setSettings} 
-                        editingPo={editingPo} setEditingPo={setEditingPo} onSavePO={onSavePO} generatePoNumber={generatePoNumber}
+                        editingPo={editingPo} setEditingPo={setEditingPo} onSavePO={onSavePO} generatePoNumber={generatePoNumber} userRole={userRole}
                       />
                     )}
                     {activeTab === 'approve' && (
-                      <ApprovalView pos={pos} onLoadPO={(po) => { setEditingPo(po); setActiveTab('create'); }} onUpdateStatus={onUpdateStatusPO} />
+                      <ApprovalView pos={pos} onLoadPO={(po) => { setEditingPo(po); setActiveTab('create'); }} onUpdateStatus={onUpdateStatusPO} userRole={userRole} />
                     )}
                     {activeTab === 'suppliers' && (
-                      <SupplierView suppliers={suppliers} onAddSupplier={onAddSupplier} onDeleteSupplier={onDeleteSupplier} />
+                      <SupplierView suppliers={suppliers} onAddSupplier={onAddSupplier} onDeleteSupplier={onDeleteSupplier} userRole={userRole} />
                     )}
                     {activeTab === 'settings' && (
-                      <SettingsView settings={settings} onSaveSettings={onSaveSettings} user={user} onLogout={handleLogout} />
+                      <SettingsView settings={settings} onSaveSettings={onSaveSettings} user={user} userRole={userRole} companyId={companyId} onLogout={handleLogout} />
                     )}
                   </main>
                 </div>
@@ -398,7 +516,7 @@
             }
 
             // --- 1. CREATE PO VIEW ---
-            function CreatePOView({ suppliers, settings, setSettings, editingPo, setEditingPo, onSavePO, generatePoNumber }) {
+            function CreatePOView({ suppliers, settings, setSettings, editingPo, setEditingPo, onSavePO, generatePoNumber, userRole }) {
               const defaultItems = [{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }];
               const [vendorId, setVendorId] = useState('');
               const [items, setItems] = useState(defaultItems);
@@ -410,7 +528,7 @@
               const [tempDiscounts, setTempDiscounts] = useState(['', '', '', '']);
 
               const selectedVendor = suppliers.find(s => s.id === vendorId) || {};
-              const currentPoNumber = generatePoNumber(settings.nextNumber);
+              const currentPoNumber = generatePoNumber(settings.nextNumber || 1);
               const isApproved = editingPo && editingPo.status === 'Approved';
 
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
@@ -475,7 +593,8 @@
                   id: editingPo ? editingPo.id : Date.now().toString(),
                   poNumber: editingPo ? editingPo.poNumber : currentPoNumber,
                   date: date.toISOString(), vendor: selectedVendor, items: items, total: total, note: note,
-                  status: editingPo ? editingPo.status : 'Pending'
+                  status: editingPo ? editingPo.status : 'Pending',
+                  createdByRole: userRole
                 };
                 onSavePO(poData, !!editingPo);
                 setEditingPo(null);
@@ -517,7 +636,7 @@
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h1 className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}>
-                          {settings.companyName}
+                          {settings.companyName || 'NAMA PERUSAHAAN'}
                         </h1>
                       </div>
                       <div className="text-right flex flex-col items-end">
@@ -562,7 +681,7 @@
                         <div className="text-gray-800 pr-12">{selectedVendor.address || 'Alamat Vendor (opsional)'}</div>
                       </div>
                       <div>
-                        <div className="font-bold mb-1 uppercase text-base">{settings.branchName}</div>
+                        <div className="font-bold mb-1 uppercase text-base">{settings.branchName || 'CABANG'}</div>
                         <div className="text-gray-800 pr-4">{settings.branchAddress}</div>
                       </div>
                     </div>
@@ -628,7 +747,11 @@
                             <span>(</span>
                             <span className="relative inline-flex items-center justify-center">
                               <span className="invisible whitespace-pre min-w-[1px]">{settings.signatureName || ' '}</span>
-                              <input type="text" value={settings.signatureName} onChange={(e) => setSettings({...settings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0" />
+                              {userRole === 'Boss' ? (
+                                <input type="text" value={settings.signatureName || ''} onChange={(e) => setSettings({...settings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0" />
+                              ) : (
+                                <div className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0">{settings.signatureName}</div>
+                              )}
                             </span>
                             <span>)</span>
                           </div>
@@ -667,7 +790,7 @@
             }
 
             // --- 2. APPROVAL VIEW ---
-            function ApprovalView({ pos, onLoadPO, onUpdateStatus }) {
+            function ApprovalView({ pos, onLoadPO, onUpdateStatus, userRole }) {
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num);
               const [expandedId, setExpandedId] = useState(null);
               const [searchTerm, setSearchTerm] = useState('');
@@ -743,7 +866,8 @@
                                 <div className="font-bold text-[#1C1C1E] text-lg">Rp {formatCurrency(po.total)}</div>
                               </div>
                               <div className="flex items-center gap-3">
-                                {po.status === 'Pending' && (
+                                {/* HANYA BOSS YANG BISA MELIHAT TOMBOL SETUJUI / TOLAK */}
+                                {userRole === 'Boss' && po.status === 'Pending' && (
                                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                                     <button onClick={() => onUpdateStatus(po.id, 'Approved')} className="w-10 h-10 flex items-center justify-center bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759] hover:text-white rounded-full transition-colors" title="Setujui PO"><CheckCircle size={22} /></button>
                                     <button onClick={() => onUpdateStatus(po.id, 'Rejected')} className="w-10 h-10 flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white rounded-full transition-colors" title="Tolak PO"><XCircle size={22} /></button>
@@ -887,16 +1011,25 @@
             }
 
             // --- 4. SETTINGS VIEW ---
-            function SettingsView({ settings, onSaveSettings, user, onLogout }) {
+            function SettingsView({ settings, onSaveSettings, user, userRole, companyId, onLogout }) {
               const [localSettings, setLocalSettings] = useState(settings);
               useEffect(() => { setLocalSettings(settings); }, [settings]);
               const handleSave = () => { onSaveSettings(localSettings); };
 
+              // Copy Company ID function
+              const handleCopyId = () => {
+                  navigator.clipboard.writeText(companyId).then(() => {
+                      alert("Kode Perusahaan disalin!");
+                  });
+              };
+
               return (
                 <div className="max-w-3xl mx-auto space-y-6 pb-12">
                   <div className="flex justify-between items-center mb-4">
-                     <h2 className="text-2xl font-bold text-[#1C1C1E]">Pengaturan Sistem</h2>
-                     <button onClick={handleSave} className="bg-[#007AFF] hover:bg-[#0056b3] text-white px-5 py-2 rounded-full font-semibold shadow-sm transition-colors text-sm">Simpan Pengaturan</button>
+                     <h2 className="text-2xl font-bold text-[#1C1C1E]">{userRole === 'Boss' ? "Pengaturan Sistem" : "Profil Saya"}</h2>
+                     {userRole === 'Boss' && (
+                        <button onClick={handleSave} className="bg-[#007AFF] hover:bg-[#0056b3] text-white px-5 py-2 rounded-full font-semibold shadow-sm transition-colors text-sm">Simpan Pengaturan</button>
+                     )}
                   </div>
 
                   <div className="space-y-6">
@@ -905,57 +1038,75 @@
                     <div>
                       <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Akun & Sesi</h3>
                       <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                        <div className="flex items-center justify-between p-4">
+                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
                           <div className="flex items-center gap-3">
                              <div className="w-10 h-10 bg-[#F2F2F7] rounded-full flex items-center justify-center text-[#8E8E93]"><Users size={20}/></div>
                              <div>
                                <div className="text-[15px] font-bold text-[#1C1C1E]">{user.isAnonymous ? 'Akun Tamu' : user.email}</div>
-                               <div className="text-xs text-[#8E8E93]">ID: {user.uid.slice(0, 8)}...</div>
+                               <div className="text-xs text-[#8E8E93]">Peran: <span className="font-bold text-[#007AFF]">{userRole}</span></div>
                              </div>
                           </div>
                           <button onClick={onLogout} className="flex items-center gap-2 text-[#FF3B30] bg-[#FFE5E5] hover:bg-[#FFD1D1] px-4 py-2 rounded-xl text-sm font-bold transition-colors">
                             <LogOut size={16} /> Keluar
                           </button>
                         </div>
+                        {userRole === 'Boss' && (
+                            <div className="flex flex-col p-4 bg-[#F9F9FB]">
+                              <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Kode Invite Perusahaan Anda</div>
+                              <div className="flex items-center gap-3">
+                                  <div className="flex-1 text-center font-mono text-lg font-bold tracking-widest text-[#007AFF] bg-[#E5F1FF] py-3 rounded-xl border border-[#B3D7FF]">
+                                    {companyId}
+                                  </div>
+                                  <button onClick={handleCopyId} className="bg-white border border-[#D1D1D6] text-[#1C1C1E] font-semibold py-3 px-6 rounded-xl hover:bg-[#F2F2F7] transition-colors whitespace-nowrap">Salin Kode</button>
+                              </div>
+                              <p className="text-xs text-[#8E8E93] mt-3">
+                                *Berikan kode di atas kepada Staff Anda. Saat Staff login dan memilih "Gabung Perusahaan", mereka harus memasukkan kode ini agar dapat bekerja di data perusahaan Anda.
+                              </p>
+                            </div>
+                        )}
                       </div>
                     </div>
 
-                    <div>
-                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Identitas Pembeli</h3>
-                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Utama</div><div className="w-2/3"><input type="text" value={localSettings.companyName} onChange={(e) => setLocalSettings({...localSettings, companyName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-medium bg-transparent"/></div></div>
-                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Penerima</div><div className="w-2/3"><input type="text" value={localSettings.branchName} onChange={(e) => setLocalSettings({...localSettings, branchName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
-                        <div className="flex items-start justify-between p-4"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Alamat</div><div className="w-2/3"><textarea rows="2" value={localSettings.branchAddress} onChange={(e) => setLocalSettings({...localSettings, branchAddress: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent resize-none"/></div></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Konfigurasi Nomor PO</h3>
-                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Prefix PO</div><div className="w-1/2"><input type="text" value={localSettings.username} onChange={(e) => setLocalSettings({...localSettings, username: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
-                        <div className="flex items-center justify-between p-4"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Nomor Selanjutnya</div><div className="w-1/2"><input type="number" value={localSettings.nextNumber} onChange={(e) => setLocalSettings({...localSettings, nextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
-                      </div>
-                      <p className="text-xs text-[#8E8E93] mt-2 ml-4">Contoh: {localSettings.username}/{new Date().getFullYear()}/{String(new Date().getMonth() + 1).padStart(2, '0')}/...</p>
-                    </div>
-
-                    <div>
-                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Dokumen</h3>
-                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                        <div className="flex items-center justify-between p-4"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Penandatangan</div><div className="w-1/2"><input type="text" value={localSettings.signatureName} onChange={(e) => setLocalSettings({...localSettings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Integrasi Spreadsheet</h3>
-                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                        <div className="flex flex-col p-4">
-                          <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Google Apps Script Webhook URL</div>
-                          <input type="text" value={localSettings.webhookUrl || ''} onChange={(e) => setLocalSettings({...localSettings, webhookUrl: e.target.value})} onFocus={(e) => e.target.select()} placeholder="https://script.google.com/macros/s/.../exec" className="w-full text-left outline-none text-[15px] text-[#007AFF] bg-[#F2F2F7] p-3 rounded-xl border-none"/>
-                          <p className="text-xs text-[#8E8E93] mt-3">*Aplikasi akan mengirimkan data PO (JSON) ke URL di atas saat simpan. Kosongkan jika tidak menggunakan Spreadsheet.</p>
+                    {/* BLOK PENGATURAN BERIKUT HANYA BISA DILIHAT OLEH BOSS */}
+                    {userRole === 'Boss' && (
+                      <>
+                        <div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Identitas Pembeli</h3>
+                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Utama</div><div className="w-2/3"><input type="text" value={localSettings.companyName || ''} onChange={(e) => setLocalSettings({...localSettings, companyName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-medium bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Penerima</div><div className="w-2/3"><input type="text" value={localSettings.branchName || ''} onChange={(e) => setLocalSettings({...localSettings, branchName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                            <div className="flex items-start justify-between p-4"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Alamat</div><div className="w-2/3"><textarea rows="2" value={localSettings.branchAddress || ''} onChange={(e) => setLocalSettings({...localSettings, branchAddress: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent resize-none"/></div></div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
 
+                        <div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Konfigurasi Nomor PO</h3>
+                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Prefix PO</div><div className="w-1/2"><input type="text" value={localSettings.username || ''} onChange={(e) => setLocalSettings({...localSettings, username: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-4"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Nomor Selanjutnya</div><div className="w-1/2"><input type="number" value={localSettings.nextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, nextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
+                          </div>
+                          <p className="text-xs text-[#8E8E93] mt-2 ml-4">Contoh: {localSettings.username || 'PO'}/{new Date().getFullYear()}/{String(new Date().getMonth() + 1).padStart(2, '0')}/...</p>
+                        </div>
+
+                        <div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Dokumen</h3>
+                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-4"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Penandatangan</div><div className="w-1/2"><input type="text" value={localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Integrasi Spreadsheet</h3>
+                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex flex-col p-4">
+                              <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Google Apps Script Webhook URL</div>
+                              <input type="text" value={localSettings.webhookUrl || ''} onChange={(e) => setLocalSettings({...localSettings, webhookUrl: e.target.value})} onFocus={(e) => e.target.select()} placeholder="https://script.google.com/macros/s/.../exec" className="w-full text-left outline-none text-[15px] text-[#007AFF] bg-[#F2F2F7] p-3 rounded-xl border-none"/>
+                              <p className="text-xs text-[#8E8E93] mt-3">*Aplikasi akan mengirimkan data PO (JSON) ke URL di atas saat simpan. Kosongkan jika tidak menggunakan Spreadsheet.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               );
