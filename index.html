@@ -5,16 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Purchase Order - Universal</title>
     
-    <!-- Tailwind CSS (Untuk Styling) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     
-    <!-- Babel (Untuk membaca syntax JSX React di Browser) -->
+    <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- Firebase SDK (ES Modules) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Expose Firebase ke window agar bisa diakses oleh Babel JSX
+        window.firebaseAPI = { initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, getFirestore, collection, doc, setDoc, getDoc, onSnapshot, deleteDoc };
+        window.dispatchEvent(new Event('firebaseLoaded'));
+    </script>
 </head>
 <body>
     <div id="root"></div>
@@ -22,7 +32,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // --- ICONS (SVG Mappings pengganti Lucide-react agar bisa jalan di 1 file HTML) ---
+        // --- ICONS ---
         const Icons = {
           Printer: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>,
           Save: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>,
@@ -37,1067 +47,1220 @@
           ChevronDown: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>,
           ChevronUp: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>,
           Search: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
-          Download: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
+          Loader: ({size=24, className=""}) => <svg className={`animate-spin ${className}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
         };
 
-        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download } = Icons;
+        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, Loader } = Icons;
 
-
-        // --- MAIN APP COMPONENT ---
-        function App() {
-          const [activeTab, setActiveTab] = useState('create');
-          
-          // Global State
-          const [settings, setSettings] = useState({
-            companyName: 'YEN BANGUNAN',
-            branchName: 'PT. YEN SEJAHTERA',
-            branchAddress: 'Jl.Raya Cibarusah No.33, Sukaresmi, Lippo Cikarang',
-            username: 'YENPO01',
-            nextNumber: 196,
-            signatureName: 'Fajar Jayadi'
-          });
-
-          const [suppliers, setSuppliers] = useState([
-            {
-              id: 1,
-              name: 'PT. YEN SEJAHTERA',
-              payment: 'Tempo',
-              ppn: 'PPN',
-              address: 'Jl.Raya Cibarusah No.33, Sukaresmi, Lippo Cikarang',
-              phone: '021-89898989'
-            },
-            {
-              id: 2,
-              name: 'CV. BANGUN BERSAMA',
-              payment: 'Cash',
-              ppn: 'Non-PPN',
-              address: 'Jl. Industri Selatan 1, Cikarang',
-              phone: '081234567890'
-            }
-          ]);
-
-          const [pos, setPos] = useState([]);
-          const [editingPo, setEditingPo] = useState(null);
-
-          // Generate PO Number Helper
-          const generatePoNumber = (num) => {
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            return `${settings.username}/${year}/${month}/${String(num).padStart(3, '0')}`;
-          };
-
-          return (
-            <div className="min-h-screen bg-[#F2F2F7] flex flex-col text-[#1C1C1E] antialiased" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
-              <style>{`
-                @page {
-                  size: 9.5in 5.5in;
-                  margin: 0;
-                }
-                
-                input[type=number]::-webkit-inner-spin-button, 
-                input[type=number]::-webkit-outer-spin-button { 
-                  -webkit-appearance: none; 
-                  margin: 0; 
-                }
-                
-                input, textarea, select {
-                  -webkit-user-select: auto !important;
-                  -moz-user-select: auto !important;
-                  -ms-user-select: auto !important;
-                  user-select: auto !important;
-                }
-
-                input[type=number] {
-                  -moz-appearance: textfield;
-                }
-              `}</style>
-
-              {/* Navigation (Clean Plain Text Style) - Hidden when printing */}
-              <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 print:hidden z-10 sticky top-0">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="flex justify-between items-center h-16">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-[#007AFF] rounded-lg flex items-center justify-center text-white font-bold text-sm">PO</div>
-                      <span className="font-bold text-gray-800 tracking-tight text-lg">System</span>
-                    </div>
-                    
-                    <div className="flex gap-2 sm:gap-6 overflow-x-auto hide-scrollbar h-full items-end">
-                      <NavButton active={activeTab === 'create'} onClick={() => { setActiveTab('create'); setEditingPo(null); }} icon={<FileText size={16} />} label="Buat PO" />
-                      <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label="Persetujuan" badge={pos.filter(p => p.status === 'Pending').length} />
-                      <NavButton active={activeTab === 'suppliers'} onClick={() => setActiveTab('suppliers')} icon={<Users size={16} />} label="Supplier" />
-                      <NavButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} icon={<Settings size={16} />} label="Pengaturan" />
-                    </div>
-                  </div>
-                </div>
-              </nav>
-
-              {/* Main Content Area */}
-              <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 print:p-0 print:bg-white pb-32">
-                {activeTab === 'create' && (
-                  <CreatePOView 
-                    suppliers={suppliers} 
-                    settings={settings} 
-                    setSettings={setSettings}
-                    editingPo={editingPo}
-                    setEditingPo={setEditingPo}
-                    onSavePO={(po, isUpdate) => {
-                      if (isUpdate) {
-                        setPos(pos.map(p => p.id === po.id ? po : p));
-                        alert("PO Berhasil Diperbarui!");
-                      } else {
-                        setPos([po, ...pos]);
-                        setSettings(s => ({ ...s, nextNumber: s.nextNumber + 1 }));
-                        alert("PO Berhasil Disimpan & Menunggu Persetujuan!");
-                      }
-                    }}
-                    generatePoNumber={generatePoNumber}
-                  />
-                )}
-                {activeTab === 'approve' && (
-                  <ApprovalView 
-                    pos={pos} 
-                    onLoadPO={(po) => {
-                      setEditingPo(po);
-                      setActiveTab('create');
-                    }}
-                    onUpdateStatus={(id, status) => {
-                      setPos(pos.map(p => p.id === id ? { ...p, status } : p));
-                    }}
-                  />
-                )}
-                {activeTab === 'suppliers' && (
-                  <SupplierView 
-                    suppliers={suppliers} 
-                    setSuppliers={setSuppliers} 
-                  />
-                )}
-                {activeTab === 'settings' && (
-                  <SettingsView 
-                    settings={settings} 
-                    setSettings={setSettings} 
-                  />
-                )}
-              </main>
-            </div>
-          );
-        }
-
-        function NavButton({ active, onClick, icon, label, badge }) {
-          return (
-            <button
-              onClick={onClick}
-              className={`
-                ${active ? 'text-[#007AFF] font-bold border-[#007AFF]' : 'text-[#8E8E93] hover:text-[#1C1C1E] border-transparent font-medium'}
-                flex items-center justify-center py-4 text-[14px] border-b-[3px] transition-colors gap-1.5 relative whitespace-nowrap
-              `}
-            >
-              {icon}
-              {label}
-              {badge > 0 && (
-                <span className="absolute top-2 -right-3 bg-[#FF3B30] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
-                  {badge}
-                </span>
-              )}
-            </button>
-          );
-        }
-
-        // --- 1. CREATE PO VIEW (Document Replica) ---
-        function CreatePOView({ suppliers, settings, setSettings, editingPo, setEditingPo, onSavePO, generatePoNumber }) {
-          const defaultItems = [
-            { id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }
-          ];
-
-          const [vendorId, setVendorId] = useState(suppliers.length > 0 ? suppliers[0].id : '');
-          const [items, setItems] = useState(defaultItems);
-          const [date, setDate] = useState(new Date());
-          const [note, setNote] = useState('');
-
-          const [isVendorDropdownOpen, setIsVendorDropdownOpen] = useState(false);
-          const [vendorSearch, setVendorSearch] = useState('');
-
-          const [discountModalId, setDiscountModalId] = useState(null);
-          // State format string untuk menjamin angka koma/desimal dapat diketik lancar
-          const [tempDiscounts, setTempDiscounts] = useState(['', '', '', '']);
-
-          const selectedVendor = suppliers.find(s => s.id === parseInt(vendorId)) || {};
-          const currentPoNumber = generatePoNumber(settings.nextNumber);
-          const isApproved = editingPo && editingPo.status === 'Approved';
-
-          const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
-          const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-
-          const handleAddItem = () => setItems([...items, { id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
-          const handleRemoveItem = (id) => setItems(items.filter(item => item.id !== id));
-          const handleItemChange = (id, field, value) => setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item));
-
-          const calculateNetPrice = (price, discounts) => {
-            if (!discounts || discounts.length === 0) return price;
-            return discounts.reduce((acc, d) => acc - (acc * (d / 100)), price);
-          };
-
-          const openDiscountModal = (item) => {
-            setDiscountModalId(item.id);
-            const d = item.discounts || [];
-            setTempDiscounts([
-              d[0] !== undefined ? String(d[0]) : '', 
-              d[1] !== undefined ? String(d[1]) : '', 
-              d[2] !== undefined ? String(d[2]) : '', 
-              d[3] !== undefined ? String(d[3]) : ''
-            ]);
-          };
-
-          const handleDiscountChange = (index, val) => {
-            const newD = [...tempDiscounts];
-            newD[index] = val; // Simpan nilai persis seperti yang diketikkan user (allow koma/desimal)
-            setTempDiscounts(newD);
-          };
-
-          const saveDiscounts = () => {
-            setItems(prevItems => prevItems.map(item => {
-              if (item.id === discountModalId) {
-                // Parsing ulang secara aman ke number sebelum dikalkulasi
-                const activeDiscounts = tempDiscounts.map(Number).filter(d => d > 0 && !isNaN(d));
-                const net = calculateNetPrice(item.price, activeDiscounts);
-                return { ...item, price: net, discounts: [] }; 
-              }
-              return item;
-            }));
-            setDiscountModalId(null);
-          };
-
-          useEffect(() => {
-            if (editingPo) {
-              setVendorId(editingPo.vendor.id);
-              setItems(editingPo.items);
-              setDate(new Date(editingPo.date));
-              setNote(editingPo.note || '');
-            } else {
-              setVendorId(suppliers.length > 0 ? suppliers[0].id : '');
-              setItems([{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
-              setDate(new Date());
-              setNote('');
-            }
-          }, [editingPo, suppliers]);
-
-          const total = items.reduce((sum, item) => sum + (item.qty * calculateNetPrice(item.price, item.discounts)), 0);
-
-          const isFormValid = vendorId && items.length > 0 && items.every(i => i.desc.trim() !== '' && i.qty > 0);
-
-          const handleSave = () => {
-            if (!isFormValid) return;
+        const renderApp = () => {
+            const { initializeApp, getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, getFirestore, collection, doc, setDoc, getDoc, onSnapshot, deleteDoc } = window.firebaseAPI;
             
-            const poData = {
-              id: editingPo ? editingPo.id : Date.now().toString(),
-              poNumber: editingPo ? editingPo.poNumber : currentPoNumber,
-              date: date.toISOString(),
-              vendor: selectedVendor,
-              items: items,
-              total: total,
-              note: note,
-              status: editingPo ? editingPo.status : 'Pending'
-            };
-            onSavePO(poData, !!editingPo);
-            setEditingPo(null);
+            // Konfigurasi Firebase dari Environment
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
 
-            // Clear Canvas
-            setVendorId('');
-            setItems([{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
-            setNote('');
-            setDate(new Date());
-          };
-
-          return (
-            <div className="max-w-5xl mx-auto flex flex-col gap-6 relative">
+            // --- MAIN APP COMPONENT ---
+            function App() {
+              const [user, setUser] = useState(null);
+              const [isLoadingAuth, setIsLoadingAuth] = useState(true);
               
-              {/* Floating Action Bar (Hidden in Print) */}
-              <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-50 print:hidden">
-                <button 
-                  onClick={(e) => {
-                    if (!isApproved) {
-                      e.preventDefault();
-                      alert("Cetak hanya tersedia untuk PO yang sudah disetujui (Approved). Silakan buka dari tab Persetujuan.");
-                      return;
+              const [activeTab, setActiveTab] = useState('create');
+              const [editingPo, setEditingPo] = useState(null);
+              
+              // Global States
+              const [settings, setSettings] = useState({
+                companyName: 'YEN BANGUNAN',
+                branchName: 'PT. YEN SEJAHTERA',
+                branchAddress: 'Jl.Raya Cibarusah No.33, Sukaresmi, Lippo Cikarang',
+                username: 'YENPO01',
+                nextNumber: 1,
+                signatureName: 'Nama Lengkap',
+                webhookUrl: ''
+              });
+              const [suppliers, setSuppliers] = useState([]);
+              const [pos, setPos] = useState([]);
+
+              // 1. Initialisasi Autentikasi Firebase
+              useEffect(() => {
+                const initAuth = async () => {
+                  try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                      await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                      await signInAnonymously(auth);
                     }
-                    window.print();
-                  }} 
-                  className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}
-                >
-                  <Printer size={18} /> Cetak
-                </button>
-                <button 
-                  onClick={handleSave} 
-                  disabled={!isFormValid}
-                  className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? 'bg-[#007AFF] hover:bg-[#0056b3] text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-                >
-                  <Save size={18} /> Simpan
-                </button>
-              </div>
+                  } catch(e) { console.error("Firebase Auth Error:", e); }
+                };
+                initAuth();
 
-              {/* 9.5 x 5.5 Inch Paper Container */}
-              <div className="bg-white p-6 shadow-md rounded-[2px] print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
-                
-                {/* Header Section */}
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <h1 
-                      className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" 
-                      style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}
-                    >
-                      {settings.companyName}
-                    </h1>
-                  </div>
-                  <div className="text-right flex flex-col items-end">
-                    <h2 className="text-xl font-bold uppercase tracking-wider mb-1">Purchase Order</h2>
-                    <div className="text-sm mb-2">{formatDate(date)}</div>
+                const unsubscribe = onAuthStateChanged(auth, (u) => {
+                  setUser(u);
+                  setIsLoadingAuth(false);
+                });
+                return () => unsubscribe();
+              }, []);
+
+              // 2. Fetch Data dari Firestore setelah login
+              useEffect(() => {
+                if (!user) return;
+
+                // Sync Settings
+                const setRef = doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'main');
+                const unsubSet = onSnapshot(setRef, (snap) => {
+                  if (snap.exists()) setSettings(snap.data());
+                }, console.error);
+
+                // Sync Suppliers
+                const supRef = collection(db, 'artifacts', appId, 'users', user.uid, 'suppliers');
+                const unsubSup = onSnapshot(supRef, (snap) => {
+                  setSuppliers(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+                }, console.error);
+
+                // Sync POs
+                const posRef = collection(db, 'artifacts', appId, 'users', user.uid, 'pos');
+                const unsubPos = onSnapshot(posRef, (snap) => {
+                  const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                  setPos(data.sort((a,b) => new Date(b.date) - new Date(a.date))); // Sort terbaru di atas
+                }, console.error);
+
+                return () => { unsubSet(); unsubSup(); unsubPos(); };
+              }, [user]);
+
+              // Fungsi Generate PO
+              const generatePoNumber = (num) => {
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                return `${settings.username}/${year}/${month}/${String(num).padStart(3, '0')}`;
+              };
+
+              // --- FUNGSI MUTASI FIREBASE ---
+              
+              // Webhook / Sync Spreadsheet
+              const syncToSpreadsheet = async (poData) => {
+                 if (!settings.webhookUrl || settings.webhookUrl.trim() === '') return;
+                 try {
+                     await fetch(settings.webhookUrl, {
+                         method: 'POST',
+                         mode: 'no-cors', // Penting untuk bypass CORS Google Apps Script
+                         headers: { 'Content-Type': 'application/json' },
+                         body: JSON.stringify(poData)
+                     });
+                     console.log("Berhasil dikirim ke Webhook");
+                 } catch(e) {
+                     console.error("Gagal sync Webhook:", e);
+                 }
+              };
+
+              const onSavePO = async (poData, isUpdate) => {
+                if (!user) return;
+                try {
+                  // Simpan PO
+                  await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'pos', poData.id), poData);
+                  
+                  // Jika PO baru, update nomor selanjutnya dan simpan setting
+                  if (!isUpdate) {
+                    const newSettings = { ...settings, nextNumber: settings.nextNumber + 1 };
+                    await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'main'), newSettings);
+                  }
+
+                  // Sync Ke Google Spreadsheet via Webhook
+                  syncToSpreadsheet(poData);
+
+                  alert(isUpdate ? "PO Berhasil Diperbarui!" : "PO Berhasil Disimpan & Menunggu Persetujuan!");
+                } catch(e) {
+                  console.error(e);
+                  alert("Terjadi kesalahan saat menyimpan PO.");
+                }
+              };
+
+              const onUpdateStatusPO = async (id, status) => {
+                 if (!user) return;
+                 try {
+                   const poToUpdate = pos.find(p => p.id === id);
+                   if (poToUpdate) {
+                      const updatedPO = { ...poToUpdate, status };
+                      await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'pos', id), updatedPO);
+                      syncToSpreadsheet(updatedPO); // Update status di sheet juga jika webhook ada
+                   }
+                 } catch(err) { console.error(err); }
+              };
+
+              const onAddSupplier = async (newSup) => {
+                 if (!user) return;
+                 await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'suppliers', newSup.id.toString()), newSup);
+              };
+
+              const onDeleteSupplier = async (id) => {
+                 if (!user) return;
+                 await deleteDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'suppliers', id.toString()));
+              };
+
+              const onSaveSettings = async (newSettings) => {
+                 if (!user) return;
+                 await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'settings', 'main'), newSettings);
+                 alert("Pengaturan Berhasil Disimpan!");
+              };
+
+              if (isLoadingAuth) {
+                  return <div className="h-screen w-full flex flex-col items-center justify-center bg-[#F2F2F7] text-[#8E8E93]"><Loader size={40} className="mb-4 text-[#007AFF]"/>Mempersiapkan Database...</div>;
+              }
+
+              return (
+                <div className="min-h-screen bg-[#F2F2F7] flex flex-col text-[#1C1C1E] antialiased" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' }}>
+                  <style>{`
+                    @page {
+                      size: 9.5in 5.5in;
+                      margin: 0;
+                    }
                     
-                    <table className="text-sm">
-                      <tbody>
-                        <tr>
-                          <td className="pr-4 py-0.5 text-left">PO</td>
-                          <td className="pr-2 py-0.5">:</td>
-                          <td className="text-left font-medium">{editingPo ? editingPo.poNumber : currentPoNumber}</td>
-                        </tr>
-                        <tr>
-                          <td className="pr-4 py-0.5 text-left">Payment</td>
-                          <td className="pr-2 py-0.5">:</td>
-                          <td className="text-left">{selectedVendor.payment || '-'}</td>
-                        </tr>
-                        <tr>
-                          <td className="pr-4 py-0.5 text-left">PPN</td>
-                          <td className="pr-2 py-0.5">:</td>
-                          <td className="text-left">{selectedVendor.ppn || '-'}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                    input[type=number]::-webkit-inner-spin-button, 
+                    input[type=number]::-webkit-outer-spin-button { 
+                      -webkit-appearance: none; 
+                      margin: 0; 
+                    }
+                    
+                    input, textarea, select {
+                      -webkit-user-select: auto !important;
+                      -moz-user-select: auto !important;
+                      -ms-user-select: auto !important;
+                      user-select: auto !important;
+                    }
 
-                {/* Vendor Section */}
-                <div className="grid grid-cols-2 gap-8 mb-6 text-sm">
-                  <div>
-                    <div className="mb-1 print:hidden relative">
-                      <div 
-                        onClick={() => setIsVendorDropdownOpen(!isVendorDropdownOpen)}
-                        className="cursor-pointer text-base font-bold uppercase hover:text-[#007AFF] inline-flex items-center gap-1 text-black"
-                      >
-                        {selectedVendor.id ? selectedVendor.name : '-- Pilih Vendor --'} <ChevronDown size={14} />
-                      </div>
-                      {isVendorDropdownOpen && (
-                        <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 shadow-xl rounded-lg z-50 overflow-hidden font-normal normal-case">
-                          <div className="p-2 border-b border-gray-100 bg-gray-50">
-                            <input 
-                              autoFocus 
-                              type="text" 
-                              placeholder="Cari Vendor..." 
-                              className="w-full p-1.5 text-sm outline-none bg-white border border-gray-200 rounded focus:border-[#007AFF]" 
-                              value={vendorSearch}
-                              onChange={(e)=>setVendorSearch(e.target.value)} 
-                            />
-                          </div>
-                          <div className="max-h-48 overflow-y-auto">
-                            {suppliers.filter(s => s.name.toLowerCase().includes(vendorSearch.toLowerCase())).length === 0 ? (
-                              <div className="p-3 text-sm text-gray-500 text-center">Vendor tidak ditemukan</div>
-                            ) : (
-                              suppliers.filter(s => s.name.toLowerCase().includes(vendorSearch.toLowerCase())).map(s => (
-                                <div 
-                                  key={s.id} 
-                                  className="p-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-gray-50 last:border-0" 
-                                  onClick={() => { setVendorId(s.id); setIsVendorDropdownOpen(false); setVendorSearch(''); }}
-                                >
-                                  <div className="font-bold text-gray-800">{s.name}</div>
-                                </div>
-                              ))
-                            )}
-                          </div>
+                    input[type=number] {
+                      -moz-appearance: textfield;
+                    }
+                  `}</style>
+
+                  {/* Navigation (Clean Plain Text Style) - Hidden when printing */}
+                  <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 print:hidden z-10 sticky top-0">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                      <div className="flex justify-between items-center h-16">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-[#007AFF] rounded-lg flex items-center justify-center text-white font-bold text-sm">PO</div>
+                          <span className="font-bold text-gray-800 tracking-tight text-lg">System</span>
                         </div>
-                      )}
+                        
+                        <div className="flex gap-2 sm:gap-6 overflow-x-auto hide-scrollbar h-full items-end">
+                          <NavButton active={activeTab === 'create'} onClick={() => { setActiveTab('create'); setEditingPo(null); }} icon={<FileText size={16} />} label="Buat PO" />
+                          <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label="Persetujuan" badge={pos.filter(p => p.status === 'Pending').length} />
+                          <NavButton active={activeTab === 'suppliers'} onClick={() => setActiveTab('suppliers')} icon={<Users size={16} />} label="Supplier" />
+                          <NavButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} icon={<Settings size={16} />} label="Pengaturan" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="font-bold mb-1 hidden print:block uppercase text-base">{selectedVendor.name || 'PILIH VENDOR'}</div>
-                    <div className="text-gray-800 pr-12">{selectedVendor.address || 'Alamat Vendor (opsional)'}</div>
-                  </div>
-                  <div>
-                    <div className="font-bold mb-1 uppercase text-base">{settings.branchName}</div>
-                    <div className="text-gray-800 pr-4">{settings.branchAddress}</div>
-                  </div>
-                </div>
+                  </nav>
 
-                {/* Items Table */}
-                <div className="mb-2 flex-1">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-t-2 border-b border-black">
-                        <th className="py-1 px-1 text-center font-bold w-10">NO</th>
-                        <th className="py-1 px-2 text-left font-bold">DESKRIPSI ITEM</th>
-                        <th className="py-1 px-2 text-center font-bold w-12">Qty</th>
-                        <th className="py-1 px-2 text-center font-bold w-16">UNIT</th>
-                        <th className="py-1 px-2 text-right font-bold w-28">UNIT PRICE</th>
-                        <th className="py-1 px-2 text-right font-bold w-32">SUB TOTAL</th>
-                        <th className="py-1 px-0 w-8 print:hidden"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items.map((item, index) => (
-                        <tr key={item.id} className="group relative border-b border-gray-100 print:border-none">
-                          <td className="py-1.5 px-1 text-center align-top">{index + 1}</td>
-                          <td className="py-1 px-2 align-top">
-                            <input 
-                              type="text" 
-                              value={item.desc}
-                              onChange={(e) => handleItemChange(item.id, 'desc', e.target.value)}
-                              onFocus={(e) => e.target.select()}
-                              className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none uppercase"
-                              placeholder="Masukkan deskripsi barang..."
-                            />
-                          </td>
-                          <td className="py-1 px-2 align-top text-center">
-                            <input 
-                              type="number" 
-                              value={item.qty}
-                              onChange={(e) => handleItemChange(item.id, 'qty', Number(e.target.value))}
-                              onFocus={(e) => e.target.select()}
-                              className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none text-center"
-                              min="1"
-                            />
-                          </td>
-                          <td className="py-1 px-2 align-top text-center">
-                            <input 
-                              type="text" 
-                              value={item.unit}
-                              onChange={(e) => handleItemChange(item.id, 'unit', e.target.value)}
-                              onFocus={(e) => e.target.select()}
-                              className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none text-center uppercase"
-                            />
-                          </td>
-                          <td className="py-1 px-2 align-top text-right">
-                            <div className="flex flex-col items-end gap-1 print:hidden">
-                              <div className="flex items-center justify-end gap-1 w-full">
-                                <button 
-                                  onClick={() => openDiscountModal(item)}
-                                  className="p-1 text-[#007AFF] hover:bg-[#E5F1FF] rounded-md transition-colors"
-                                  title="Atur Diskon"
-                                >
-                                  %
-                                </button>
+                  {/* Main Content Area */}
+                  <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 print:p-0 print:bg-white pb-32">
+                    {activeTab === 'create' && (
+                      <CreatePOView 
+                        suppliers={suppliers} 
+                        settings={settings} 
+                        setSettings={setSettings} // Set Setting Sementara sebelum disave berbarengan PO
+                        editingPo={editingPo}
+                        setEditingPo={setEditingPo}
+                        onSavePO={onSavePO}
+                        generatePoNumber={generatePoNumber}
+                      />
+                    )}
+                    {activeTab === 'approve' && (
+                      <ApprovalView 
+                        pos={pos} 
+                        onLoadPO={(po) => {
+                          setEditingPo(po);
+                          setActiveTab('create');
+                        }}
+                        onUpdateStatus={onUpdateStatusPO}
+                      />
+                    )}
+                    {activeTab === 'suppliers' && (
+                      <SupplierView 
+                        suppliers={suppliers} 
+                        onAddSupplier={onAddSupplier}
+                        onDeleteSupplier={onDeleteSupplier}
+                      />
+                    )}
+                    {activeTab === 'settings' && (
+                      <SettingsView 
+                        settings={settings} 
+                        onSaveSettings={onSaveSettings} 
+                      />
+                    )}
+                  </main>
+                </div>
+              );
+            }
+
+            function NavButton({ active, onClick, icon, label, badge }) {
+              return (
+                <button
+                  onClick={onClick}
+                  className={`
+                    ${active ? 'text-[#007AFF] font-bold border-[#007AFF]' : 'text-[#8E8E93] hover:text-[#1C1C1E] border-transparent font-medium'}
+                    flex items-center justify-center py-4 text-[14px] border-b-[3px] transition-colors gap-1.5 relative whitespace-nowrap
+                  `}
+                >
+                  {icon}
+                  {label}
+                  {badge > 0 && (
+                    <span className="absolute top-2 -right-3 bg-[#FF3B30] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                      {badge}
+                    </span>
+                  )}
+                </button>
+              );
+            }
+
+            // --- 1. CREATE PO VIEW ---
+            function CreatePOView({ suppliers, settings, setSettings, editingPo, setEditingPo, onSavePO, generatePoNumber }) {
+              const defaultItems = [
+                { id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }
+              ];
+
+              const [vendorId, setVendorId] = useState('');
+              const [items, setItems] = useState(defaultItems);
+              const [date, setDate] = useState(new Date());
+              const [note, setNote] = useState('');
+
+              const [isVendorDropdownOpen, setIsVendorDropdownOpen] = useState(false);
+              const [vendorSearch, setVendorSearch] = useState('');
+
+              const [discountModalId, setDiscountModalId] = useState(null);
+              const [tempDiscounts, setTempDiscounts] = useState(['', '', '', '']);
+
+              const selectedVendor = suppliers.find(s => s.id === vendorId) || {};
+              const currentPoNumber = generatePoNumber(settings.nextNumber);
+              const isApproved = editingPo && editingPo.status === 'Approved';
+
+              const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
+              const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+              const handleAddItem = () => setItems([...items, { id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
+              const handleRemoveItem = (id) => setItems(items.filter(item => item.id !== id));
+              const handleItemChange = (id, field, value) => setItems(items.map(item => item.id === id ? { ...item, [field]: value } : item));
+
+              const calculateNetPrice = (price, discounts) => {
+                if (!discounts || discounts.length === 0) return price;
+                return discounts.reduce((acc, d) => acc - (acc * (d / 100)), price);
+              };
+
+              const openDiscountModal = (item) => {
+                setDiscountModalId(item.id);
+                const d = item.discounts || [];
+                setTempDiscounts([
+                  d[0] !== undefined ? String(d[0]) : '', 
+                  d[1] !== undefined ? String(d[1]) : '', 
+                  d[2] !== undefined ? String(d[2]) : '', 
+                  d[3] !== undefined ? String(d[3]) : ''
+                ]);
+              };
+
+              const handleDiscountChange = (index, val) => {
+                const newD = [...tempDiscounts];
+                newD[index] = val;
+                setTempDiscounts(newD);
+              };
+
+              const saveDiscounts = () => {
+                setItems(prevItems => prevItems.map(item => {
+                  if (item.id === discountModalId) {
+                    const activeDiscounts = tempDiscounts.map(Number).filter(d => d > 0 && !isNaN(d));
+                    const net = calculateNetPrice(item.price, activeDiscounts);
+                    return { ...item, price: net, discounts: [] }; 
+                  }
+                  return item;
+                }));
+                setDiscountModalId(null);
+              };
+
+              useEffect(() => {
+                if (editingPo) {
+                  setVendorId(editingPo.vendor.id);
+                  setItems(editingPo.items);
+                  setDate(new Date(editingPo.date));
+                  setNote(editingPo.note || '');
+                } else {
+                  setVendorId(suppliers.length > 0 ? suppliers[0].id : '');
+                  setItems([{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
+                  setDate(new Date());
+                  setNote('');
+                }
+              }, [editingPo, suppliers]);
+
+              const total = items.reduce((sum, item) => sum + (item.qty * calculateNetPrice(item.price, item.discounts)), 0);
+
+              const isFormValid = vendorId && items.length > 0 && items.every(i => i.desc.trim() !== '' && i.qty > 0);
+
+              const handleSave = () => {
+                if (!isFormValid) return;
+                
+                const poData = {
+                  id: editingPo ? editingPo.id : Date.now().toString(),
+                  poNumber: editingPo ? editingPo.poNumber : currentPoNumber,
+                  date: date.toISOString(),
+                  vendor: selectedVendor,
+                  items: items,
+                  total: total,
+                  note: note,
+                  status: editingPo ? editingPo.status : 'Pending'
+                };
+                
+                onSavePO(poData, !!editingPo);
+                setEditingPo(null);
+
+                // Clear Canvas
+                setVendorId('');
+                setItems([{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
+                setNote('');
+                setDate(new Date());
+              };
+
+              return (
+                <div className="max-w-5xl mx-auto flex flex-col gap-6 relative">
+                  
+                  {/* Floating Action Bar (Hidden in Print) */}
+                  <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-50 print:hidden">
+                    <button 
+                      onClick={(e) => {
+                        if (!isApproved) {
+                          e.preventDefault();
+                          alert("Cetak hanya tersedia untuk PO yang sudah disetujui (Approved). Silakan buka dari tab Persetujuan.");
+                          return;
+                        }
+                        window.print();
+                      }} 
+                      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}
+                    >
+                      <Printer size={18} /> Cetak
+                    </button>
+                    <button 
+                      onClick={handleSave} 
+                      disabled={!isFormValid}
+                      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? 'bg-[#007AFF] hover:bg-[#0056b3] text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                    >
+                      <Save size={18} /> Simpan
+                    </button>
+                  </div>
+
+                  {/* 9.5 x 5.5 Inch Paper Container */}
+                  <div className="bg-white p-6 shadow-md rounded-[2px] print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
+                    
+                    {/* Header Section */}
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <h1 
+                          className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" 
+                          style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}
+                        >
+                          {settings.companyName}
+                        </h1>
+                      </div>
+                      <div className="text-right flex flex-col items-end">
+                        <h2 className="text-xl font-bold uppercase tracking-wider mb-1">Purchase Order</h2>
+                        <div className="text-sm mb-2">{formatDate(date)}</div>
+                        
+                        <table className="text-sm">
+                          <tbody>
+                            <tr>
+                              <td className="pr-4 py-0.5 text-left">PO</td>
+                              <td className="pr-2 py-0.5">:</td>
+                              <td className="text-left font-medium">{editingPo ? editingPo.poNumber : currentPoNumber}</td>
+                            </tr>
+                            <tr>
+                              <td className="pr-4 py-0.5 text-left">Payment</td>
+                              <td className="pr-2 py-0.5">:</td>
+                              <td className="text-left">{selectedVendor.payment || '-'}</td>
+                            </tr>
+                            <tr>
+                              <td className="pr-4 py-0.5 text-left">PPN</td>
+                              <td className="pr-2 py-0.5">:</td>
+                              <td className="text-left">{selectedVendor.ppn || '-'}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Vendor Section */}
+                    <div className="grid grid-cols-2 gap-8 mb-6 text-sm">
+                      <div>
+                        <div className="mb-1 print:hidden relative">
+                          <div 
+                            onClick={() => setIsVendorDropdownOpen(!isVendorDropdownOpen)}
+                            className="cursor-pointer text-base font-bold uppercase hover:text-[#007AFF] inline-flex items-center gap-1 text-black"
+                          >
+                            {selectedVendor.id ? selectedVendor.name : '-- Pilih Vendor --'} <ChevronDown size={14} />
+                          </div>
+                          {isVendorDropdownOpen && (
+                            <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 shadow-xl rounded-lg z-50 overflow-hidden font-normal normal-case">
+                              <div className="p-2 border-b border-gray-100 bg-gray-50">
                                 <input 
-                                  type="number" 
-                                  value={item.price || ''}
-                                  onChange={(e) => handleItemChange(item.id, 'price', Number(e.target.value))}
-                                  onFocus={(e) => e.target.select()}
-                                  className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 text-right"
-                                  step="100"
-                                  placeholder="0"
+                                  autoFocus 
+                                  type="text" 
+                                  placeholder="Cari Vendor..." 
+                                  className="w-full p-1.5 text-sm outline-none bg-white border border-gray-200 rounded focus:border-[#007AFF]" 
+                                  value={vendorSearch}
+                                  onChange={(e)=>setVendorSearch(e.target.value)} 
                                 />
                               </div>
-                            </div>
-                            <div className="hidden print:block text-right">{formatCurrency(calculateNetPrice(item.price, item.discounts))}</div>
-                          </td>
-                          <td className="py-1.5 px-2 align-top text-right font-medium">
-                            {formatCurrency(item.qty * calculateNetPrice(item.price, item.discounts))}
-                          </td>
-                          <td className="py-1 px-0 align-top text-center print:hidden">
-                            <button 
-                              onClick={() => handleRemoveItem(item.id)}
-                              className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-md"
-                              title="Hapus baris"
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    {/* Tambah Baris spans partially, Total is inline */}
-                    <tfoot>
-                      <tr>
-                        <td colSpan="5" className="pt-2">
-                          <button 
-                            onClick={handleAddItem}
-                            className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-2 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-md transition-colors"
-                          >
-                            <Plus size={14} /> TAMBAH BARIS
-                          </button>
-                        </td>
-                        <td className="pt-2 px-2 align-top text-right">
-                          <div className="border-t border-black pt-1">
-                            <span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span>
-                          </div>
-                        </td>
-                        <td className="print:hidden"></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-
-                {/* Notes & Footer / Total Section */}
-                <div className="mt-auto pt-4 px-2 grid grid-cols-2 gap-8 items-end">
-                  
-                  {/* Notes Area (Otomatis Sembunyi Saat Print Jika Kosong) */}
-                  <div className={`w-full mb-2 ${!note.trim() ? 'print:hidden' : ''}`}>
-                     <div className="font-bold text-sm mb-1">Catatan :</div>
-                     <textarea 
-                       className="w-full bg-transparent border-transparent outline-none resize-none text-sm p-1.5 hover:bg-gray-50 focus:bg-gray-50 focus:ring-1 focus:ring-blue-100 rounded transition-all print:resize-none print:p-0 print:border-none" 
-                       rows="3" 
-                       value={note}
-                       onChange={(e) => setNote(e.target.value)}
-                       placeholder="Tambahkan catatan khusus... (opsional)"
-                     />
-                  </div>
-
-                  <div className="flex flex-col items-end col-start-2">
-                    {/* Signature Area */}
-                    <div className="text-center w-48 relative pr-2">
-                      <div className="h-16 mb-2"></div> {/* Blank area for stamp/signature */}
-                      <div className="border-t border-black"></div>
-                      <div className="mt-1 text-sm font-bold flex items-center justify-center whitespace-nowrap">
-                        <span>(</span>
-                        <span className="relative inline-flex items-center justify-center">
-                          <span className="invisible whitespace-pre">{settings.signatureName || ' '}</span>
-                          <input 
-                              type="text" 
-                              value={settings.signatureName} 
-                              onChange={(e) => setSettings({...settings, signatureName: e.target.value})}
-                              onFocus={(e) => e.target.select()}
-                              className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0"
-                          />
-                        </span>
-                        <span>)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Simplified Discount Modal (4 Inputs) */}
-              {discountModalId && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 print:hidden p-4">
-                  <div className="bg-white rounded-2xl shadow-xl w-auto min-w-[340px] overflow-hidden">
-                    <div className="px-6 py-4 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
-                      <h3 className="font-bold text-[#1C1C1E]">Diskon Beruntun</h3>
-                      <button onClick={() => setDiscountModalId(null)} className="text-[#8E8E93] hover:text-[#FF3B30] transition-colors"><XCircle size={20}/></button>
-                    </div>
-                    
-                    <div className="p-6">
-                      <div className="flex flex-wrap items-center justify-center gap-2 mb-6 w-full">
-                        {[0, 1, 2, 3].map((idx) => (
-                          <React.Fragment key={idx}>
-                            <div className="relative">
-                              <input 
-                                type="number"
-                                value={tempDiscounts[idx]}
-                                onChange={(e) => handleDiscountChange(idx, e.target.value)}
-                                onFocus={(e) => e.target.select()}
-                                className="w-16 bg-[#F2F2F7] border-none rounded-lg p-2 pr-4 text-center font-medium focus:ring-2 focus:ring-[#007AFF] outline-none"
-                                placeholder="0"
-                              />
-                              <span className="absolute right-1.5 top-2.5 text-[10px] text-[#8E8E93]">%</span>
-                            </div>
-                            {idx < 3 && <span className="text-[#8E8E93] font-bold">+</span>}
-                          </React.Fragment>
-                        ))}
-                      </div>
-                      
-                      <button onClick={saveDiscounts} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-3 rounded-xl transition-colors shadow-sm">
-                        Terapkan Diskon
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        }
-
-        // --- 2. APPROVAL VIEW (iOS Capsule Style) ---
-        function ApprovalView({ pos, onLoadPO, onUpdateStatus }) {
-          const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num);
-          const [expandedId, setExpandedId] = useState(null);
-          const [searchTerm, setSearchTerm] = useState('');
-          
-          // Export Excel States
-          const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-          const [exportFilter, setExportFilter] = useState({ startDate: '', endDate: '', tax: 'Semua' });
-
-          const toggleExpand = (id) => {
-            setExpandedId(expandedId === id ? null : id);
-          };
-
-          const filteredPos = pos.filter(po => 
-            po.poNumber.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            po.vendor.name.toLowerCase().includes(searchTerm.toLowerCase())
-          );
-
-          const handleExportExcel = () => {
-            const exportedData = pos.filter(po => {
-              const poDate = new Date(po.date).setHours(0,0,0,0);
-              const start = exportFilter.startDate ? new Date(exportFilter.startDate).setHours(0,0,0,0) : null;
-              const end = exportFilter.endDate ? new Date(exportFilter.endDate).setHours(23,59,59,999) : null;
-              
-              const inDateRange = (!start || poDate >= start) && (!end || poDate <= end);
-              const matchTax = exportFilter.tax === 'Semua' || po.vendor.ppn === exportFilter.tax;
-              
-              return inDateRange && matchTax;
-            });
-
-            if(exportedData.length === 0) return alert("Tidak ada data PO yang sesuai dengan rentang tanggal dan filter pajak ini.");
-
-            // Create simple HTML Table string to be exported as .xls
-            let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
-            html += '<head><meta charset="UTF-8"></head><body>';
-            html += '<h2>Laporan Purchase Order</h2>';
-            html += `<p>Periode: ${exportFilter.startDate || 'Awal'} s/d ${exportFilter.endDate || 'Akhir'} | Filter Pajak: ${exportFilter.tax}</p>`;
-            html += '<table border="1" style="border-collapse: collapse;">';
-            html += '<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. PO</th><th>Nama Vendor</th><th>Pembayaran</th><th>Status Pajak</th><th>Subtotal</th><th>Status</th></tr>';
-            
-            exportedData.forEach(po => {
-                const dateStr = new Date(po.date).toLocaleDateString('id-ID');
-                html += `<tr>
-                  <td>${dateStr}</td>
-                  <td>${po.poNumber}</td>
-                  <td>${po.vendor.name}</td>
-                  <td>${po.vendor.payment}</td>
-                  <td>${po.vendor.ppn}</td>
-                  <td>${po.total}</td>
-                  <td>${po.status}</td>
-                </tr>`;
-            });
-            html += '</table></body></html>';
-
-            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `Laporan_PO_${exportFilter.startDate || 'All'}.xls`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            setIsExportModalOpen(false);
-          };
-
-          return (
-            <div className="max-w-4xl mx-auto space-y-6 relative">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
-                <h2 className="text-2xl font-bold text-[#1C1C1E]">Persetujuan PO</h2>
-                
-                <div className="flex items-center gap-3">
-                  <button 
-                    onClick={() => setIsExportModalOpen(true)}
-                    className="flex items-center justify-center gap-2 bg-[#34C759] hover:bg-[#2DB34A] text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm"
-                  >
-                    <Download size={16} /> Export Excel
-                  </button>
-                  
-                  {/* Search Bar */}
-                  <div className="relative w-full sm:w-64">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Search size={16} className="text-[#8E8E93]" />
-                    </div>
-                    <input
-                      type="text"
-                      className="w-full bg-white border border-[#E5E5EA] text-[#1C1C1E] rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] transition-shadow shadow-sm"
-                      placeholder="Cari No. PO / Vendor..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {filteredPos.length === 0 ? (
-                  <div className="bg-white rounded-2xl p-8 text-center text-[#8E8E93] shadow-sm">
-                    {searchTerm ? 'PO tidak ditemukan.' : 'Belum ada Purchase Order yang diajukan.'}
-                  </div>
-                ) : (
-                  filteredPos.map(po => (
-                    <div key={po.id} className="bg-white rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-[#E5E5EA]">
-                      
-                      {/* Capsule Header (Always Visible) */}
-                      <div 
-                        className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-[#F9F9F9] transition-colors"
-                        onClick={() => toggleExpand(po.id)}
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className={`p-3 rounded-full ${po.status === 'Pending' ? 'bg-[#FFF500]/20 text-[#D4AF37]' : po.status === 'Approved' ? 'bg-[#34C759]/20 text-[#34C759]' : 'bg-[#FF3B30]/20 text-[#FF3B30]'}`}>
-                            <FileText size={24} />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <button 
-                                onClick={(e) => { e.stopPropagation(); onLoadPO(po); }}
-                                className="font-bold text-[#007AFF] hover:text-[#0056b3] hover:underline text-lg"
-                                title="Buka & Edit PO"
-                              >
-                                {po.poNumber}
-                              </button>
-                              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                                po.status === 'Approved' ? 'bg-[#34C759] text-white' :
-                                po.status === 'Rejected' ? 'bg-[#FF3B30] text-white' :
-                                'bg-[#FFCC00] text-black'
-                              }`}>
-                                {po.status}
-                              </span>
-                            </div>
-                            <div className="text-sm text-[#8E8E93] font-medium">
-                              {po.vendor.name} • {new Date(po.date).toLocaleDateString('id-ID')}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto w-full">
-                          <div className="text-right">
-                            <div className="text-xs text-[#8E8E93] uppercase font-bold tracking-wider mb-0.5">Total</div>
-                            <div className="font-bold text-[#1C1C1E] text-lg">Rp {formatCurrency(po.total)}</div>
-                          </div>
-                          
-                          <div className="flex items-center gap-3">
-                            {po.status === 'Pending' && (
-                              <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-                                <button 
-                                  onClick={() => onUpdateStatus(po.id, 'Approved')}
-                                  className="w-10 h-10 flex items-center justify-center bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759] hover:text-white rounded-full transition-colors"
-                                  title="Setujui PO"
-                                >
-                                  <CheckCircle size={22} />
-                                </button>
-                                <button 
-                                  onClick={() => onUpdateStatus(po.id, 'Rejected')}
-                                  className="w-10 h-10 flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white rounded-full transition-colors"
-                                  title="Tolak PO"
-                                >
-                                  <XCircle size={22} />
-                                </button>
+                              <div className="max-h-48 overflow-y-auto">
+                                {suppliers.filter(s => s.name.toLowerCase().includes(vendorSearch.toLowerCase())).length === 0 ? (
+                                  <div className="p-3 text-sm text-gray-500 text-center">Vendor tidak ditemukan</div>
+                                ) : (
+                                  suppliers.filter(s => s.name.toLowerCase().includes(vendorSearch.toLowerCase())).map(s => (
+                                    <div 
+                                      key={s.id} 
+                                      className="p-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-gray-50 last:border-0" 
+                                      onClick={() => { setVendorId(s.id); setIsVendorDropdownOpen(false); setVendorSearch(''); }}
+                                    >
+                                      <div className="font-bold text-gray-800">{s.name}</div>
+                                    </div>
+                                  ))
+                                )}
                               </div>
-                            )}
-                            <div className="text-[#C7C7CC]">
-                              {expandedId === po.id ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Expanded Content (Items) - Horizontal Layout */}
-                      {expandedId === po.id && (
-                        <div className="border-t border-[#F2F2F7] bg-[#F9F9FB] p-5">
-                          <h4 className="font-bold text-[#8E8E93] text-sm uppercase tracking-wider mb-3">Detail Item</h4>
-                          
-                          <div className="overflow-x-auto">
-                            <table className="w-full text-sm text-left">
-                              <thead className="text-xs text-[#8E8E93] uppercase bg-white/50 border-b border-[#E5E5EA]">
-                                <tr>
-                                  <th className="px-4 py-2 rounded-tl-lg">Deskripsi</th>
-                                  <th className="px-4 py-2 text-center">Qty</th>
-                                  <th className="px-4 py-2 text-right">Harga</th>
-                                  <th className="px-4 py-2 text-right rounded-tr-lg">Subtotal</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-[#F2F2F7]">
-                                {po.items.map((item, idx) => {
-                                  const netPrice = !item.discounts || item.discounts.length === 0 
-                                                  ? item.price 
-                                                  : item.discounts.reduce((acc, d) => acc - (acc * (d / 100)), item.price);
-                                  return (
-                                    <tr key={idx} className="bg-white hover:bg-white/80 transition-colors">
-                                      <td className="px-4 py-3 font-semibold text-[#1C1C1E]">
-                                        {item.desc}
-                                      </td>
-                                      <td className="px-4 py-3 text-center text-[#8E8E93]">
-                                        {item.qty} {item.unit}
-                                      </td>
-                                      <td className="px-4 py-3 text-right text-[#8E8E93]">
-                                        Rp {formatCurrency(item.price)}
-                                      </td>
-                                      <td className="px-4 py-3 text-right font-bold text-[#1C1C1E]">
-                                        Rp {formatCurrency(item.qty * netPrice)}
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
-                          </div>
-
-                          {po.note && (
-                            <div className="mt-4 p-3 bg-white border border-[#E5E5EA] rounded-lg">
-                              <span className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-1">Catatan:</span>
-                              <p className="text-sm text-[#1C1C1E]">{po.note}</p>
                             </div>
                           )}
-
                         </div>
-                      )}
-                    </div>
-                  ))
-                )}
-              </div>
-
-              {/* Export to Excel Modal */}
-              {isExportModalOpen && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                  <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden">
-                    <div className="px-6 py-4 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
-                      <h3 className="font-bold text-[#1C1C1E]">Export ke Excel</h3>
-                      <button onClick={() => setIsExportModalOpen(false)} className="text-[#8E8E93] hover:text-[#FF3B30] transition-colors"><XCircle size={20}/></button>
-                    </div>
-                    
-                    <div className="p-6 space-y-5">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Dari Tanggal</label>
-                          <input 
-                            type="date" 
-                            value={exportFilter.startDate} 
-                            onChange={e => setExportFilter({...exportFilter, startDate: e.target.value})} 
-                            className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" 
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Sampai Tanggal</label>
-                          <input 
-                            type="date" 
-                            value={exportFilter.endDate} 
-                            onChange={e => setExportFilter({...exportFilter, endDate: e.target.value})} 
-                            className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" 
-                          />
-                        </div>
+                        <div className="font-bold mb-1 hidden print:block uppercase text-base">{selectedVendor.name || 'PILIH VENDOR'}</div>
+                        <div className="text-gray-800 pr-12">{selectedVendor.address || 'Alamat Vendor (opsional)'}</div>
                       </div>
-                      
                       <div>
-                        <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Status Pajak</label>
-                        <select 
-                          value={exportFilter.tax} 
-                          onChange={e => setExportFilter({...exportFilter, tax: e.target.value})} 
-                          className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]"
-                        >
-                          <option value="Semua">Semua (PPN & Non-PPN)</option>
-                          <option value="PPN">Hanya PPN</option>
-                          <option value="Non-PPN">Hanya Non-PPN</option>
-                        </select>
+                        <div className="font-bold mb-1 uppercase text-base">{settings.branchName}</div>
+                        <div className="text-gray-800 pr-4">{settings.branchAddress}</div>
+                      </div>
+                    </div>
+
+                    {/* Items Table */}
+                    <div className="mb-2 flex-1">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-t-2 border-b border-black">
+                            <th className="py-1 px-1 text-center font-bold w-10">NO</th>
+                            <th className="py-1 px-2 text-left font-bold">DESKRIPSI ITEM</th>
+                            <th className="py-1 px-2 text-center font-bold w-12">Qty</th>
+                            <th className="py-1 px-2 text-center font-bold w-16">UNIT</th>
+                            <th className="py-1 px-2 text-right font-bold w-28">UNIT PRICE</th>
+                            <th className="py-1 px-2 text-right font-bold w-32">SUB TOTAL</th>
+                            <th className="py-1 px-0 w-8 print:hidden"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {items.map((item, index) => (
+                            <tr key={item.id} className="group relative border-b border-gray-100 print:border-none">
+                              <td className="py-1.5 px-1 text-center align-top">{index + 1}</td>
+                              <td className="py-1 px-2 align-top">
+                                <input 
+                                  type="text" 
+                                  value={item.desc}
+                                  onChange={(e) => handleItemChange(item.id, 'desc', e.target.value)}
+                                  onFocus={(e) => e.target.select()}
+                                  className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none uppercase"
+                                  placeholder="Masukkan deskripsi barang..."
+                                />
+                              </td>
+                              <td className="py-1 px-2 align-top text-center">
+                                <input 
+                                  type="number" 
+                                  value={item.qty}
+                                  onChange={(e) => handleItemChange(item.id, 'qty', Number(e.target.value))}
+                                  onFocus={(e) => e.target.select()}
+                                  className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none text-center"
+                                  min="1"
+                                />
+                              </td>
+                              <td className="py-1 px-2 align-top text-center">
+                                <input 
+                                  type="text" 
+                                  value={item.unit}
+                                  onChange={(e) => handleItemChange(item.id, 'unit', e.target.value)}
+                                  onFocus={(e) => e.target.select()}
+                                  className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none text-center uppercase"
+                                />
+                              </td>
+                              <td className="py-1 px-2 align-top text-right">
+                                <div className="flex flex-col items-end gap-1 print:hidden">
+                                  <div className="flex items-center justify-end gap-1 w-full">
+                                    <button 
+                                      onClick={() => openDiscountModal(item)}
+                                      className="p-1 text-[#007AFF] hover:bg-[#E5F1FF] rounded-md transition-colors"
+                                      title="Atur Diskon"
+                                    >
+                                      %
+                                    </button>
+                                    <input 
+                                      type="number" 
+                                      value={item.price || ''}
+                                      onChange={(e) => handleItemChange(item.id, 'price', Number(e.target.value))}
+                                      onFocus={(e) => e.target.select()}
+                                      className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 text-right"
+                                      step="100"
+                                      placeholder="0"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="hidden print:block text-right">{formatCurrency(calculateNetPrice(item.price, item.discounts))}</div>
+                              </td>
+                              <td className="py-1.5 px-2 align-top text-right font-medium">
+                                {formatCurrency(item.qty * calculateNetPrice(item.price, item.discounts))}
+                              </td>
+                              <td className="py-1 px-0 align-top text-center print:hidden">
+                                <button 
+                                  onClick={() => handleRemoveItem(item.id)}
+                                  className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-md"
+                                  title="Hapus baris"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        {/* Tambah Baris spans partially, Total is inline */}
+                        <tfoot>
+                          <tr>
+                            <td colSpan="5" className="pt-2">
+                              <button 
+                                onClick={handleAddItem}
+                                className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-2 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-md transition-colors"
+                              >
+                                <Plus size={14} /> TAMBAH BARIS
+                              </button>
+                            </td>
+                            <td className="pt-2 px-2 align-top text-right">
+                              <div className="border-t border-black pt-1">
+                                <span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span>
+                              </div>
+                            </td>
+                            <td className="print:hidden"></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+
+                    {/* Notes & Footer / Total Section */}
+                    <div className="mt-auto pt-4 px-2 grid grid-cols-2 gap-8 items-end">
+                      
+                      {/* Notes Area (Otomatis Sembunyi Saat Print Jika Kosong) */}
+                      <div className={`w-full mb-2 ${!note.trim() ? 'print:hidden' : ''}`}>
+                         <div className="font-bold text-sm mb-1">Catatan :</div>
+                         <textarea 
+                           className="w-full bg-transparent border-transparent outline-none resize-none text-sm p-1.5 hover:bg-gray-50 focus:bg-gray-50 focus:ring-1 focus:ring-blue-100 rounded transition-all print:resize-none print:p-0 print:border-none" 
+                           rows="3" 
+                           value={note}
+                           onChange={(e) => setNote(e.target.value)}
+                           placeholder="Tambahkan catatan khusus... (opsional)"
+                         />
                       </div>
 
-                      <button 
-                        onClick={handleExportExcel} 
-                        className="w-full bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2 mt-2"
-                      >
-                        <Download size={18} /> Unduh (.xls)
-                      </button>
+                      <div className="flex flex-col items-end col-start-2">
+                        {/* Signature Area */}
+                        <div className="text-center w-48 relative pr-2">
+                          <div className="h-16 mb-2"></div> {/* Blank area for stamp/signature */}
+                          <div className="border-t border-black"></div>
+                          <div className="mt-1 text-sm font-bold flex items-center justify-center whitespace-nowrap">
+                            <span>(</span>
+                            <span className="relative inline-flex items-center justify-center">
+                              <span className="invisible whitespace-pre min-w-[1px]">{settings.signatureName || ' '}</span>
+                              <input 
+                                  type="text" 
+                                  value={settings.signatureName} 
+                                  onChange={(e) => setSettings({...settings, signatureName: e.target.value})}
+                                  onFocus={(e) => e.target.select()}
+                                  className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0"
+                              />
+                            </span>
+                            <span>)</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
                   </div>
+
+                  {/* Simplified Discount Modal (4 Inputs) */}
+                  {discountModalId && (
+                    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 print:hidden p-4">
+                      <div className="bg-white rounded-2xl shadow-xl w-auto min-w-[340px] overflow-hidden">
+                        <div className="px-6 py-4 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
+                          <h3 className="font-bold text-[#1C1C1E]">Diskon Beruntun</h3>
+                          <button onClick={() => setDiscountModalId(null)} className="text-[#8E8E93] hover:text-[#FF3B30] transition-colors"><XCircle size={20}/></button>
+                        </div>
+                        
+                        <div className="p-6">
+                          <div className="flex flex-wrap items-center justify-center gap-2 mb-6 w-full">
+                            {[0, 1, 2, 3].map((idx) => (
+                              <React.Fragment key={idx}>
+                                <div className="relative">
+                                  <input 
+                                    type="number"
+                                    value={tempDiscounts[idx]}
+                                    onChange={(e) => handleDiscountChange(idx, e.target.value)}
+                                    onFocus={(e) => e.target.select()}
+                                    className="w-16 bg-[#F2F2F7] border-none rounded-lg p-2 pr-4 text-center font-medium focus:ring-2 focus:ring-[#007AFF] outline-none"
+                                    placeholder="0"
+                                  />
+                                  <span className="absolute right-1.5 top-2.5 text-[10px] text-[#8E8E93]">%</span>
+                                </div>
+                                {idx < 3 && <span className="text-[#8E8E93] font-bold">+</span>}
+                              </React.Fragment>
+                            ))}
+                          </div>
+                          
+                          <button onClick={saveDiscounts} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-3 rounded-xl transition-colors shadow-sm">
+                            Terapkan Diskon
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
+              );
+            }
 
-            </div>
-          );
-        }
+            // --- 2. APPROVAL VIEW (iOS Capsule Style) ---
+            function ApprovalView({ pos, onLoadPO, onUpdateStatus }) {
+              const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num);
+              const [expandedId, setExpandedId] = useState(null);
+              const [searchTerm, setSearchTerm] = useState('');
+              
+              // Export Excel States
+              const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+              const [exportFilter, setExportFilter] = useState({ startDate: '', endDate: '', tax: 'Semua' });
 
-        // --- 3. SUPPLIER LIST VIEW (iOS Style) ---
-        function SupplierView({ suppliers, setSuppliers }) {
-          const [isAdding, setIsAdding] = useState(false);
-          const [formData, setFormData] = useState({
-            name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: ''
-          });
+              const toggleExpand = (id) => {
+                setExpandedId(expandedId === id ? null : id);
+              };
 
-          const handleSave = (e) => {
-            e.preventDefault();
-            if (!formData.name) return alert("Nama PT wajib diisi!");
-            setSuppliers([...suppliers, { ...formData, id: Date.now() }]);
-            setFormData({ name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
-            setIsAdding(false);
-          };
+              const filteredPos = pos.filter(po => 
+                po.poNumber.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                po.vendor.name.toLowerCase().includes(searchTerm.toLowerCase())
+              );
 
-          const handleDelete = (id) => {
-            if(confirm("Hapus supplier ini?")) setSuppliers(suppliers.filter(s => s.id !== id));
-          };
+              const handleExportExcel = () => {
+                const exportedData = pos.filter(po => {
+                  const poDate = new Date(po.date).setHours(0,0,0,0);
+                  const start = exportFilter.startDate ? new Date(exportFilter.startDate).setHours(0,0,0,0) : null;
+                  const end = exportFilter.endDate ? new Date(exportFilter.endDate).setHours(23,59,59,999) : null;
+                  
+                  const inDateRange = (!start || poDate >= start) && (!end || poDate <= end);
+                  const matchTax = exportFilter.tax === 'Semua' || po.vendor.ppn === exportFilter.tax;
+                  
+                  return inDateRange && matchTax;
+                });
 
-          return (
-            <div className="max-w-4xl mx-auto space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar Supplier</h2>
-                <button 
-                  onClick={() => setIsAdding(!isAdding)}
-                  className="flex items-center justify-center w-10 h-10 bg-[#007AFF] text-white rounded-full shadow-sm transition-transform hover:scale-105"
-                >
-                  {isAdding ? <XCircle size={20} /> : <Plus size={20} />}
-                </button>
-              </div>
+                if(exportedData.length === 0) return alert("Tidak ada data PO yang sesuai dengan rentang tanggal dan filter pajak ini.");
 
-              {isAdding && (
-                <form onSubmit={handleSave} className="bg-white p-6 rounded-2xl shadow-sm border border-[#E5E5EA] space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Nama Vendor *</label>
-                      <input required type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="PT. Nama Vendor" 
-                        value={formData.name} onChange={e => setFormData({...formData, name: e.target.value.toUpperCase()})} />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">No. Telepon</label>
-                      <input type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="0812..." 
-                        value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Pembayaran</label>
-                      <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.payment} onChange={e => setFormData({...formData, payment: e.target.value})}>
-                        <option value="Cash">Cash</option>
-                        <option value="Tempo">Tempo</option>
-                        <option value="Tempo 14 Hari">Tempo 14 Hari</option>
-                        <option value="Tempo 30 Hari">Tempo 30 Hari</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Status Pajak</label>
-                      <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
-                        <option value="Non-PPN">Non-PPN</option>
-                        <option value="PPN">PPN</option>
-                        <option value="PPN 11%">PPN 11%</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1.5 md:col-span-2">
-                      <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Alamat (Opsional)</label>
-                      <textarea className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" rows="2" placeholder="Jl. Raya..."
-                        value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
-                    </div>
-                  </div>
-                  <div className="flex justify-end pt-2">
-                    <button type="submit" className="px-6 py-3 bg-[#007AFF] text-white rounded-xl font-bold shadow-sm hover:bg-[#0056b3] transition-colors">Simpan Supplier</button>
-                  </div>
-                </form>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {suppliers.map(sup => (
-                  <div key={sup.id} className="bg-white rounded-2xl p-5 shadow-sm border border-[#E5E5EA] flex flex-col relative group">
-                    <button 
-                      onClick={() => handleDelete(sup.id)}
-                      className="absolute top-4 right-4 text-[#C7C7CC] hover:text-[#FF3B30] transition-colors"
-                    >
-                      <Trash2 size={20} />
-                    </button>
-                    <h3 className="font-bold text-lg text-[#1C1C1E] mb-1 pr-8">{sup.name}</h3>
-                    <p className="text-sm text-[#8E8E93] mb-4">{sup.phone || 'Tidak ada telepon'}</p>
-                    
-                    <div className="mt-auto">
-                      <div className="flex gap-2 mb-3">
-                        <span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.payment}</span>
-                        <span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.ppn}</span>
-                      </div>
-                      <p className="text-sm text-[#1C1C1E] line-clamp-2">{sup.address || '-'}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        }
-
-        // --- 4. SETTINGS VIEW (iOS Style) ---
-        function SettingsView({ settings, setSettings }) {
-          return (
-            <div className="max-w-3xl mx-auto space-y-6 pb-12">
-              <h2 className="text-2xl font-bold text-[#1C1C1E] mb-4">Pengaturan Sistem</h2>
-
-              <div className="space-y-6">
+                // Create simple HTML Table string to be exported as .xls
+                let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+                html += '<head><meta charset="UTF-8"></head><body>';
+                html += '<h2>Laporan Purchase Order</h2>';
+                html += `<p>Periode: ${exportFilter.startDate || 'Awal'} s/d ${exportFilter.endDate || 'Akhir'} | Filter Pajak: ${exportFilter.tax}</p>`;
+                html += '<table border="1" style="border-collapse: collapse;">';
+                html += '<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. PO</th><th>Nama Vendor</th><th>Pembayaran</th><th>Status Pajak</th><th>Subtotal</th><th>Status</th></tr>';
                 
-                {/* Identitas Perusahaan */}
-                <div>
-                  <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Identitas Pembeli / Perusahaan</h3>
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                    <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
-                      <div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Utama</div>
-                      <div className="w-2/3">
-                        <input 
-                          type="text" 
-                          value={settings.companyName}
-                          onChange={(e) => setSettings({...settings, companyName: e.target.value.toUpperCase()})}
-                          className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-medium bg-transparent"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
-                      <div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Penerima</div>
-                      <div className="w-2/3">
-                        <input 
-                          type="text" 
-                          value={settings.branchName}
-                          onChange={(e) => setSettings({...settings, branchName: e.target.value.toUpperCase()})}
-                          className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex items-start justify-between p-4">
-                      <div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Alamat</div>
-                      <div className="w-2/3">
-                        <textarea 
-                          rows="2"
-                          value={settings.branchAddress}
-                          onChange={(e) => setSettings({...settings, branchAddress: e.target.value})}
-                          className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent resize-none"
+                exportedData.forEach(po => {
+                    const dateStr = new Date(po.date).toLocaleDateString('id-ID');
+                    html += `<tr>
+                      <td>${dateStr}</td>
+                      <td>${po.poNumber}</td>
+                      <td>${po.vendor.name}</td>
+                      <td>${po.vendor.payment}</td>
+                      <td>${po.vendor.ppn}</td>
+                      <td>${po.total}</td>
+                      <td>${po.status}</td>
+                    </tr>`;
+                });
+                html += '</table></body></html>';
+
+                const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `Laporan_PO_${exportFilter.startDate || 'All'}.xls`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                setIsExportModalOpen(false);
+              };
+
+              return (
+                <div className="max-w-4xl mx-auto space-y-6 relative">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
+                    <h2 className="text-2xl font-bold text-[#1C1C1E]">Persetujuan PO</h2>
+                    
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => setIsExportModalOpen(true)}
+                        className="flex items-center justify-center gap-2 bg-[#34C759] hover:bg-[#2DB34A] text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm"
+                      >
+                        <Download size={16} /> Export Excel
+                      </button>
+                      
+                      {/* Search Bar */}
+                      <div className="relative w-full sm:w-64">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <Search size={16} className="text-[#8E8E93]" />
+                        </div>
+                        <input
+                          type="text"
+                          className="w-full bg-white border border-[#E5E5EA] text-[#1C1C1E] rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] transition-shadow shadow-sm"
+                          placeholder="Cari No. PO / Vendor..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
                         />
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Konfigurasi PO */}
-                <div>
-                  <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Konfigurasi Nomor PO</h3>
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                    <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
-                      <div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Prefix PO</div>
-                      <div className="w-1/2">
-                        <input 
-                          type="text" 
-                          value={settings.username}
-                          onChange={(e) => setSettings({...settings, username: e.target.value.toUpperCase()})}
-                          className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"
-                        />
+                  <div className="space-y-4">
+                    {filteredPos.length === 0 ? (
+                      <div className="bg-white rounded-2xl p-8 text-center text-[#8E8E93] shadow-sm">
+                        {searchTerm ? 'PO tidak ditemukan.' : 'Belum ada Purchase Order yang diajukan.'}
                       </div>
-                    </div>
-                    <div className="flex items-center justify-between p-4">
-                      <div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Nomor Selanjutnya</div>
-                      <div className="w-1/2">
-                        <input 
-                          type="number" 
-                          value={settings.nextNumber}
-                          onChange={(e) => setSettings({...settings, nextNumber: Number(e.target.value)})}
-                          className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"
-                          min="1"
-                        />
-                      </div>
-                    </div>
+                    ) : (
+                      filteredPos.map(po => (
+                        <div key={po.id} className="bg-white rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-[#E5E5EA]">
+                          
+                          {/* Capsule Header (Always Visible) */}
+                          <div 
+                            className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-[#F9F9F9] transition-colors"
+                            onClick={() => toggleExpand(po.id)}
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className={`p-3 rounded-full ${po.status === 'Pending' ? 'bg-[#FFF500]/20 text-[#D4AF37]' : po.status === 'Approved' ? 'bg-[#34C759]/20 text-[#34C759]' : 'bg-[#FF3B30]/20 text-[#FF3B30]'}`}>
+                                <FileText size={24} />
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <button 
+                                    onClick={(e) => { e.stopPropagation(); onLoadPO(po); }}
+                                    className="font-bold text-[#007AFF] hover:text-[#0056b3] hover:underline text-lg"
+                                    title="Buka & Edit PO"
+                                  >
+                                    {po.poNumber}
+                                  </button>
+                                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                    po.status === 'Approved' ? 'bg-[#34C759] text-white' :
+                                    po.status === 'Rejected' ? 'bg-[#FF3B30] text-white' :
+                                    'bg-[#FFCC00] text-black'
+                                  }`}>
+                                    {po.status}
+                                  </span>
+                                </div>
+                                <div className="text-sm text-[#8E8E93] font-medium">
+                                  {po.vendor.name} • {new Date(po.date).toLocaleDateString('id-ID')}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto w-full">
+                              <div className="text-right">
+                                <div className="text-xs text-[#8E8E93] uppercase font-bold tracking-wider mb-0.5">Total</div>
+                                <div className="font-bold text-[#1C1C1E] text-lg">Rp {formatCurrency(po.total)}</div>
+                              </div>
+                              
+                              <div className="flex items-center gap-3">
+                                {po.status === 'Pending' && (
+                                  <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                                    <button 
+                                      onClick={() => onUpdateStatus(po.id, 'Approved')}
+                                      className="w-10 h-10 flex items-center justify-center bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759] hover:text-white rounded-full transition-colors"
+                                      title="Setujui PO"
+                                    >
+                                      <CheckCircle size={22} />
+                                    </button>
+                                    <button 
+                                      onClick={() => onUpdateStatus(po.id, 'Rejected')}
+                                      className="w-10 h-10 flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white rounded-full transition-colors"
+                                      title="Tolak PO"
+                                    >
+                                      <XCircle size={22} />
+                                    </button>
+                                  </div>
+                                )}
+                                <div className="text-[#C7C7CC]">
+                                  {expandedId === po.id ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Expanded Content (Items) - Horizontal Layout */}
+                          {expandedId === po.id && (
+                            <div className="border-t border-[#F2F2F7] bg-[#F9F9FB] p-5">
+                              <h4 className="font-bold text-[#8E8E93] text-sm uppercase tracking-wider mb-3">Detail Item</h4>
+                              
+                              <div className="overflow-x-auto">
+                                <table className="w-full text-sm text-left">
+                                  <thead className="text-xs text-[#8E8E93] uppercase bg-white/50 border-b border-[#E5E5EA]">
+                                    <tr>
+                                      <th className="px-4 py-2 rounded-tl-lg">Deskripsi</th>
+                                      <th className="px-4 py-2 text-center">Qty</th>
+                                      <th className="px-4 py-2 text-right">Harga</th>
+                                      <th className="px-4 py-2 text-right rounded-tr-lg">Subtotal</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-[#F2F2F7]">
+                                    {po.items.map((item, idx) => {
+                                      const netPrice = !item.discounts || item.discounts.length === 0 
+                                                      ? item.price 
+                                                      : item.discounts.reduce((acc, d) => acc - (acc * (d / 100)), item.price);
+                                      return (
+                                        <tr key={idx} className="bg-white hover:bg-white/80 transition-colors">
+                                          <td className="px-4 py-3 font-semibold text-[#1C1C1E]">
+                                            {item.desc}
+                                          </td>
+                                          <td className="px-4 py-3 text-center text-[#8E8E93]">
+                                            {item.qty} {item.unit}
+                                          </td>
+                                          <td className="px-4 py-3 text-right text-[#8E8E93]">
+                                            Rp {formatCurrency(item.price)}
+                                          </td>
+                                          <td className="px-4 py-3 text-right font-bold text-[#1C1C1E]">
+                                            Rp {formatCurrency(item.qty * netPrice)}
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </tbody>
+                                </table>
+                              </div>
+
+                              {po.note && (
+                                <div className="mt-4 p-3 bg-white border border-[#E5E5EA] rounded-lg">
+                                  <span className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-1">Catatan:</span>
+                                  <p className="text-sm text-[#1C1C1E]">{po.note}</p>
+                                </div>
+                              )}
+
+                            </div>
+                          )}
+                        </div>
+                      ))
+                    )}
                   </div>
-                  <p className="text-xs text-[#8E8E93] mt-2 ml-4">
-                    Contoh: {settings.username}/{new Date().getFullYear()}/{String(new Date().getMonth() + 1).padStart(2, '0')}/...
-                  </p>
-                </div>
 
-                {/* Tanda Tangan */}
-                <div>
-                  <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Dokumen</h3>
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                    <div className="flex items-center justify-between p-4">
-                      <div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Penandatangan</div>
-                      <div className="w-1/2">
-                        <input 
-                          type="text" 
-                          value={settings.signatureName}
-                          onChange={(e) => setSettings({...settings, signatureName: e.target.value})}
-                          className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"
-                        />
+                  {/* Export to Excel Modal */}
+                  {isExportModalOpen && (
+                    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                      <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden">
+                        <div className="px-6 py-4 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
+                          <h3 className="font-bold text-[#1C1C1E]">Export ke Excel</h3>
+                          <button onClick={() => setIsExportModalOpen(false)} className="text-[#8E8E93] hover:text-[#FF3B30] transition-colors"><XCircle size={20}/></button>
+                        </div>
+                        
+                        <div className="p-6 space-y-5">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Dari Tanggal</label>
+                              <input 
+                                type="date" 
+                                value={exportFilter.startDate} 
+                                onChange={e => setExportFilter({...exportFilter, startDate: e.target.value})} 
+                                className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" 
+                              />
+                            </div>
+                            <div>
+                              <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Sampai Tanggal</label>
+                              <input 
+                                type="date" 
+                                value={exportFilter.endDate} 
+                                onChange={e => setExportFilter({...exportFilter, endDate: e.target.value})} 
+                                className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" 
+                              />
+                            </div>
+                          </div>
+                          
+                          <div>
+                            <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Status Pajak</label>
+                            <select 
+                              value={exportFilter.tax} 
+                              onChange={e => setExportFilter({...exportFilter, tax: e.target.value})} 
+                              className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]"
+                            >
+                              <option value="Semua">Semua (PPN & Non-PPN)</option>
+                              <option value="PPN">Hanya PPN</option>
+                              <option value="Non-PPN">Hanya Non-PPN</option>
+                            </select>
+                          </div>
+
+                          <button 
+                            onClick={handleExportExcel} 
+                            className="w-full bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2 mt-2"
+                          >
+                            <Download size={18} /> Unduh (.xls)
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  )}
+
+                </div>
+              );
+            }
+
+            // --- 3. SUPPLIER LIST VIEW ---
+            function SupplierView({ suppliers, onAddSupplier, onDeleteSupplier }) {
+              const [isAdding, setIsAdding] = useState(false);
+              const [formData, setFormData] = useState({
+                id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: ''
+              });
+
+              const handleSave = (e) => {
+                e.preventDefault();
+                if (!formData.name) return alert("Nama PT wajib diisi!");
+                onAddSupplier({ ...formData, id: Date.now() });
+                setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
+                setIsAdding(false);
+              };
+
+              const handleDelete = (id) => {
+                if(confirm("Hapus supplier ini?")) onDeleteSupplier(id);
+              };
+
+              return (
+                <div className="max-w-4xl mx-auto space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar Supplier</h2>
+                    <button 
+                      onClick={() => setIsAdding(!isAdding)}
+                      className="flex items-center justify-center w-10 h-10 bg-[#007AFF] text-white rounded-full shadow-sm transition-transform hover:scale-105"
+                    >
+                      {isAdding ? <XCircle size={20} /> : <Plus size={20} />}
+                    </button>
+                  </div>
+
+                  {isAdding && (
+                    <form onSubmit={handleSave} className="bg-white p-6 rounded-2xl shadow-sm border border-[#E5E5EA] space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Nama Vendor *</label>
+                          <input required type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="PT. Nama Vendor" 
+                            value={formData.name} onChange={e => setFormData({...formData, name: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">No. Telepon</label>
+                          <input type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="0812..." 
+                            value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} onFocus={(e) => e.target.select()} />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Pembayaran</label>
+                          <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.payment} onChange={e => setFormData({...formData, payment: e.target.value})}>
+                            <option value="Cash">Cash</option>
+                            <option value="Tempo">Tempo</option>
+                            <option value="Tempo 14 Hari">Tempo 14 Hari</option>
+                            <option value="Tempo 30 Hari">Tempo 30 Hari</option>
+                          </select>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Status Pajak</label>
+                          <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
+                            <option value="Non-PPN">Non-PPN</option>
+                            <option value="PPN">PPN</option>
+                            <option value="PPN 11%">PPN 11%</option>
+                          </select>
+                        </div>
+                        <div className="space-y-1.5 md:col-span-2">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Alamat (Opsional)</label>
+                          <textarea className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" rows="2" placeholder="Jl. Raya..."
+                            value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} onFocus={(e) => e.target.select()} />
+                        </div>
+                      </div>
+                      <div className="flex justify-end pt-2">
+                        <button type="submit" className="px-6 py-3 bg-[#007AFF] text-white rounded-xl font-bold shadow-sm hover:bg-[#0056b3] transition-colors">Simpan Supplier</button>
+                      </div>
+                    </form>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {suppliers.map(sup => (
+                      <div key={sup.id} className="bg-white rounded-2xl p-5 shadow-sm border border-[#E5E5EA] flex flex-col relative group">
+                        <button 
+                          onClick={() => handleDelete(sup.id)}
+                          className="absolute top-4 right-4 text-[#C7C7CC] hover:text-[#FF3B30] transition-colors"
+                        >
+                          <Trash2 size={20} />
+                        </button>
+                        <h3 className="font-bold text-lg text-[#1C1C1E] mb-1 pr-8">{sup.name}</h3>
+                        <p className="text-sm text-[#8E8E93] mb-4">{sup.phone || 'Tidak ada telepon'}</p>
+                        
+                        <div className="mt-auto">
+                          <div className="flex gap-2 mb-3">
+                            <span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.payment}</span>
+                            <span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.ppn}</span>
+                          </div>
+                          <p className="text-sm text-[#1C1C1E] line-clamp-2">{sup.address || '-'}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
+              );
+            }
 
-              </div>
-            </div>
-          );
+            // --- 4. SETTINGS VIEW ---
+            function SettingsView({ settings, onSaveSettings }) {
+              const [localSettings, setLocalSettings] = useState(settings);
+
+              useEffect(() => {
+                setLocalSettings(settings);
+              }, [settings]);
+
+              const handleSave = () => {
+                 onSaveSettings(localSettings);
+              };
+
+              return (
+                <div className="max-w-3xl mx-auto space-y-6 pb-12">
+                  <div className="flex justify-between items-center mb-4">
+                     <h2 className="text-2xl font-bold text-[#1C1C1E]">Pengaturan Sistem</h2>
+                     <button onClick={handleSave} className="bg-[#007AFF] hover:bg-[#0056b3] text-white px-5 py-2 rounded-full font-semibold shadow-sm transition-colors text-sm">
+                        Simpan Pengaturan
+                     </button>
+                  </div>
+
+                  <div className="space-y-6">
+                    
+                    {/* Identitas Perusahaan */}
+                    <div>
+                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Identitas Pembeli / Perusahaan</h3>
+                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
+                          <div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Utama</div>
+                          <div className="w-2/3">
+                            <input 
+                              type="text" 
+                              value={localSettings.companyName}
+                              onChange={(e) => setLocalSettings({...localSettings, companyName: e.target.value.toUpperCase()})}
+                              onFocus={(e) => e.target.select()}
+                              className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-medium bg-transparent"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
+                          <div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Penerima</div>
+                          <div className="w-2/3">
+                            <input 
+                              type="text" 
+                              value={localSettings.branchName}
+                              onChange={(e) => setLocalSettings({...localSettings, branchName: e.target.value.toUpperCase()})}
+                              onFocus={(e) => e.target.select()}
+                              className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-start justify-between p-4">
+                          <div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Alamat</div>
+                          <div className="w-2/3">
+                            <textarea 
+                              rows="2"
+                              value={localSettings.branchAddress}
+                              onChange={(e) => setLocalSettings({...localSettings, branchAddress: e.target.value})}
+                              onFocus={(e) => e.target.select()}
+                              className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent resize-none"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Konfigurasi PO */}
+                    <div>
+                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Konfigurasi Nomor PO</h3>
+                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
+                          <div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Prefix PO</div>
+                          <div className="w-1/2">
+                            <input 
+                              type="text" 
+                              value={localSettings.username}
+                              onChange={(e) => setLocalSettings({...localSettings, username: e.target.value.toUpperCase()})}
+                              onFocus={(e) => e.target.select()}
+                              className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between p-4">
+                          <div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Nomor Selanjutnya</div>
+                          <div className="w-1/2">
+                            <input 
+                              type="number" 
+                              value={localSettings.nextNumber}
+                              onChange={(e) => setLocalSettings({...localSettings, nextNumber: Number(e.target.value)})}
+                              onFocus={(e) => e.target.select()}
+                              className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"
+                              min="1"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-xs text-[#8E8E93] mt-2 ml-4">
+                        Contoh: {localSettings.username}/{new Date().getFullYear()}/{String(new Date().getMonth() + 1).padStart(2, '0')}/...
+                      </p>
+                    </div>
+
+                    {/* Tanda Tangan */}
+                    <div>
+                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Dokumen</h3>
+                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                        <div className="flex items-center justify-between p-4">
+                          <div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Penandatangan</div>
+                          <div className="w-1/2">
+                            <input 
+                              type="text" 
+                              value={localSettings.signatureName}
+                              onChange={(e) => setLocalSettings({...localSettings, signatureName: e.target.value})}
+                              onFocus={(e) => e.target.select()}
+                              className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Sinkronisasi Spreadsheet */}
+                    <div>
+                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Integrasi Spreadsheet</h3>
+                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
+                        <div className="flex flex-col p-4">
+                          <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Google Apps Script Webhook URL</div>
+                          <input 
+                            type="text" 
+                            value={localSettings.webhookUrl || ''}
+                            onChange={(e) => setLocalSettings({...localSettings, webhookUrl: e.target.value})}
+                            onFocus={(e) => e.target.select()}
+                            placeholder="https://script.google.com/macros/s/.../exec"
+                            className="w-full text-left outline-none text-[15px] text-[#007AFF] bg-[#F2F2F7] p-3 rounded-xl border-none"
+                          />
+                          <p className="text-xs text-[#8E8E93] mt-3">
+                            *Setiap kali PO disingpan atau diupdate, aplikasi akan mengirimkan data PO (JSON) ke URL di atas. Kosongkan jika tidak menggunakan Spreadsheet.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              );
+            }
+
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+        };
+
+        // Tunggu module Firebase selesai termuat lalu render
+        if (window.firebaseAPI) {
+            renderApp();
+        } else {
+            window.addEventListener('firebaseLoaded', renderApp);
         }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
     </script>
 </body>
 </html>
