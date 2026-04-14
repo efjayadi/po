@@ -74,8 +74,8 @@
                 appId: "1:744030550441:web:b60090ce280cceb1c1acb8"
             };
 
-            // Master ID untuk routing profile pengguna ke Company yang benar
-            const GLOBAL_ROUTER_ID = 'PO_GLOBAL_ROUTER_V1'; 
+            // Menggunakan appId agar sesuai dengan aturan keamanan Firebase
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'Aplikasi_PO_YenBangunan'; 
             
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
@@ -179,13 +179,13 @@
                   const newCompanyId = generateCompanyId();
                   try {
                      // Simpan profile pengguna sebagai Boss dari company baru
-                     await setDoc(doc(db, 'artifacts', GLOBAL_ROUTER_ID, 'users', user.uid, 'profile', 'main'), { 
+                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'), { 
                          companyId: newCompanyId, 
                          role: 'Boss' 
                      });
                      
                      // Setup pengaturan default untuk company tersebut
-                     await setDoc(doc(db, 'artifacts', newCompanyId, 'public', 'data', 'settings', 'main'), {
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${newCompanyId}`, 'main'), {
                          companyName: 'NAMA PERUSAHAAN',
                          branchName: 'NAMA CABANG',
                          branchAddress: 'Alamat Cabang Perusahaan Anda',
@@ -212,7 +212,7 @@
                      const formattedCode = joinCode.trim().toUpperCase();
                      
                      // Simpan profile pengguna sebagai Staff
-                     await setDoc(doc(db, 'artifacts', GLOBAL_ROUTER_ID, 'users', user.uid, 'profile', 'main'), { 
+                     await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'), { 
                          companyId: formattedCode, 
                          role: 'Staff' 
                      });
@@ -317,7 +317,7 @@
               useEffect(() => {
                 if (!user) return;
 
-                const profileRef = doc(db, 'artifacts', GLOBAL_ROUTER_ID, 'users', user.uid, 'profile', 'main');
+                const profileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main');
                 const unsubProfile = onSnapshot(profileRef, (snap) => {
                   if (snap.exists() && snap.data().companyId) {
                     setUserProfile({
@@ -340,19 +340,19 @@
                 const companyId = userProfile.companyId;
 
                 // Sync Pengaturan
-                const setRef = doc(db, 'artifacts', companyId, 'public', 'data', 'settings', 'main');
+                const setRef = doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main');
                 const unsubSet = onSnapshot(setRef, (snap) => {
                   if (snap.exists()) setSettings(snap.data());
                 }, console.error);
 
                 // Sync Supplier
-                const supRef = collection(db, 'artifacts', companyId, 'public', 'data', 'suppliers');
+                const supRef = collection(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`);
                 const unsubSup = onSnapshot(supRef, (snap) => {
                   setSuppliers(snap.docs.map(d => ({ id: d.id, ...d.data() })));
                 }, console.error);
 
                 // Sync POs
-                const posRef = collection(db, 'artifacts', companyId, 'public', 'data', 'pos');
+                const posRef = collection(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`);
                 const unsubPos = onSnapshot(posRef, (snap) => {
                   const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                   setPos(data.sort((a,b) => new Date(b.date) - new Date(a.date))); 
@@ -405,10 +405,10 @@
 
               const onSavePO = async (poData, isUpdate) => {
                 try {
-                  await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'pos', poData.id), poData);
+                  await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`, poData.id), poData);
                   if (!isUpdate) {
                     const newSettings = { ...settings, nextNumber: (settings.nextNumber || 1) + 1 };
-                    await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'settings', 'main'), newSettings);
+                    await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), newSettings);
                   }
                   syncToSpreadsheet(poData);
                   alert(isUpdate ? "PO Berhasil Diperbarui!" : "PO Berhasil Disimpan & Menunggu Persetujuan!");
@@ -421,24 +421,39 @@
                    const poToUpdate = pos.find(p => p.id === id);
                    if (poToUpdate) {
                       const updatedPO = { ...poToUpdate, status };
-                      await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'pos', id), updatedPO);
+                      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`, id), updatedPO);
                       syncToSpreadsheet(updatedPO);
                    }
                  } catch(err) { console.error(err); }
               };
 
               const onAddSupplier = async (newSup) => {
-                 await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'suppliers', newSup.id.toString()), newSup);
+                 try {
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, newSup.id.toString()), newSup);
+                 } catch(err) {
+                     console.error("Gagal tambah supplier:", err);
+                     alert("Gagal menambahkan supplier.");
+                 }
               };
 
               const onDeleteSupplier = async (id) => {
-                 await deleteDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'suppliers', id.toString()));
+                 try {
+                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, id.toString()));
+                 } catch(err) {
+                     console.error("Gagal hapus supplier:", err);
+                     alert("Gagal menghapus supplier.");
+                 }
               };
 
               const onSaveSettings = async (newSettings) => {
                  if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya Boss yang dapat mengubah pengaturan.");
-                 await setDoc(doc(db, 'artifacts', companyId, 'public', 'data', 'settings', 'main'), newSettings);
-                 alert("Pengaturan Berhasil Disimpan!");
+                 try {
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), newSettings);
+                     alert("Pengaturan Berhasil Disimpan!");
+                 } catch(err) {
+                     console.error("Gagal simpan setting:", err);
+                     alert("Gagal menyimpan pengaturan.");
+                 }
               };
 
               return (
