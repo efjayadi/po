@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Purchase Order Profesional</title>
+    <title>Sistem Purchase Order & Surat Jalan</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -44,7 +44,7 @@
           Trash2: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>,
           CheckCircle: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>,
           XCircle: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>,
-          Settings: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>,
+          Settings: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>,
           Users: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
           FileText: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>,
           ClipboardList: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg>,
@@ -53,7 +53,7 @@
           Search: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>,
           Download: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
           LogOut: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>,
-          Google: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>,
+          Google: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>,
           Loader: ({size=24, className=""}) => <svg className={`animate-spin ${className}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>,
           Building: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>,
           UserPlus: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>,
@@ -86,13 +86,23 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            // --- KOMPONEN AUTENTIKASI (LANDING PAGE SEAMLESS SPLIT-SCREEN) ---
+            // --- KOMPONEN AUTENTIKASI (LANDING PAGE HYPERSONIC & LIQUID GLASS) ---
             function AuthScreen() {
               const [isLogin, setIsLogin] = useState(true);
               const [email, setEmail] = useState('');
               const [password, setPassword] = useState('');
               const [error, setError] = useState('');
               const [loading, setLoading] = useState(false);
+              
+              const [wordIndex, setWordIndex] = useState(0);
+              const words = ['Purchase Order', 'Surat Jalan', 'Invoice'];
+
+              useEffect(() => {
+                const interval = setInterval(() => {
+                  setWordIndex(prev => (prev + 1) % words.length);
+                }, 3000);
+                return () => clearInterval(interval);
+              }, []);
 
               const handleEmailAuth = async (e) => {
                 e.preventDefault();
@@ -137,141 +147,210 @@
               };
 
               return (
-                <div className="min-h-screen w-full flex flex-col lg:flex-row font-sans text-[#1C1C1E] bg-[#F4F5F7] relative overflow-hidden">
+                <div className="min-h-screen w-full flex items-center justify-center font-sans text-[#1C1C1E] bg-[#E8EBF2] relative overflow-hidden">
                   
-                  {/* Animasi Background Kecepatan Cahaya (Ultrasonic Light Streaks) yang Seamless menutupi seluruh layar */}
+                  {/* Animasi Background Hypersonic & Masuk (On-Load Animations) */}
                   <style>{`
-                    @keyframes shoot {
-                      0% { transform: translateX(-100vw) scaleX(1); opacity: 0; }
-                      10% { opacity: 1; }
-                      80% { opacity: 1; }
-                      100% { transform: translateX(100vw) scaleX(4); opacity: 0; }
-                    }
-                    .fast-streak {
+                    .hyperspace-container {
                       position: absolute;
-                      height: 2px;
-                      background: linear-gradient(90deg, transparent, rgba(0,122,255,0.7), rgba(52,199,89,0.9), transparent);
-                      filter: blur(1px);
-                      animation: shoot linear infinite;
+                      top: 0; left: 0; right: 0; bottom: 0;
+                      overflow: hidden;
+                      perspective: 600px;
+                      transform-style: preserve-3d;
                       z-index: 0;
                     }
-                    .streak-1 { top: 15%; width: 15vw; animation-duration: 0.9s; animation-delay: 0.1s; }
-                    .streak-2 { top: 30%; width: 25vw; animation-duration: 0.6s; animation-delay: 0.4s; background: linear-gradient(90deg, transparent, rgba(0,122,255,0.9), transparent); }
-                    .streak-3 { top: 45%; width: 10vw; animation-duration: 1.2s; animation-delay: 0.2s; }
-                    .streak-4 { top: 60%; width: 30vw; animation-duration: 0.7s; animation-delay: 0.6s; }
-                    .streak-5 { top: 75%; width: 20vw; animation-duration: 0.85s; animation-delay: 0.3s; }
-                    .streak-6 { top: 90%; width: 35vw; animation-duration: 1.1s; animation-delay: 0.7s; background: linear-gradient(90deg, transparent, rgba(52,199,89,0.8), transparent); }
-                    .streak-7 { top: 10%; width: 18vw; animation-duration: 0.75s; animation-delay: 0.8s; }
-                    .streak-8 { top: 85%; width: 22vw; animation-duration: 0.65s; animation-delay: 0.15s; }
+                    @keyframes warp {
+                      0% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(5vh) translateZ(-500px) scaleY(0.5); opacity: 0; }
+                      20% { opacity: 1; }
+                      80% { opacity: 1; }
+                      100% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(100vh) translateZ(500px) scaleY(2); opacity: 0; }
+                    }
+                    .streak {
+                      position: absolute;
+                      top: 50%; left: 50%;
+                      width: 2px;
+                      height: 150px;
+                      background: linear-gradient(to bottom, rgba(0,122,255,0), rgba(0,122,255,0.6), rgba(52,199,89,0.6), rgba(52,199,89,0));
+                      transform-origin: top center;
+                      animation: warp linear infinite;
+                      border-radius: 9999px;
+                    }
+                    
+                    /* Smooth Enter Animations */
+                    @keyframes smoothEnter {
+                      0% { opacity: 0; transform: translateY(30px); }
+                      100% { opacity: 1; transform: translateY(0); }
+                    }
+                    .animate-enter {
+                      opacity: 0;
+                      animation: smoothEnter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                    }
+                    
+                    /* Text Flip Animation */
+                    @keyframes flipEnter {
+                      0% { opacity: 0; transform: translateY(15px); }
+                      100% { opacity: 1; transform: translateY(0); }
+                    }
+                    .flip-enter {
+                      animation: flipEnter 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+                    }
+
+                    .delay-100 { animation-delay: 0.1s; }
+                    .delay-200 { animation-delay: 0.2s; }
+                    .delay-300 { animation-delay: 0.3s; }
                   `}</style>
                   
-                  <div className="fast-streak streak-1"></div>
-                  <div className="fast-streak streak-2"></div>
-                  <div className="fast-streak streak-3"></div>
-                  <div className="fast-streak streak-4"></div>
-                  <div className="fast-streak streak-5"></div>
-                  <div className="fast-streak streak-6"></div>
-                  <div className="fast-streak streak-7"></div>
-                  <div className="fast-streak streak-8"></div>
-
-                  {/* Bagian Kiri - Copywriting Genius Marketing */}
-                  <div className="lg:w-1/2 w-full p-8 sm:p-12 lg:p-24 flex flex-col justify-center relative z-10">
-                    <div className="max-w-xl mx-auto lg:mx-0">
-                        <h1 className="text-4xl lg:text-[4rem] font-black tracking-tight mb-5 leading-[1.05]">
-                          <span className="text-[#007AFF]">Sistem Purchasing,</span><br/>
-                          <span className="text-[#1C1C1E]">Dibuat oleh Purchasing.</span>
-                        </h1>
-                        
-                        <p className="text-lg text-[#8E8E93] mb-12 leading-relaxed font-medium">
-                          Berbekal 4 tahun pengalaman di lapangan, inilah sistem yang murni berfokus pada esensi pekerjaan Anda. Tanpa fitur ribet yang tak pernah dipakai, dan pastinya tanpa waktu <i>loading</i> lemot yang menyita waktu Anda.
-                        </p>
-
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/60 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-1 group border border-transparent hover:border-white/50 cursor-default">
-                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300"><Zap size={24} /></div>
-                            <div>
-                              <h3 className="font-bold text-[#1C1C1E] text-lg">Sat-Set & Langsung Cetak</h3>
-                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed group-hover:text-[#555] transition-colors">Satu halaman tanpa loading. Ketik, simpan, dan cetak dalam hitungan detik.</p>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/60 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-1 group border border-transparent hover:border-white/50 cursor-default">
-                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300"><Target size={24} /></div>
-                            <div>
-                              <h3 className="font-bold text-[#1C1C1E] text-lg">Anti Ribet</h3>
-                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed group-hover:text-[#555] transition-colors">Antarmuka sangat bersih dan mudah dipahami. Siapapun bisa pakai tanpa perlu panduan khusus.</p>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/60 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-1 group border border-transparent hover:border-white/50 cursor-default">
-                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300"><ShieldCheck size={24} /></div>
-                            <div>
-                              <h3 className="font-bold text-[#1C1C1E] text-lg">Otomatis Rekap</h3>
-                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed group-hover:text-[#555] transition-colors">Persetujuan instan antar tim. Data aman terpusat dan terhubung otomatis ke Google Sheets.</p>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
+                  <div className="hyperspace-container">
+                    <div className="streak" style={{"--angle": "0deg", animationDuration: "1.2s", animationDelay: "0s"}}></div>
+                    <div className="streak" style={{"--angle": "25deg", animationDuration: "1.5s", animationDelay: "0.3s"}}></div>
+                    <div className="streak" style={{"--angle": "45deg", animationDuration: "1.1s", animationDelay: "0.1s"}}></div>
+                    <div className="streak" style={{"--angle": "70deg", animationDuration: "1.8s", animationDelay: "0.5s"}}></div>
+                    <div className="streak" style={{"--angle": "90deg", animationDuration: "1.3s", animationDelay: "0.2s"}}></div>
+                    <div className="streak" style={{"--angle": "115deg", animationDuration: "1.6s", animationDelay: "0.8s"}}></div>
+                    <div className="streak" style={{"--angle": "135deg", animationDuration: "1.4s", animationDelay: "0.4s"}}></div>
+                    <div className="streak" style={{"--angle": "160deg", animationDuration: "1.9s", animationDelay: "0.7s"}}></div>
+                    <div className="streak" style={{"--angle": "180deg", animationDuration: "1.1s", animationDelay: "0.1s"}}></div>
+                    <div className="streak" style={{"--angle": "205deg", animationDuration: "1.7s", animationDelay: "0.6s"}}></div>
+                    <div className="streak" style={{"--angle": "225deg", animationDuration: "1.2s", animationDelay: "0.3s"}}></div>
+                    <div className="streak" style={{"--angle": "250deg", animationDuration: "1.5s", animationDelay: "0.9s"}}></div>
+                    <div className="streak" style={{"--angle": "270deg", animationDuration: "1.3s", animationDelay: "0.2s"}}></div>
+                    <div className="streak" style={{"--angle": "295deg", animationDuration: "1.8s", animationDelay: "0.5s"}}></div>
+                    <div className="streak" style={{"--angle": "315deg", animationDuration: "1.4s", animationDelay: "0.8s"}}></div>
+                    <div className="streak" style={{"--angle": "340deg", animationDuration: "1.6s", animationDelay: "0.4s"}}></div>
                   </div>
 
-                  {/* Bagian Kanan - Formulir Login */}
-                  <div className="lg:w-1/2 w-full flex flex-col justify-center items-center p-6 sm:p-12 relative z-10">
-                     <div className="bg-white/80 backdrop-blur-2xl w-full max-w-[420px] rounded-[2rem] shadow-[0_8px_40px_rgba(0,0,0,0.06)] p-8 sm:p-10 relative border border-white hover:shadow-[0_16px_50px_rgba(0,122,255,0.12)] transition-shadow duration-500">
-                        
-                        <div className="text-center mb-8">
-                          <h2 className="text-2xl font-bold tracking-tight text-[#1C1C1E]">Selamat Datang</h2>
-                          <p className="text-[#8E8E93] text-[15px] mt-1.5">Masuk untuk mengelola Purchase Order</p>
-                        </div>
+                  {/* Wrapper Konten dengan Max-Width agar tidak melebar saat zoom-out */}
+                  <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center relative z-10 px-6 sm:px-12 py-12">
+                    
+                    {/* Bagian Kiri - Copywriting Genius Marketing */}
+                    <div className="lg:w-1/2 w-full flex flex-col justify-center lg:pr-12 xl:pr-20 mb-12 lg:mb-0">
+                      <div className="max-w-xl mx-auto lg:mx-0">
+                          <h1 className="text-4xl sm:text-5xl lg:text-[4rem] font-black tracking-tight mb-4 leading-[1.05] animate-enter">
+                            <span className="text-[#1C1C1E] block mb-2">Bisa Buat</span>
+                            <span className="text-[#007AFF] inline-block h-[1.1em] overflow-hidden align-bottom">
+                              <span key={wordIndex} className="inline-block flip-enter pb-2">{words[wordIndex]}</span>
+                            </span>
+                          </h1>
+                          
+                          <p className="text-lg text-[#8E8E93] mb-6 leading-relaxed animate-enter delay-100">
+                            Inilah sistem yang murni berfokus pada esensi pekerjaan Anda. Tanpa fitur ribet yang tak pernah dipakai, dan pastinya tanpa waktu <i>loading</i> lemot yang menyita waktu.
+                          </p>
 
-                        <div className="flex bg-[#F2F2F7] rounded-xl p-1.5 mb-8">
-                          <button onClick={() => setIsLogin(true)} className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${isLogin ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#1C1C1E]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}>Masuk</button>
-                          <button onClick={() => setIsLogin(false)} className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${!isLogin ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#1C1C1E]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}>Buat Akun</button>
-                        </div>
+                          <div className="space-y-3 animate-enter delay-200">
+                            
+                            {/* Point 1 */}
+                            <div className="relative h-[90px] z-30 group cursor-default">
+                              <div className="absolute inset-0 flex items-center gap-4 p-4 rounded-[2rem] bg-white/20 backdrop-blur-xl border border-white/30 transition-all duration-300 group-hover:bg-white group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
+                                <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-full shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300">
+                                   <Zap size={24} />
+                                </div>
+                                <div className="relative flex-1 h-full flex items-center overflow-hidden">
+                                  <h3 className="absolute w-full font-bold text-[#1C1C1E] text-lg transition-all duration-300 transform translate-y-0 opacity-100 group-hover:-translate-y-8 group-hover:opacity-0">
+                                    Sat-Set & Langsung Cetak
+                                  </h3>
+                                  <p className="absolute w-full text-[14px] text-[#555] leading-snug transition-all duration-300 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pr-2">
+                                    Satu halaman tanpa loading. Ketik, simpan, dan cetak dokumen dalam hitungan detik.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Point 2 */}
+                            <div className="relative h-[90px] z-20 group cursor-default">
+                              <div className="absolute inset-0 flex items-center gap-4 p-4 rounded-[2rem] bg-white/20 backdrop-blur-xl border border-white/30 transition-all duration-300 group-hover:bg-white group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
+                                <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-full shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300">
+                                   <Target size={24} />
+                                </div>
+                                <div className="relative flex-1 h-full flex items-center overflow-hidden">
+                                  <h3 className="absolute w-full font-bold text-[#1C1C1E] text-lg transition-all duration-300 transform translate-y-0 opacity-100 group-hover:-translate-y-8 group-hover:opacity-0">
+                                    Anti Ribet
+                                  </h3>
+                                  <p className="absolute w-full text-[14px] text-[#555] leading-snug transition-all duration-300 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pr-2">
+                                    Antarmuka sangat bersih dan mudah dipahami. Siapapun bisa pakai tanpa perlu panduan khusus.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Point 3 */}
+                            <div className="relative h-[90px] z-10 group cursor-default">
+                              <div className="absolute inset-0 flex items-center gap-4 p-4 rounded-[2rem] bg-white/20 backdrop-blur-xl border border-white/30 transition-all duration-300 group-hover:bg-white group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)]">
+                                <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-full shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300">
+                                   <ShieldCheck size={24} />
+                                </div>
+                                <div className="relative flex-1 h-full flex items-center overflow-hidden">
+                                  <h3 className="absolute w-full font-bold text-[#1C1C1E] text-lg transition-all duration-300 transform translate-y-0 opacity-100 group-hover:-translate-y-8 group-hover:opacity-0">
+                                    Otomatis Rekap
+                                  </h3>
+                                  <p className="absolute w-full text-[14px] text-[#555] leading-snug transition-all duration-300 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 pr-2">
+                                    Persetujuan instan antar tim. Data aman terpusat dan terhubung otomatis ke Google Sheets.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
 
-                        {error && <div className="bg-[#FFE5E5] text-[#FF3B30] text-sm p-3.5 rounded-xl mb-6 text-center border border-[#FFD1D1] font-medium animate-pulse">{error}</div>}
-
-                        <form onSubmit={handleEmailAuth} className="space-y-4">
-                          <div>
-                            <input 
-                              type="email" 
-                              placeholder="Alamat Email" 
-                              value={email} 
-                              onChange={(e) => setEmail(e.target.value)} 
-                              className="w-full bg-[#F2F2F7] hover:bg-[#E5E5EA] focus:bg-white border border-transparent rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" 
-                              required 
-                            />
                           </div>
-                          <div>
-                            <input 
-                              type="password" 
-                              placeholder="Password" 
-                              value={password} 
-                              onChange={(e) => setPassword(e.target.value)} 
-                              className="w-full bg-[#F2F2F7] hover:bg-[#E5E5EA] focus:bg-white border border-transparent rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" 
-                              required 
-                            />
+                      </div>
+                    </div>
+
+                    {/* Bagian Kanan - Formulir Login dengan Efek Liquid Glass Murni */}
+                    <div className="lg:w-1/2 w-full flex flex-col justify-center items-center lg:items-end xl:items-center animate-enter delay-300">
+                       <div className="w-full max-w-[420px] rounded-[3rem] p-8 sm:p-10 relative overflow-hidden transition-all duration-500 bg-white/60 backdrop-blur-2xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]">
+                          
+                          {/* Glossy Highlight Reflection di bagian atas */}
+                          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/90 to-transparent pointer-events-none"></div>
+
+                          <div className="relative z-10">
+                              <div className="flex bg-white/50 backdrop-blur-md border border-white/60 shadow-inner rounded-full p-1.5 mb-10">
+                                <button onClick={() => setIsLogin(true)} className={`flex-1 py-3 text-sm font-semibold rounded-full transition-all ${isLogin ? 'bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.05)] text-[#1C1C1E]' : 'text-[#555] hover:text-[#1C1C1E]'}`}>Masuk</button>
+                                <button onClick={() => setIsLogin(false)} className={`flex-1 py-3 text-sm font-semibold rounded-full transition-all ${!isLogin ? 'bg-white/90 shadow-[0_2px_8px_rgba(0,0,0,0.05)] text-[#1C1C1E]' : 'text-[#555] hover:text-[#1C1C1E]'}`}>Buat Akun</button>
+                              </div>
+
+                              {error && <div className="bg-[#FFE5E5]/90 backdrop-blur-sm text-[#FF3B30] text-sm p-4 rounded-full mb-6 text-center border border-[#FFD1D1] font-medium animate-pulse">{error}</div>}
+
+                              <form onSubmit={handleEmailAuth} className="space-y-4">
+                                <div>
+                                  <input 
+                                    type="email" 
+                                    placeholder="Alamat Email" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    className="w-full bg-white/70 hover:bg-white/80 focus:bg-white border border-white/80 rounded-full px-6 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition-all placeholder-[#555] text-[#1C1C1E] shadow-inner" 
+                                    required 
+                                  />
+                                </div>
+                                <div>
+                                  <input 
+                                    type="password" 
+                                    placeholder="Password" 
+                                    value={password} 
+                                    onChange={(e) => setPassword(e.target.value)} 
+                                    className="w-full bg-white/70 hover:bg-white/80 focus:bg-white border border-white/80 rounded-full px-6 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition-all placeholder-[#555] text-[#1C1C1E] shadow-inner" 
+                                    required 
+                                  />
+                                </div>
+                                <button type="submit" disabled={loading} className="w-full bg-[#007AFF]/90 backdrop-blur-md hover:bg-[#007AFF] hover:scale-[1.02] active:scale-[0.98] text-white font-bold py-4 rounded-full transition-all shadow-[0_4px_14px_rgba(0,122,255,0.39)] flex justify-center items-center mt-2">
+                                  {loading ? <Loader size={20} /> : (isLogin ? 'Mulai Eksekusi' : 'Daftar Sekarang')}
+                                </button>
+                              </form>
+
+                              <div className="flex items-center my-7">
+                                <div className="flex-1 border-t border-white/60"></div>
+                                <span className="px-4 text-[#555] text-xs font-bold uppercase tracking-widest">Akses Kilat</span>
+                                <div className="flex-1 border-t border-white/60"></div>
+                              </div>
+
+                              <div className="space-y-3.5">
+                                <button onClick={handleGoogleAuth} className="group w-full bg-white/60 backdrop-blur-md border border-white/60 hover:bg-white/80 text-[#1C1C1E] font-bold py-4 rounded-full transition-all flex items-center justify-center gap-3 shadow-sm">
+                                  <Google size={20} className="grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" /> Lanjutkan dengan Google
+                                </button>
+                                <button onClick={handleAnonAuth} className="w-full bg-white/40 backdrop-blur-md border border-white/50 hover:bg-white/60 text-[#1C1C1E] font-bold py-4 rounded-full transition-all text-[15px] shadow-sm">
+                                  Masuk Sebagai Tamu (Uji Coba Langsung)
+                                </button>
+                              </div>
                           </div>
-                          <button type="submit" disabled={loading} className="w-full bg-[#007AFF] hover:bg-[#0056b3] hover:scale-[1.02] active:scale-[0.98] text-white font-bold py-4 rounded-xl transition-all shadow-sm flex justify-center items-center mt-2">
-                            {loading ? <Loader size={20} /> : (isLogin ? 'Mulai Eksekusi' : 'Daftar Sekarang')}
-                          </button>
-                        </form>
-
-                        <div className="flex items-center my-7">
-                          <div className="flex-1 border-t border-[#E5E5EA]"></div>
-                          <span className="px-4 text-[#8E8E93] text-xs font-bold uppercase tracking-widest">Akses Kilat</span>
-                          <div className="flex-1 border-t border-[#E5E5EA]"></div>
-                        </div>
-
-                        <div className="space-y-3.5">
-                          <button onClick={handleGoogleAuth} className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] hover:border-[#C7C7CC] text-[#1C1C1E] font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-3">
-                            <Google size={20} /> Lanjutkan dengan Google
-                          </button>
-                          <button onClick={handleAnonAuth} className="w-full bg-transparent hover:bg-[#E5F1FF] text-[#007AFF] font-bold py-4 rounded-xl transition-colors text-[15px]">
-                            Masuk Sebagai Tamu (Uji Coba Langsung)
-                          </button>
-                        </div>
-
-                     </div>
+                       </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -300,6 +379,8 @@
                          branchAddress: 'Alamat Cabang Perusahaan Anda',
                          username: 'PO',
                          nextNumber: 1,
+                         sjUsername: 'SJ',
+                         sjNextNumber: 1,
                          signatureName: 'Nama Direktur',
                          webhookUrl: '',
                          requireApproval: true
@@ -333,7 +414,7 @@
 
                return (
                 <div className="min-h-screen bg-[#F2F2F7] flex flex-col justify-center items-center p-4 font-sans text-[#1C1C1E]">
-                  <div className="bg-white w-full max-w-md rounded-3xl shadow-lg p-8 relative border border-[#E5E5EA]">
+                  <div className="bg-white w-full max-w-md rounded-[2.5rem] shadow-lg p-8 relative border border-[#E5E5EA]">
                     
                     <div className="text-center mb-8">
                       <h2 className="text-2xl font-bold tracking-tight mb-2">Selamat Datang!</h2>
@@ -345,11 +426,11 @@
                            <button 
                               onClick={handleCreateCompany} 
                               disabled={loading}
-                              className="w-full border-2 border-[#007AFF] bg-blue-50/50 hover:bg-blue-50 rounded-2xl p-4 flex items-center gap-4 transition-colors text-left"
+                              className="w-full border-2 border-[#007AFF] bg-blue-50/50 hover:bg-blue-50 rounded-[2rem] p-4 flex items-center gap-4 transition-colors text-left"
                             >
                               <div className="bg-[#007AFF] text-white p-3 rounded-full"><Building size={24}/></div>
                               <div>
-                                 <div className="font-bold text-[#1C1C1E] text-lg">Setup Sistem PO Baru</div>
+                                 <div className="font-bold text-[#1C1C1E] text-lg">Setup Sistem Dokumen Baru</div>
                                  <div className="text-sm text-[#8E8E93]">Saya adalah Pengelola / Boss.</div>
                               </div>
                            </button>
@@ -357,7 +438,7 @@
                            <button 
                               onClick={() => setMode('join')} 
                               disabled={loading}
-                              className="w-full border-2 border-[#34C759] bg-green-50/50 hover:bg-green-50 rounded-2xl p-4 flex items-center gap-4 transition-colors text-left"
+                              className="w-full border-2 border-[#34C759] bg-green-50/50 hover:bg-green-50 rounded-[2rem] p-4 flex items-center gap-4 transition-colors text-left"
                             >
                               <div className="bg-[#34C759] text-white p-3 rounded-full"><UserPlus size={24}/></div>
                               <div>
@@ -376,17 +457,17 @@
                                 placeholder="Contoh: TIM-XXXXX" 
                                 value={joinCode}
                                 onChange={(e) => setJoinCode(e.target.value)}
-                                className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-center font-bold text-lg tracking-widest uppercase outline-none focus:ring-2 focus:ring-[#34C759] transition-all mb-4"
+                                className="w-full bg-[#F2F2F7] border-none rounded-full px-6 py-4 text-center font-bold text-lg tracking-widest uppercase outline-none focus:ring-2 focus:ring-[#34C759] transition-all mb-4"
                                 required
                             />
                             <div className="flex gap-2">
-                                <button type="button" onClick={() => setMode('select')} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3.5 rounded-xl transition-colors">Batal</button>
-                                <button type="submit" disabled={loading} className="flex-1 bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm">Gabung</button>
+                                <button type="button" onClick={() => setMode('select')} className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 rounded-full transition-colors">Batal</button>
+                                <button type="submit" disabled={loading} className="flex-1 bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-4 rounded-full transition-colors shadow-sm">Gabung</button>
                             </div>
                         </form>
                     )}
 
-                    <button onClick={onLogout} className="w-full text-[#FF3B30] font-semibold py-2 hover:bg-[#FFE5E5] rounded-xl transition-colors">
+                    <button onClick={onLogout} className="w-full text-[#FF3B30] font-semibold py-2 hover:bg-[#FFE5E5] rounded-full transition-colors">
                       Keluar Akun
                     </button>
                   </div>
@@ -400,14 +481,21 @@
               const [userProfile, setUserProfile] = useState(null); 
               const [isLoadingAuth, setIsLoadingAuth] = useState(true);
               
+              // App Modes: 'PO' (Purchase Order) or 'SJ' (Surat Jalan)
+              const [appMode, setAppMode] = useState('PO');
               const [activeTab, setActiveTab] = useState('create');
-              const [editingPo, setEditingPo] = useState(null);
+              const [editingDoc, setEditingDoc] = useState(null);
               
               const [settings, setSettings] = useState({
-                companyName: 'NAMA PERUSAHAAN', branchName: 'CABANG', branchAddress: '', username: 'PO', nextNumber: 1, signatureName: '', webhookUrl: '', requireApproval: true
+                companyName: 'NAMA PERUSAHAAN', branchName: 'CABANG', branchAddress: '', 
+                username: 'PO', nextNumber: 1, sjUsername: 'SJ', sjNextNumber: 1, 
+                signatureName: '', webhookUrl: '', requireApproval: true
               });
+              
               const [suppliers, setSuppliers] = useState([]);
+              const [customers, setCustomers] = useState([]);
               const [pos, setPos] = useState([]);
+              const [sjs, setSjs] = useState([]);
 
               useEffect(() => {
                 const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -450,14 +538,25 @@
                 const unsubSup = onSnapshot(supRef, (snap) => {
                   setSuppliers(snap.docs.map(d => ({ id: d.id, ...d.data() })));
                 }, console.error);
+                
+                const custRef = collection(db, 'artifacts', appId, 'public', 'data', `customers_${companyId}`);
+                const unsubCust = onSnapshot(custRef, (snap) => {
+                  setCustomers(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+                }, console.error);
 
                 const posRef = collection(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`);
                 const unsubPos = onSnapshot(posRef, (snap) => {
                   const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                   setPos(data.sort((a,b) => new Date(b.date) - new Date(a.date))); 
                 }, console.error);
+                
+                const sjsRef = collection(db, 'artifacts', appId, 'public', 'data', `sjs_${companyId}`);
+                const unsubSjs = onSnapshot(sjsRef, (snap) => {
+                  const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                  setSjs(data.sort((a,b) => new Date(b.date) - new Date(a.date))); 
+                }, console.error);
 
-                return () => { unsubSet(); unsubSup(); unsubPos(); };
+                return () => { unsubSet(); unsubSup(); unsubCust(); unsubPos(); unsubSjs(); };
               }, [userProfile]);
 
               const handleLogout = async () => {
@@ -479,67 +578,83 @@
 
               const { companyId, role: userRole } = userProfile;
 
-              const generatePoNumber = (num) => {
+              const generateDocNumber = (num, mode) => {
                 const date = new Date();
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
-                return `${settings.username || 'PO'}/${year}/${month}/${String(num).padStart(3, '0')}`;
+                const prefix = mode === 'PO' ? (settings.username || 'PO') : (settings.sjUsername || 'SJ');
+                return `${prefix}/${year}/${month}/${String(num).padStart(3, '0')}`;
               };
 
-              const syncToSpreadsheet = async (poData) => {
+              const syncToSpreadsheet = async (docData, mode) => {
                  if (!settings.webhookUrl || settings.webhookUrl.trim() === '') return;
                  try {
+                     const payload = { ...docData, documentType: mode };
                      await fetch(settings.webhookUrl, {
                          method: 'POST',
                          mode: 'no-cors',
                          headers: { 'Content-Type': 'application/json' },
-                         body: JSON.stringify(poData)
+                         body: JSON.stringify(payload)
                      });
                  } catch(e) { console.error("Gagal sync Webhook:", e); }
               };
 
-              const onSavePO = async (poData, isUpdate) => {
+              const onSaveDoc = async (docData, isUpdate, mode) => {
                 try {
-                  await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`, poData.id), poData);
+                  const collectionName = mode === 'PO' ? `pos_${companyId}` : `sjs_${companyId}`;
+                  await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, docData.id), docData);
+                  
                   if (!isUpdate) {
-                    const newSettings = { ...settings, nextNumber: (settings.nextNumber || 1) + 1 };
+                    const newSettings = { ...settings };
+                    if (mode === 'PO') {
+                        newSettings.nextNumber = (settings.nextNumber || 1) + 1;
+                    } else {
+                        newSettings.sjNextNumber = (settings.sjNextNumber || 1) + 1;
+                    }
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), newSettings);
                   }
-                  syncToSpreadsheet(poData);
-                  alert(isUpdate ? "PO Berhasil Diperbarui!" : "PO Berhasil Disimpan & Menunggu Persetujuan!");
-                } catch(e) { console.error(e); alert("Terjadi kesalahan saat menyimpan PO."); }
+                  
+                  syncToSpreadsheet(docData, mode);
+                  alert(isUpdate ? "Dokumen Berhasil Diperbarui!" : "Dokumen Berhasil Disimpan!");
+                } catch(e) { console.error(e); alert("Terjadi kesalahan saat menyimpan dokumen."); }
               };
 
-              const onUpdateStatusPO = async (id, status) => {
+              const onUpdateStatusDoc = async (id, status, mode) => {
                  if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya atasan yang dapat mengubah status.");
                  try {
-                   const poToUpdate = pos.find(p => p.id === id);
-                   if (poToUpdate) {
-                      const updatedPO = { ...poToUpdate, status };
-                      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`, id), updatedPO);
-                      syncToSpreadsheet(updatedPO);
+                   const collectionName = mode === 'PO' ? `pos_${companyId}` : `sjs_${companyId}`;
+                   const sourceArray = mode === 'PO' ? pos : sjs;
+                   const docToUpdate = sourceArray.find(p => p.id === id);
+                   
+                   if (docToUpdate) {
+                      const updatedDoc = { ...docToUpdate, status };
+                      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, id), updatedDoc);
+                      syncToSpreadsheet(updatedDoc, mode);
                    }
                  } catch(err) { console.error(err); alert("Gagal update status: " + err.message); }
               };
 
-              const onAddSupplier = async (newSup) => {
+              const onAddPartner = async (newPartner, mode) => {
                  try {
-                     const cleanSup = Object.fromEntries(Object.entries(newSup).filter(([_, v]) => v !== undefined));
-                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, newSup.id.toString()), cleanSup);
-                 } catch(err) { console.error("Gagal tambah supplier:", err); alert("Gagal menambahkan supplier: " + err.message); }
+                     const collectionName = mode === 'PO' ? `suppliers_${companyId}` : `customers_${companyId}`;
+                     const cleanPartner = Object.fromEntries(Object.entries(newPartner).filter(([_, v]) => v !== undefined));
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, newPartner.id.toString()), cleanPartner);
+                 } catch(err) { console.error("Gagal tambah partner:", err); alert("Gagal menambahkan data: " + err.message); }
               };
 
-              const onEditSupplier = async (updatedSup) => {
+              const onEditPartner = async (updatedPartner, mode) => {
                  try {
-                     const cleanSup = Object.fromEntries(Object.entries(updatedSup).filter(([_, v]) => v !== undefined));
-                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, updatedSup.id.toString()), cleanSup);
-                 } catch(err) { console.error("Gagal edit supplier:", err); alert("Gagal mengedit supplier: " + err.message); }
+                     const collectionName = mode === 'PO' ? `suppliers_${companyId}` : `customers_${companyId}`;
+                     const cleanPartner = Object.fromEntries(Object.entries(updatedPartner).filter(([_, v]) => v !== undefined));
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, updatedPartner.id.toString()), cleanPartner);
+                 } catch(err) { console.error("Gagal edit partner:", err); alert("Gagal mengedit data: " + err.message); }
               };
 
-              const onDeleteSupplier = async (id) => {
+              const onDeletePartner = async (id, mode) => {
                  try {
-                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, id.toString()));
-                 } catch(err) { console.error("Gagal hapus supplier:", err); alert("Gagal menghapus supplier: " + err.message); }
+                     const collectionName = mode === 'PO' ? `suppliers_${companyId}` : `customers_${companyId}`;
+                     await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, id.toString()));
+                 } catch(err) { console.error("Gagal hapus partner:", err); alert("Gagal menghapus data: " + err.message); }
               };
 
               const onSaveSettings = async (newSettings) => {
@@ -560,21 +675,37 @@
                     input[type=number] { -moz-appearance: textfield; }
                   `}</style>
 
-                  {/* Navigasi (Bilah Atas) - Tanpa Logo PO */}
                   <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 print:hidden z-10 sticky top-0">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                       <div className="flex justify-between items-center h-16">
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-gray-800 tracking-tight text-xl">PO System</span>
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${userRole === 'Boss' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'}`}>
+                          <span className="font-bold text-gray-800 tracking-tight text-xl hidden sm:block">Sistem</span>
+                          
+                          {/* Mode Switcher */}
+                          <div className="bg-[#F2F2F7] p-1 rounded-full flex text-xs font-bold ml-2 shadow-inner">
+                            <button 
+                              onClick={() => { setAppMode('PO'); setEditingDoc(null); setActiveTab('create'); }} 
+                              className={`px-4 py-1.5 rounded-full transition-all ${appMode === 'PO' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#007AFF]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}
+                            >
+                              Purchase Order
+                            </button>
+                            <button 
+                              onClick={() => { setAppMode('SJ'); setEditingDoc(null); setActiveTab('create'); }} 
+                              className={`px-4 py-1.5 rounded-full transition-all ${appMode === 'SJ' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#34C759]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}
+                            >
+                              Surat Jalan
+                            </button>
+                          </div>
+
+                          <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider hidden md:inline-block ml-2 ${userRole === 'Boss' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'}`}>
                              {userRole}
                           </span>
                         </div>
                         
                         <div className="flex gap-2 sm:gap-6 overflow-x-auto hide-scrollbar h-full items-end">
-                          <NavButton active={activeTab === 'create'} onClick={() => { setActiveTab('create'); setEditingPo(null); }} icon={<FileText size={16} />} label="Buat PO" />
-                          <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label="Daftar PO" badge={settings.requireApproval !== false ? pos.filter(p => p.status === 'Pending').length : 0} />
-                          <NavButton active={activeTab === 'suppliers'} onClick={() => setActiveTab('suppliers')} icon={<Users size={16} />} label="Supplier" />
+                          <NavButton active={activeTab === 'create'} onClick={() => { setActiveTab('create'); setEditingDoc(null); }} icon={<FileText size={16} />} label={`Buat ${appMode}`} />
+                          <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label={`Daftar ${appMode}`} badge={settings.requireApproval !== false ? (appMode === 'PO' ? pos : sjs).filter(p => p.status === 'Pending').length : 0} />
+                          <NavButton active={activeTab === 'partners'} onClick={() => setActiveTab('partners')} icon={<Users size={16} />} label={appMode === 'PO' ? 'Supplier' : 'Customer'} />
                           <NavButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} icon={<Settings size={16} />} label={userRole === 'Boss' ? "Pengaturan" : "Profil"} />
                         </div>
                       </div>
@@ -583,16 +714,29 @@
 
                   <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 print:p-0 print:bg-white pb-32">
                     {activeTab === 'create' && (
-                      <CreatePOView 
-                        suppliers={suppliers} settings={settings} setSettings={setSettings} 
-                        editingPo={editingPo} setEditingPo={setEditingPo} onSavePO={onSavePO} generatePoNumber={generatePoNumber} userRole={userRole}
+                      <CreateDocView 
+                        appMode={appMode}
+                        partners={appMode === 'PO' ? suppliers : customers} 
+                        settings={settings} setSettings={setSettings} 
+                        editingDoc={editingDoc} setEditingDoc={setEditingDoc} 
+                        onSaveDoc={onSaveDoc} generateDocNumber={generateDocNumber} userRole={userRole}
                       />
                     )}
                     {activeTab === 'approve' && (
-                      <ApprovalView pos={pos} onLoadPO={(po) => { setEditingPo(po); setActiveTab('create'); }} onUpdateStatus={onUpdateStatusPO} userRole={userRole} />
+                      <DocListView 
+                        appMode={appMode}
+                        docs={appMode === 'PO' ? pos : sjs} 
+                        onLoadDoc={(doc) => { setEditingDoc(doc); setActiveTab('create'); }} 
+                        onUpdateStatus={onUpdateStatusDoc} userRole={userRole} 
+                      />
                     )}
-                    {activeTab === 'suppliers' && (
-                      <SupplierView suppliers={suppliers} pos={pos} onAddSupplier={onAddSupplier} onEditSupplier={onEditSupplier} onDeleteSupplier={onDeleteSupplier} />
+                    {activeTab === 'partners' && (
+                      <PartnerView 
+                        appMode={appMode}
+                        partners={appMode === 'PO' ? suppliers : customers} 
+                        docs={appMode === 'PO' ? pos : sjs} 
+                        onAddPartner={onAddPartner} onEditPartner={onEditPartner} onDeletePartner={onDeletePartner} 
+                      />
                     )}
                     {activeTab === 'settings' && (
                       <SettingsView settings={settings} onSaveSettings={onSaveSettings} user={user} userRole={userRole} companyId={companyId} onLogout={handleLogout} />
@@ -622,21 +766,25 @@
               );
             }
 
-            // --- 1. CREATE PO VIEW ---
-            function CreatePOView({ suppliers, settings, setSettings, editingPo, setEditingPo, onSavePO, generatePoNumber, userRole }) {
+            // --- 1. CREATE DOC VIEW ---
+            function CreateDocView({ appMode, partners, settings, setSettings, editingDoc, setEditingDoc, onSaveDoc, generateDocNumber, userRole }) {
               const defaultItems = [{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }];
-              const [vendorId, setVendorId] = useState('');
+              const [partnerId, setPartnerId] = useState('');
               const [items, setItems] = useState(defaultItems);
               const [date, setDate] = useState(new Date());
               const [note, setNote] = useState('');
-              const [isVendorDropdownOpen, setIsVendorDropdownOpen] = useState(false);
-              const [vendorSearch, setVendorSearch] = useState('');
+              const [isPartnerDropdownOpen, setIsPartnerDropdownOpen] = useState(false);
+              const [partnerSearch, setPartnerSearch] = useState('');
               const [discountModalId, setDiscountModalId] = useState(null);
               const [tempDiscounts, setTempDiscounts] = useState(['', '', '', '']);
 
-              const selectedVendor = suppliers.find(s => s.id === vendorId) || {};
-              const currentPoNumber = generatePoNumber(settings.nextNumber || 1);
-              const isApproved = editingPo && editingPo.status === 'Approved';
+              const docTitle = appMode === 'PO' ? 'Purchase Order' : 'Surat Jalan';
+              const docLabel = appMode === 'PO' ? 'PO' : 'SJ';
+              const partnerLabel = appMode === 'PO' ? 'Vendor' : 'Customer';
+
+              const selectedPartner = partners.find(s => s.id === partnerId) || {};
+              const currentDocNumber = generateDocNumber(appMode === 'PO' ? (settings.nextNumber || 1) : (settings.sjNextNumber || 1), appMode);
+              const isApproved = editingDoc && editingDoc.status === 'Approved';
 
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
               const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -678,34 +826,38 @@
               };
 
               useEffect(() => {
-                if (editingPo) {
-                  setVendorId(editingPo.vendor.id);
-                  setItems(editingPo.items);
-                  setDate(new Date(editingPo.date));
-                  setNote(editingPo.note || '');
+                if (editingDoc) {
+                  setPartnerId(editingDoc.vendor.id); // Keeping property name as vendor internally for compatibility
+                  setItems(editingDoc.items);
+                  setDate(new Date(editingDoc.date));
+                  setNote(editingDoc.note || '');
                 } else {
-                  setVendorId(suppliers.length > 0 ? suppliers[0].id : '');
+                  setPartnerId(partners.length > 0 ? partners[0].id : '');
                   setItems([{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
                   setDate(new Date());
                   setNote('');
                 }
-              }, [editingPo, suppliers]);
+              }, [editingDoc, partners]);
 
               const total = items.reduce((sum, item) => sum + (item.qty * calculateNetPrice(item.price, item.discounts)), 0);
-              const isFormValid = vendorId && items.length > 0 && items.every(i => i.desc.trim() !== '' && i.qty > 0);
+              const isFormValid = partnerId && items.length > 0 && items.every(i => i.desc.trim() !== '' && i.qty > 0);
 
               const handleSave = () => {
                 if (!isFormValid) return;
-                const poData = {
-                  id: editingPo ? editingPo.id : Date.now().toString(),
-                  poNumber: editingPo ? editingPo.poNumber : currentPoNumber,
-                  date: date.toISOString(), vendor: selectedVendor, items: items, total: total, note: note,
-                  status: editingPo ? editingPo.status : (settings.requireApproval !== false ? 'Pending' : 'Approved'),
+                const docData = {
+                  id: editingDoc ? editingDoc.id : Date.now().toString(),
+                  poNumber: editingDoc ? editingDoc.poNumber : currentDocNumber, // Using poNumber key internally for backwards compatibility
+                  date: date.toISOString(), 
+                  vendor: selectedPartner, 
+                  items: items, 
+                  total: total, 
+                  note: note,
+                  status: editingDoc ? editingDoc.status : (settings.requireApproval !== false ? 'Pending' : 'Approved'),
                   createdByRole: userRole
                 };
-                onSavePO(poData, !!editingPo);
-                setEditingPo(null);
-                setVendorId('');
+                onSaveDoc(docData, !!editingDoc, appMode);
+                setEditingDoc(null);
+                setPartnerId('');
                 setItems([{ id: Date.now(), desc: '', qty: 1, unit: 'PCS', price: 0, discounts: [] }]);
                 setNote('');
                 setDate(new Date());
@@ -714,11 +866,11 @@
               return (
                 <div className="max-w-5xl mx-auto flex flex-col gap-6 relative">
                   <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-50 print:hidden">
-                    <button onClick={(e) => { if (!isApproved) { e.preventDefault(); alert("Cetak hanya tersedia untuk PO yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar PO."); return; } window.print(); }} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><Printer size={18} /> Cetak</button>
-                    <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? 'bg-[#007AFF] hover:bg-[#0056b3] text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
+                    <button onClick={(e) => { if (!isApproved) { e.preventDefault(); alert(`Cetak hanya tersedia untuk ${docLabel} yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar.`); return; } window.print(); }} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><Printer size={18} /> Cetak</button>
+                    <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? (appMode === 'PO' ? 'bg-[#007AFF] hover:bg-[#0056b3]' : 'bg-[#34C759] hover:bg-[#2DB34A]') + ' text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
                   </div>
 
-                  <div className="bg-white p-6 shadow-md rounded-[2px] print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
+                  <div className="bg-white p-6 shadow-md rounded-3xl print:rounded-none print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h1 className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}>
@@ -726,13 +878,13 @@
                         </h1>
                       </div>
                       <div className="text-right flex flex-col items-end">
-                        <h2 className="text-xl font-bold uppercase tracking-wider mb-1">Purchase Order</h2>
+                        <h2 className="text-xl font-bold uppercase tracking-wider mb-1">{docTitle}</h2>
                         <div className="text-sm mb-2">{formatDate(date)}</div>
                         <table className="text-sm">
                           <tbody>
-                            <tr><td className="pr-4 py-0.5 text-left">PO</td><td className="pr-2 py-0.5">:</td><td className="text-left font-medium">{editingPo ? editingPo.poNumber : currentPoNumber}</td></tr>
-                            <tr><td className="pr-4 py-0.5 text-left">Payment</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedVendor.payment || '-'}</td></tr>
-                            <tr><td className="pr-4 py-0.5 text-left">PPN</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedVendor.ppn || '-'}</td></tr>
+                            <tr><td className="pr-4 py-0.5 text-left">{docLabel}</td><td className="pr-2 py-0.5">:</td><td className="text-left font-medium">{editingDoc ? editingDoc.poNumber : currentDocNumber}</td></tr>
+                            <tr><td className="pr-4 py-0.5 text-left">Payment</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedPartner.payment || '-'}</td></tr>
+                            <tr><td className="pr-4 py-0.5 text-left">PPN</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedPartner.ppn || '-'}</td></tr>
                           </tbody>
                         </table>
                       </div>
@@ -741,20 +893,20 @@
                     <div className="grid grid-cols-2 gap-8 mb-6 text-sm">
                       <div>
                         <div className="mb-1 print:hidden relative">
-                          <div onClick={() => setIsVendorDropdownOpen(!isVendorDropdownOpen)} className="cursor-pointer text-base font-bold uppercase hover:text-[#007AFF] inline-flex items-center gap-1 text-black">
-                            {selectedVendor.id ? selectedVendor.name : '-- Pilih Vendor --'} <ChevronDown size={14} />
+                          <div onClick={() => setIsPartnerDropdownOpen(!isPartnerDropdownOpen)} className="cursor-pointer text-base font-bold uppercase hover:text-[#007AFF] inline-flex items-center gap-1 text-black">
+                            {selectedPartner.id ? selectedPartner.name : `-- PILIH ${partnerLabel.toUpperCase()} --`} <ChevronDown size={14} />
                           </div>
-                          {isVendorDropdownOpen && (
-                            <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 shadow-xl rounded-lg z-50 overflow-hidden font-normal normal-case">
+                          {isPartnerDropdownOpen && (
+                            <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 shadow-xl rounded-3xl z-50 overflow-hidden font-normal normal-case">
                               <div className="p-2 border-b border-gray-100 bg-gray-50">
-                                <input autoFocus type="text" placeholder="Cari Vendor..." className="w-full p-1.5 text-sm outline-none bg-white border border-gray-200 rounded focus:border-[#007AFF]" value={vendorSearch} onChange={(e)=>setVendorSearch(e.target.value)} />
+                                <input autoFocus type="text" placeholder={`Cari ${partnerLabel}...`} className="w-full px-4 py-2 text-sm outline-none bg-white border border-gray-200 rounded-full focus:border-[#007AFF]" value={partnerSearch} onChange={(e)=>setPartnerSearch(e.target.value)} />
                               </div>
                               <div className="max-h-48 overflow-y-auto">
-                                {suppliers.filter(s => s.name.toLowerCase().includes(vendorSearch.toLowerCase())).length === 0 ? (
-                                  <div className="p-3 text-sm text-gray-500 text-center">Vendor tidak ditemukan</div>
+                                {partners.filter(s => s.name.toLowerCase().includes(partnerSearch.toLowerCase())).length === 0 ? (
+                                  <div className="p-4 text-sm text-gray-500 text-center">{partnerLabel} tidak ditemukan</div>
                                 ) : (
-                                  suppliers.filter(s => s.name.toLowerCase().includes(vendorSearch.toLowerCase())).map(s => (
-                                    <div key={s.id} className="p-3 hover:bg-blue-50 cursor-pointer text-sm border-b border-gray-50 last:border-0" onClick={() => { setVendorId(s.id); setIsVendorDropdownOpen(false); setVendorSearch(''); }}>
+                                  partners.filter(s => s.name.toLowerCase().includes(partnerSearch.toLowerCase())).map(s => (
+                                    <div key={s.id} className="p-4 hover:bg-blue-50 cursor-pointer text-sm border-b border-gray-50 last:border-0" onClick={() => { setPartnerId(s.id); setIsPartnerDropdownOpen(false); setPartnerSearch(''); }}>
                                       <div className="font-bold text-gray-800">{s.name}</div>
                                     </div>
                                   ))
@@ -763,8 +915,8 @@
                             </div>
                           )}
                         </div>
-                        <div className="font-bold mb-1 hidden print:block uppercase text-base">{selectedVendor.name || 'PILIH VENDOR'}</div>
-                        <div className="text-gray-800 pr-12">{selectedVendor.address ? selectedVendor.address : <span className="print:hidden text-[#C7C7CC]">Alamat Vendor (opsional)</span>}</div>
+                        <div className="font-bold mb-1 hidden print:block uppercase text-base">{selectedPartner.name || `PILIH ${partnerLabel.toUpperCase()}`}</div>
+                        <div className="text-gray-800 pr-12">{selectedPartner.address ? selectedPartner.address : <span className="print:hidden text-[#C7C7CC]">Alamat (opsional)</span>}</div>
                       </div>
                       <div>
                         <div className="font-bold mb-1 uppercase text-base">{settings.branchName || 'CABANG'}</div>
@@ -795,20 +947,20 @@
                               <td className="py-1 px-2 align-top text-right">
                                 <div className="flex flex-col items-end gap-1 print:hidden">
                                   <div className="flex items-center justify-end gap-1 w-full">
-                                    <button onClick={() => openDiscountModal(item)} className="p-1 text-[#007AFF] hover:bg-[#E5F1FF] rounded-md transition-colors" title="Atur Diskon">%</button>
+                                    <button onClick={() => openDiscountModal(item)} className="p-1 text-[#007AFF] hover:bg-[#E5F1FF] rounded-full transition-colors" title="Atur Diskon">%</button>
                                     <input type="number" value={item.price || ''} onChange={(e) => handleItemChange(item.id, 'price', Number(e.target.value))} onFocus={(e) => e.target.select()} className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 text-right" step="100" placeholder="0" />
                                   </div>
                                 </div>
                                 <div className="hidden print:block text-right">{formatCurrency(calculateNetPrice(item.price, item.discounts))}</div>
                               </td>
                               <td className="py-1.5 px-2 align-top text-right font-medium">{formatCurrency(item.qty * calculateNetPrice(item.price, item.discounts))}</td>
-                              <td className="py-1 px-0 align-top text-center print:hidden"><button onClick={() => handleRemoveItem(item.id)} className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-md" title="Hapus baris"><Trash2 size={16} /></button></td>
+                              <td className="py-1 px-0 align-top text-center print:hidden"><button onClick={() => handleRemoveItem(item.id)} className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-full" title="Hapus baris"><Trash2 size={16} /></button></td>
                             </tr>
                           ))}
                         </tbody>
                         <tfoot>
                           <tr>
-                            <td colSpan="5" className="pt-2"><button onClick={handleAddItem} className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-2 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-md transition-colors"><Plus size={14} /> TAMBAH BARIS</button></td>
+                            <td colSpan="5" className="pt-2"><button onClick={handleAddItem} className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-3 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-full transition-colors"><Plus size={14} /> TAMBAH BARIS</button></td>
                             <td className="pt-2 px-2 align-top text-right"><div className="border-t border-black pt-1"><span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span></div></td>
                             <td className="print:hidden"></td>
                           </tr>
@@ -819,7 +971,7 @@
                     <div className="mt-auto pt-4 px-2 grid grid-cols-2 gap-8 items-end">
                       <div className={`w-full mb-2 ${!note.trim() ? 'print:hidden' : ''}`}>
                          <div className="font-bold text-sm mb-1">Catatan :</div>
-                         <textarea className="w-full bg-transparent border-transparent outline-none resize-none text-sm p-1.5 hover:bg-gray-50 focus:bg-gray-50 focus:ring-1 focus:ring-blue-100 rounded transition-all print:resize-none print:p-0 print:border-none" rows="3" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Tambahkan catatan khusus... (opsional)" />
+                         <textarea className="w-full bg-transparent border-transparent outline-none resize-none text-sm p-3 hover:bg-gray-50 focus:bg-gray-50 focus:ring-1 focus:ring-blue-100 rounded-3xl transition-all print:resize-none print:p-0 print:border-none" rows="3" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Tambahkan catatan khusus... (opsional)" />
                       </div>
                       <div className="flex flex-col items-end col-start-2">
                         <div className="text-center w-48 relative pr-2">
@@ -845,24 +997,24 @@
                   {/* Discount Modal */}
                   {discountModalId && (
                     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 print:hidden p-4">
-                      <div className="bg-white rounded-2xl shadow-xl w-auto min-w-[340px] overflow-hidden">
-                        <div className="px-6 py-4 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
+                      <div className="bg-white rounded-[2.5rem] shadow-xl w-auto min-w-[340px] overflow-hidden">
+                        <div className="px-6 py-5 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
                           <h3 className="font-bold text-[#1C1C1E]">Diskon Beruntun</h3>
                           <button onClick={() => setDiscountModalId(null)} className="text-[#8E8E93] hover:text-[#FF3B30] transition-colors"><XCircle size={20}/></button>
                         </div>
-                        <div className="p-6">
-                          <div className="flex flex-wrap items-center justify-center gap-2 mb-6 w-full">
+                        <div className="p-8">
+                          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 w-full">
                             {[0, 1, 2, 3].map((idx) => (
                               <React.Fragment key={idx}>
                                 <div className="relative">
-                                  <input type="number" value={tempDiscounts[idx]} onChange={(e) => handleDiscountChange(idx, e.target.value)} onFocus={(e) => e.target.select()} className="w-16 bg-[#F2F2F7] border-none rounded-lg p-2 pr-4 text-center font-medium focus:ring-2 focus:ring-[#007AFF] outline-none" placeholder="0" />
-                                  <span className="absolute right-1.5 top-2.5 text-[10px] text-[#8E8E93]">%</span>
+                                  <input type="number" value={tempDiscounts[idx]} onChange={(e) => handleDiscountChange(idx, e.target.value)} onFocus={(e) => e.target.select()} className="w-16 bg-[#F2F2F7] border-none rounded-full p-2 pr-4 text-center font-medium focus:ring-2 focus:ring-[#007AFF] outline-none" placeholder="0" />
+                                  <span className="absolute right-2 top-2.5 text-[10px] text-[#8E8E93]">%</span>
                                 </div>
                                 {idx < 3 && <span className="text-[#8E8E93] font-bold">+</span>}
                               </React.Fragment>
                             ))}
                           </div>
-                          <button onClick={saveDiscounts} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-3 rounded-xl transition-colors shadow-sm">Terapkan Diskon</button>
+                          <button onClick={saveDiscounts} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-4 rounded-full transition-colors shadow-sm">Terapkan Diskon</button>
                         </div>
                       </div>
                     </div>
@@ -871,121 +1023,124 @@
               );
             }
 
-            // --- 2. APPROVAL VIEW ---
-            function ApprovalView({ pos, onLoadPO, onUpdateStatus, userRole }) {
+            // --- 2. DOC LIST VIEW ---
+            function DocListView({ appMode, docs, onLoadDoc, onUpdateStatus, userRole }) {
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num);
               const [expandedId, setExpandedId] = useState(null);
               const [searchTerm, setSearchTerm] = useState('');
               const [isExportModalOpen, setIsExportModalOpen] = useState(false);
               const [exportFilter, setExportFilter] = useState({ startDate: '', endDate: '', tax: 'Semua' });
 
+              const docTitle = appMode === 'PO' ? 'Purchase Order' : 'Surat Jalan';
+              const partnerLabel = appMode === 'PO' ? 'Vendor' : 'Customer';
+
               const toggleExpand = (id) => setExpandedId(expandedId === id ? null : id);
-              const filteredPos = pos.filter(po => po.poNumber.toLowerCase().includes(searchTerm.toLowerCase()) || po.vendor.name.toLowerCase().includes(searchTerm.toLowerCase()));
+              const filteredDocs = docs.filter(doc => doc.poNumber.toLowerCase().includes(searchTerm.toLowerCase()) || doc.vendor.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
               const handleExportExcel = () => {
-                const exportedData = pos.filter(po => {
-                  const poDate = new Date(po.date).setHours(0,0,0,0);
+                const exportedData = docs.filter(doc => {
+                  const docDate = new Date(doc.date).setHours(0,0,0,0);
                   const start = exportFilter.startDate ? new Date(exportFilter.startDate).setHours(0,0,0,0) : null;
                   const end = exportFilter.endDate ? new Date(exportFilter.endDate).setHours(23,59,59,999) : null;
-                  const inDateRange = (!start || poDate >= start) && (!end || poDate <= end);
-                  const matchTax = exportFilter.tax === 'Semua' || po.vendor.ppn === exportFilter.tax;
+                  const inDateRange = (!start || docDate >= start) && (!end || docDate <= end);
+                  const matchTax = exportFilter.tax === 'Semua' || doc.vendor.ppn === exportFilter.tax;
                   return inDateRange && matchTax;
                 });
 
-                if(exportedData.length === 0) return alert("Tidak ada data PO yang sesuai dengan rentang tanggal dan filter pajak ini.");
+                if(exportedData.length === 0) return alert("Tidak ada data yang sesuai dengan rentang tanggal dan filter pajak ini.");
 
                 let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
-                html += '<h2>Laporan Purchase Order</h2>';
+                html += `<h2>Laporan ${docTitle}</h2>`;
                 html += `<p>Periode: ${exportFilter.startDate || 'Awal'} s/d ${exportFilter.endDate || 'Akhir'} | Filter Pajak: ${exportFilter.tax}</p>`;
                 html += '<table border="1" style="border-collapse: collapse;">';
-                html += '<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. PO</th><th>Nama Vendor</th><th>Pembayaran</th><th>Status Pajak</th><th>Subtotal</th><th>Status</th></tr>';
-                exportedData.forEach(po => {
-                    html += `<tr><td>${new Date(po.date).toLocaleDateString('id-ID')}</td><td>${po.poNumber}</td><td>${po.vendor.name}</td><td>${po.vendor.payment}</td><td>${po.vendor.ppn}</td><td>${po.total}</td><td>${po.status}</td></tr>`;
+                html += `<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. ${appMode}</th><th>Nama ${partnerLabel}</th><th>Pembayaran</th><th>Status Pajak</th><th>Subtotal</th><th>Status</th></tr>`;
+                exportedData.forEach(doc => {
+                    html += `<tr><td>${new Date(doc.date).toLocaleDateString('id-ID')}</td><td>${doc.poNumber}</td><td>${doc.vendor.name}</td><td>${doc.vendor.payment}</td><td>${doc.vendor.ppn}</td><td>${doc.total}</td><td>${doc.status}</td></tr>`;
                 });
                 html += '</table></body></html>';
 
                 const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
-                link.href = url; link.download = `Laporan_PO_${exportFilter.startDate || 'All'}.xls`;
+                link.href = url; link.download = `Laporan_${appMode}_${exportFilter.startDate || 'All'}.xls`;
                 document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
                 setIsExportModalOpen(false);
               };
 
               return (
                 <div className="max-w-4xl mx-auto space-y-6 relative">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
-                    <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar Purchase Order</h2>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar {docTitle}</h2>
                     <div className="flex items-center gap-3">
-                      <button onClick={() => setIsExportModalOpen(true)} className="flex items-center justify-center gap-2 bg-[#34C759] hover:bg-[#2DB34A] text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors shadow-sm"><Download size={16} /> Export Excel</button>
+                      <button onClick={() => setIsExportModalOpen(true)} className="flex items-center justify-center gap-2 bg-[#34C759] hover:bg-[#2DB34A] text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-colors shadow-sm"><Download size={16} /> Export Excel</button>
                       <div className="relative w-full sm:w-64">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search size={16} className="text-[#8E8E93]" /></div>
-                        <input type="text" className="w-full bg-white border border-[#E5E5EA] text-[#1C1C1E] rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] transition-shadow shadow-sm" placeholder="Cari No. PO / Vendor..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><Search size={16} className="text-[#8E8E93]" /></div>
+                        <input type="text" className="w-full bg-white border border-[#E5E5EA] text-[#1C1C1E] rounded-full py-2.5 pl-11 pr-4 text-sm focus:outline-none focus:border-[#007AFF] focus:ring-1 focus:ring-[#007AFF] transition-shadow shadow-sm" placeholder={`Cari No. / ${partnerLabel}...`} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    {filteredPos.length === 0 ? (
-                      <div className="bg-white rounded-2xl p-8 text-center text-[#8E8E93] shadow-sm">{searchTerm ? 'PO tidak ditemukan.' : 'Belum ada Purchase Order yang diajukan.'}</div>
+                    {filteredDocs.length === 0 ? (
+                      <div className="bg-white rounded-[2.5rem] p-12 text-center text-[#8E8E93] shadow-sm">{searchTerm ? 'Dokumen tidak ditemukan.' : 'Belum ada dokumen yang diajukan.'}</div>
                     ) : (
-                      filteredPos.map(po => (
-                        <div key={po.id} className="bg-white rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-[#E5E5EA]">
-                          <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-[#F9F9F9] transition-colors" onClick={() => toggleExpand(po.id)}>
+                      filteredDocs.map(doc => (
+                        <div key={doc.id} className="bg-white rounded-[2.5rem] shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden border border-[#E5E5EA]">
+                          <div className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 cursor-pointer hover:bg-[#F9F9F9] transition-colors" onClick={() => toggleExpand(doc.id)}>
                             <div className="flex items-start gap-4">
-                              <div className={`p-3 rounded-full ${po.status === 'Pending' ? 'bg-[#FFF500]/20 text-[#D4AF37]' : po.status === 'Approved' ? 'bg-[#34C759]/20 text-[#34C759]' : 'bg-[#FF3B30]/20 text-[#FF3B30]'}`}><FileText size={24} /></div>
+                              <div className={`p-4 rounded-full ${doc.status === 'Pending' ? 'bg-[#FFF500]/20 text-[#D4AF37]' : doc.status === 'Approved' ? 'bg-[#34C759]/20 text-[#34C759]' : 'bg-[#FF3B30]/20 text-[#FF3B30]'}`}><FileText size={24} /></div>
                               <div>
                                 <div className="flex items-center gap-2 mb-1">
-                                  <button onClick={(e) => { e.stopPropagation(); onLoadPO(po); }} className="font-bold text-[#007AFF] hover:text-[#0056b3] hover:underline text-lg" title="Buka & Edit PO">{po.poNumber}</button>
-                                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${po.status === 'Approved' ? 'bg-[#34C759] text-white' : po.status === 'Rejected' ? 'bg-[#FF3B30] text-white' : 'bg-[#FFCC00] text-black'}`}>{po.status}</span>
+                                  <button onClick={(e) => { e.stopPropagation(); onLoadDoc(doc); }} className="font-bold text-[#007AFF] hover:text-[#0056b3] hover:underline text-lg" title="Buka & Edit">{doc.poNumber}</button>
+                                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${doc.status === 'Approved' ? 'bg-[#34C759] text-white' : doc.status === 'Rejected' ? 'bg-[#FF3B30] text-white' : 'bg-[#FFCC00] text-black'}`}>{doc.status}</span>
                                 </div>
-                                <div className="text-sm text-[#8E8E93] font-medium">{po.vendor.name} • {new Date(po.date).toLocaleDateString('id-ID')}</div>
+                                <div className="text-sm text-[#8E8E93] font-medium">{doc.vendor.name} • {new Date(doc.date).toLocaleDateString('id-ID')}</div>
                               </div>
                             </div>
                             <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto w-full">
                               <div className="text-right">
-                                <div className="text-xs text-[#8E8E93] uppercase font-bold tracking-wider mb-0.5">Total</div>
-                                <div className="font-bold text-[#1C1C1E] text-lg">Rp {formatCurrency(po.total)}</div>
+                                <div className="text-xs text-[#8E8E93] uppercase font-bold tracking-wider mb-1">Total</div>
+                                <div className="font-bold text-[#1C1C1E] text-xl">Rp {formatCurrency(doc.total)}</div>
                               </div>
                               <div className="flex items-center gap-3">
-                                {userRole === 'Boss' && po.status === 'Pending' && (
+                                {userRole === 'Boss' && doc.status === 'Pending' && (
                                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-                                    <button onClick={() => onUpdateStatus(po.id, 'Approved')} className="w-10 h-10 flex items-center justify-center bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759] hover:text-white rounded-full transition-colors" title="Setujui PO"><CheckCircle size={22} /></button>
-                                    <button onClick={() => onUpdateStatus(po.id, 'Rejected')} className="w-10 h-10 flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white rounded-full transition-colors" title="Tolak PO"><XCircle size={22} /></button>
+                                    <button onClick={() => onUpdateStatus(doc.id, 'Approved', appMode)} className="w-12 h-12 flex items-center justify-center bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759] hover:text-white rounded-full transition-colors" title="Setujui"><CheckCircle size={24} /></button>
+                                    <button onClick={() => onUpdateStatus(doc.id, 'Rejected', appMode)} className="w-12 h-12 flex items-center justify-center bg-[#FF3B30]/10 text-[#FF3B30] hover:bg-[#FF3B30] hover:text-white rounded-full transition-colors" title="Tolak"><XCircle size={24} /></button>
                                   </div>
                                 )}
-                                <div className="text-[#C7C7CC]">{expandedId === po.id ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}</div>
+                                <div className="text-[#C7C7CC]">{expandedId === doc.id ? <ChevronUp size={24}/> : <ChevronDown size={24}/>}</div>
                               </div>
                             </div>
                           </div>
 
-                          {expandedId === po.id && (
-                            <div className="border-t border-[#F2F2F7] bg-[#F9F9FB] p-5">
-                              <h4 className="font-bold text-[#8E8E93] text-sm uppercase tracking-wider mb-3">Detail Item</h4>
+                          {expandedId === doc.id && (
+                            <div className="border-t border-[#F2F2F7] bg-[#F9F9FB] p-6">
+                              <h4 className="font-bold text-[#8E8E93] text-sm uppercase tracking-wider mb-4">Detail Item</h4>
                               <div className="overflow-x-auto">
                                 <table className="w-full text-sm text-left">
                                   <thead className="text-xs text-[#8E8E93] uppercase bg-white/50 border-b border-[#E5E5EA]">
-                                    <tr><th className="px-4 py-2 rounded-tl-lg">Deskripsi</th><th className="px-4 py-2 text-center">Qty</th><th className="px-4 py-2 text-right">Harga</th><th className="px-4 py-2 text-right rounded-tr-lg">Subtotal</th></tr>
+                                    <tr><th className="px-4 py-3 rounded-tl-[1.5rem]">Deskripsi</th><th className="px-4 py-3 text-center">Qty</th><th className="px-4 py-3 text-right">Harga</th><th className="px-4 py-3 text-right rounded-tr-[1.5rem]">Subtotal</th></tr>
                                   </thead>
                                   <tbody className="divide-y divide-[#F2F2F7]">
-                                    {po.items.map((item, idx) => {
+                                    {doc.items.map((item, idx) => {
                                       const netPrice = !item.discounts || item.discounts.length === 0 ? item.price : item.discounts.reduce((acc, d) => acc - (acc * (d / 100)), item.price);
                                       return (
                                         <tr key={idx} className="bg-white hover:bg-white/80 transition-colors">
-                                          <td className="px-4 py-3 font-semibold text-[#1C1C1E]">{item.desc}</td>
-                                          <td className="px-4 py-3 text-center text-[#8E8E93]">{item.qty} {item.unit}</td>
-                                          <td className="px-4 py-3 text-right text-[#8E8E93]">Rp {formatCurrency(item.price)}</td>
-                                          <td className="px-4 py-3 text-right font-bold text-[#1C1C1E]">Rp {formatCurrency(item.qty * netPrice)}</td>
+                                          <td className="px-4 py-4 font-semibold text-[#1C1C1E]">{item.desc}</td>
+                                          <td className="px-4 py-4 text-center text-[#8E8E93]">{item.qty} {item.unit}</td>
+                                          <td className="px-4 py-4 text-right text-[#8E8E93]">Rp {formatCurrency(item.price)}</td>
+                                          <td className="px-4 py-4 text-right font-bold text-[#1C1C1E]">Rp {formatCurrency(item.qty * netPrice)}</td>
                                         </tr>
                                       );
                                     })}
                                   </tbody>
                                 </table>
                               </div>
-                              {po.note && (
-                                <div className="mt-4 p-3 bg-white border border-[#E5E5EA] rounded-lg">
+                              {doc.note && (
+                                <div className="mt-6 p-4 bg-white border border-[#E5E5EA] rounded-3xl">
                                   <span className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-1">Catatan:</span>
-                                  <p className="text-sm text-[#1C1C1E]">{po.note}</p>
+                                  <p className="text-sm text-[#1C1C1E]">{doc.note}</p>
                                 </div>
                               )}
                             </div>
@@ -998,29 +1153,29 @@
                   {/* Export Modal */}
                   {isExportModalOpen && (
                     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                      <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden">
-                        <div className="px-6 py-4 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
+                      <div className="bg-white rounded-[2.5rem] shadow-xl w-full max-w-sm overflow-hidden">
+                        <div className="px-6 py-5 border-b border-[#F2F2F7] flex justify-between items-center bg-[#F9F9F9]">
                           <h3 className="font-bold text-[#1C1C1E]">Export ke Excel</h3>
                           <button onClick={() => setIsExportModalOpen(false)} className="text-[#8E8E93] hover:text-[#FF3B30] transition-colors"><XCircle size={20}/></button>
                         </div>
-                        <div className="p-6 space-y-5">
+                        <div className="p-8 space-y-6">
                           <div className="grid grid-cols-2 gap-4">
                             <div>
                               <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Dari Tanggal</label>
-                              <input type="date" value={exportFilter.startDate} onChange={e => setExportFilter({...exportFilter, startDate: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" />
+                              <input type="date" value={exportFilter.startDate} onChange={e => setExportFilter({...exportFilter, startDate: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-full px-5 py-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" />
                             </div>
                             <div>
                               <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Sampai Tanggal</label>
-                              <input type="date" value={exportFilter.endDate} onChange={e => setExportFilter({...exportFilter, endDate: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" />
+                              <input type="date" value={exportFilter.endDate} onChange={e => setExportFilter({...exportFilter, endDate: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-full px-5 py-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" />
                             </div>
                           </div>
                           <div>
                             <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Status Pajak</label>
-                            <select value={exportFilter.tax} onChange={e => setExportFilter({...exportFilter, tax: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-xl p-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <select value={exportFilter.tax} onChange={e => setExportFilter({...exportFilter, tax: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-full px-5 py-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]">
                               <option value="Semua">Semua (PPN & Non-PPN)</option><option value="PPN">Hanya PPN</option><option value="Non-PPN">Hanya Non-PPN</option>
                             </select>
                           </div>
-                          <button onClick={handleExportExcel} className="w-full bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2 mt-2"><Download size={18} /> Unduh (.xls)</button>
+                          <button onClick={handleExportExcel} className="w-full bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-4 rounded-full transition-colors shadow-sm flex items-center justify-center gap-2 mt-4"><Download size={18} /> Unduh (.xls)</button>
                         </div>
                       </div>
                     </div>
@@ -1029,20 +1184,20 @@
               );
             }
 
-            // --- 3. SUPPLIER LIST VIEW ---
-            function SupplierView({ suppliers, pos, onAddSupplier, onEditSupplier, onDeleteSupplier }) {
+            // --- 3. PARTNER LIST VIEW ---
+            function PartnerView({ appMode, partners, docs, onAddPartner, onEditPartner, onDeletePartner }) {
               const [isFormOpen, setIsFormOpen] = useState(false);
               const [isEditing, setIsEditing] = useState(false);
               const [formData, setFormData] = useState({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
 
+              const partnerLabel = appMode === 'PO' ? 'Supplier' : 'Customer';
+
               const openAddForm = () => {
                 if (isEditing) {
-                  // Jika sedang mode edit, rubah jadi add form tanpa menutup
                   setIsEditing(false);
                   setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
                   setIsFormOpen(true);
                 } else {
-                  // Jika normal, toggle state (Buka/Tutup)
                   setIsFormOpen(!isFormOpen);
                   setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
                 }
@@ -1056,64 +1211,64 @@
 
               const handleSave = (e) => {
                 e.preventDefault();
-                if (!formData.name) return alert("Nama PT wajib diisi!");
-                if (isEditing) { onEditSupplier(formData); } else { onAddSupplier({ ...formData, id: Date.now() }); }
+                if (!formData.name) return alert(`Nama ${partnerLabel} wajib diisi!`);
+                if (isEditing) { onEditPartner(formData, appMode); } else { onAddPartner({ ...formData, id: Date.now() }, appMode); }
                 setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
                 setIsFormOpen(false); setIsEditing(false);
               };
 
               const handleDelete = (id) => {
-                const isUsed = pos.some(p => p.vendor && p.vendor.id === id);
-                if (isUsed) { return alert("PENTING: Tidak dapat menghapus supplier ini karena sudah pernah digunakan di dalam dokumen PO."); }
-                if(confirm("Hapus supplier ini secara permanen?")) onDeleteSupplier(id); 
+                const isUsed = docs.some(p => p.vendor && p.vendor.id === id);
+                if (isUsed) { return alert(`PENTING: Tidak dapat menghapus ${partnerLabel.toLowerCase()} ini karena sudah pernah digunakan di dalam dokumen.`); }
+                if(confirm(`Hapus ${partnerLabel.toLowerCase()} ini secara permanen?`)) onDeletePartner(id, appMode); 
               };
 
               return (
                 <div className="max-w-4xl mx-auto space-y-6">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar Supplier</h2>
-                    <button onClick={openAddForm} className="flex items-center justify-center w-10 h-10 bg-[#007AFF] text-white rounded-full shadow-sm transition-transform hover:scale-105">{isFormOpen && !isEditing ? <XCircle size={20} /> : <Plus size={20} />}</button>
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar {partnerLabel}</h2>
+                    <button onClick={openAddForm} className="flex items-center justify-center w-12 h-12 bg-[#007AFF] text-white rounded-full shadow-sm transition-transform hover:scale-105">{isFormOpen && !isEditing ? <XCircle size={24} /> : <Plus size={24} />}</button>
                   </div>
 
                   {isFormOpen && (
-                    <form onSubmit={handleSave} className="bg-white p-6 rounded-2xl shadow-sm border border-[#E5E5EA] space-y-4">
-                      <div className="flex items-center justify-between border-b border-[#F2F2F7] pb-3 mb-2">
-                          <h3 className="font-bold text-[#1C1C1E]">{isEditing ? 'Edit Informasi Supplier' : 'Tambah Supplier Baru'}</h3>
-                          <button type="button" onClick={() => setIsFormOpen(false)} className="text-[#8E8E93] hover:text-[#FF3B30]"><XCircle size={20}/></button>
+                    <form onSubmit={handleSave} className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-[#E5E5EA] space-y-5">
+                      <div className="flex items-center justify-between border-b border-[#F2F2F7] pb-4 mb-4">
+                          <h3 className="font-bold text-xl text-[#1C1C1E]">{isEditing ? `Edit Informasi ${partnerLabel}` : `Tambah ${partnerLabel} Baru`}</h3>
+                          <button type="button" onClick={() => setIsFormOpen(false)} className="text-[#8E8E93] hover:text-[#FF3B30]"><XCircle size={24}/></button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-1.5"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Nama Vendor *</label><input required type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="PT. Nama Vendor" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} /></div>
-                        <div className="space-y-1.5"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">No. Telepon</label><input type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="0812..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} onFocus={(e) => e.target.select()} /></div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Pembayaran</label>
-                          <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.payment} onChange={e => setFormData({...formData, payment: e.target.value})}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="space-y-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Nama {partnerLabel} *</label><input required type="text" className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder={`PT. Nama ${partnerLabel}`} value={formData.name} onChange={e => setFormData({...formData, name: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} /></div>
+                        <div className="space-y-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">No. Telepon</label><input type="text" className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="0812..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} onFocus={(e) => e.target.select()} /></div>
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Pembayaran</label>
+                          <select className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.payment} onChange={e => setFormData({...formData, payment: e.target.value})}>
                             <option value="Cash">Cash</option><option value="Tempo">Tempo</option>
                           </select>
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Status Pajak</label>
-                          <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Status Pajak</label>
+                          <select className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
                             <option value="Non-PPN">Non-PPN</option><option value="PPN">PPN</option>
                           </select>
                         </div>
-                        <div className="space-y-1.5 md:col-span-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Alamat (Opsional)</label><textarea className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" rows="2" placeholder="Jl. Raya..." value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} onFocus={(e) => e.target.select()} /></div>
+                        <div className="space-y-2 md:col-span-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Alamat (Opsional)</label><textarea className="w-full bg-[#F2F2F7] rounded-[2rem] px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" rows="3" placeholder="Jl. Raya..." value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} onFocus={(e) => e.target.select()} /></div>
                       </div>
-                      <div className="flex justify-end pt-2"><button type="submit" className="px-6 py-3 bg-[#007AFF] text-white rounded-xl font-bold shadow-sm hover:bg-[#0056b3] transition-colors">{isEditing ? 'Simpan Perubahan' : 'Simpan Supplier'}</button></div>
+                      <div className="flex justify-end pt-4"><button type="submit" className="px-8 py-4 bg-[#007AFF] text-white rounded-full font-bold shadow-sm hover:bg-[#0056b3] transition-colors">{isEditing ? 'Simpan Perubahan' : `Simpan ${partnerLabel}`}</button></div>
                     </form>
                   )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {suppliers.map(sup => (
-                      <div key={sup.id} className="bg-white rounded-2xl p-5 shadow-sm border border-[#E5E5EA] flex flex-col relative group hover:border-[#007AFF] transition-colors">
-                        <div className="absolute top-4 right-4 flex items-center gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={() => openEditForm(sup)} className="p-1.5 text-[#007AFF] bg-[#E5F1FF] hover:bg-[#007AFF] hover:text-white rounded-lg transition-colors"><Edit2 size={16} /></button>
-                            <button onClick={() => handleDelete(sup.id)} className="p-1.5 text-[#FF3B30] bg-[#FFE5E5] hover:bg-[#FF3B30] hover:text-white rounded-lg transition-colors"><Trash2 size={16} /></button>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {partners.map(sup => (
+                      <div key={sup.id} className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-[#E5E5EA] flex flex-col relative group hover:border-[#007AFF] transition-colors">
+                        <div className="absolute top-5 right-5 flex items-center gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={() => openEditForm(sup)} className="p-2 text-[#007AFF] bg-[#E5F1FF] hover:bg-[#007AFF] hover:text-white rounded-full transition-colors"><Edit2 size={18} /></button>
+                            <button onClick={() => handleDelete(sup.id)} className="p-2 text-[#FF3B30] bg-[#FFE5E5] hover:bg-[#FF3B30] hover:text-white rounded-full transition-colors"><Trash2 size={18} /></button>
                         </div>
-                        <h3 className="font-bold text-lg text-[#1C1C1E] mb-1 pr-20">{sup.name}</h3>
-                        <p className="text-sm text-[#8E8E93] mb-4">{sup.phone || 'Tidak ada telepon'}</p>
+                        <h3 className="font-bold text-xl text-[#1C1C1E] mb-1 pr-20">{sup.name}</h3>
+                        <p className="text-[15px] text-[#8E8E93] mb-5">{sup.phone || 'Tidak ada telepon'}</p>
                         <div className="mt-auto">
-                          <div className="flex gap-2 mb-3"><span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.payment}</span><span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.ppn}</span></div>
-                          <p className="text-sm text-[#1C1C1E] line-clamp-2">{sup.address || '-'}</p>
+                          <div className="flex gap-2 mb-4"><span className="px-3 py-1.5 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-full">{sup.payment}</span><span className="px-3 py-1.5 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-full">{sup.ppn}</span></div>
+                          <p className="text-[15px] text-[#1C1C1E] line-clamp-2">{sup.address || '-'}</p>
                         </div>
                       </div>
                     ))}
@@ -1133,41 +1288,41 @@
               };
 
               return (
-                <div className="max-w-3xl mx-auto space-y-6 pb-12">
-                  <div className="flex justify-between items-center mb-4">
+                <div className="max-w-3xl mx-auto space-y-8 pb-12">
+                  <div className="flex justify-between items-center mb-6">
                      <h2 className="text-2xl font-bold text-[#1C1C1E]">{userRole === 'Boss' ? "Pengaturan Sistem" : "Profil Saya"}</h2>
                      {userRole === 'Boss' && (
-                        <button onClick={handleSave} className="bg-[#007AFF] hover:bg-[#0056b3] text-white px-5 py-2 rounded-full font-semibold shadow-sm transition-colors text-sm">Simpan Pengaturan</button>
+                        <button onClick={handleSave} className="bg-[#007AFF] hover:bg-[#0056b3] text-white px-6 py-3 rounded-full font-bold shadow-sm transition-colors text-[15px]">Simpan Pengaturan</button>
                      )}
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                     {/* Akun */}
                     <div>
-                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Akun & Sesi</h3>
-                      <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                        <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]">
-                          <div className="flex items-center gap-3">
-                             <div className="w-10 h-10 bg-[#F2F2F7] rounded-full flex items-center justify-center text-[#8E8E93]"><Users size={20}/></div>
+                      <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Akun & Sesi</h3>
+                      <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                        <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]">
+                          <div className="flex items-center gap-4">
+                             <div className="w-12 h-12 bg-[#F2F2F7] rounded-full flex items-center justify-center text-[#8E8E93]"><Users size={24}/></div>
                              <div>
-                               <div className="text-[15px] font-bold text-[#1C1C1E]">{user.isAnonymous ? 'Akun Tamu' : user.email}</div>
-                               <div className="text-xs text-[#8E8E93]">Peran: <span className="font-bold text-[#007AFF]">{userRole}</span></div>
+                               <div className="text-lg font-bold text-[#1C1C1E]">{user.isAnonymous ? 'Akun Tamu' : user.email}</div>
+                               <div className="text-sm text-[#8E8E93]">Peran: <span className="font-bold text-[#007AFF]">{userRole}</span></div>
                              </div>
                           </div>
-                          <button onClick={onLogout} className="flex items-center gap-2 text-[#FF3B30] bg-[#FFE5E5] hover:bg-[#FFD1D1] px-4 py-2 rounded-xl text-sm font-bold transition-colors">
-                            <LogOut size={16} /> Keluar
+                          <button onClick={onLogout} className="flex items-center gap-2 text-[#FF3B30] bg-[#FFE5E5] hover:bg-[#FFD1D1] px-5 py-3 rounded-full text-[15px] font-bold transition-colors">
+                            <LogOut size={18} /> Keluar
                           </button>
                         </div>
                         {userRole === 'Boss' && (
-                            <div className="flex flex-col p-4 bg-[#F9F9FB]">
-                              <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Kode Akses Tim Anda</div>
+                            <div className="flex flex-col p-6 bg-[#F9F9FB]">
+                              <div className="text-[15px] font-bold text-[#1C1C1E] mb-3">Kode Akses Tim Anda</div>
                               <div className="flex items-center gap-3">
-                                  <div className="flex-1 text-center font-mono text-lg font-bold tracking-widest text-[#007AFF] bg-[#E5F1FF] py-3 rounded-xl border border-[#B3D7FF]">
+                                  <div className="flex-1 text-center font-mono text-xl font-bold tracking-widest text-[#007AFF] bg-[#E5F1FF] py-4 rounded-full border border-[#B3D7FF]">
                                     {companyId}
                                   </div>
-                                  <button onClick={handleCopyId} className="bg-white border border-[#D1D1D6] text-[#1C1C1E] font-semibold py-3 px-6 rounded-xl hover:bg-[#F2F2F7] transition-colors whitespace-nowrap">Salin Kode</button>
+                                  <button onClick={handleCopyId} className="bg-white border border-[#D1D1D6] text-[#1C1C1E] font-bold py-4 px-8 rounded-full hover:bg-[#F2F2F7] transition-colors whitespace-nowrap">Salin Kode</button>
                               </div>
-                              <p className="text-xs text-[#8E8E93] mt-3">
+                              <p className="text-sm text-[#8E8E93] mt-4">
                                 *Berikan kode di atas kepada Tim Anda. Saat masuk dan memilih "Gabung ke Tim", mereka harus memasukkan kode ini agar dapat bekerja di data yang sama.
                               </p>
                             </div>
@@ -1178,19 +1333,19 @@
                     {userRole === 'Boss' && (
                       <>
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Alur Kerja (Workflow)</h3>
-                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                            <div className="flex items-center justify-between p-4">
-                              <div className="w-3/4">
-                                <div className="text-[15px] font-medium text-[#1C1C1E]">Wajib Persetujuan (Approval)</div>
-                                <div className="text-xs text-[#8E8E93] mt-0.5">Jika dimatikan, PO yang dibuat akan langsung berstatus 'Approved' dan bisa dicetak tanpa persetujuan Boss.</div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Alur Kerja (Workflow)</h3>
+                          <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-6">
+                              <div className="w-3/4 pr-4">
+                                <div className="text-[17px] font-bold text-[#1C1C1E]">Wajib Persetujuan (Approval)</div>
+                                <div className="text-sm text-[#8E8E93] mt-1">Jika dimatikan, dokumen yang dibuat akan langsung berstatus 'Approved' dan bisa dicetak tanpa persetujuan Boss.</div>
                               </div>
                               <div className="w-1/4 flex justify-end">
                                 <label className="flex items-center cursor-pointer">
                                   <div className="relative">
                                     <input type="checkbox" className="sr-only" checked={localSettings.requireApproval !== false} onChange={(e) => setLocalSettings({...localSettings, requireApproval: e.target.checked})} />
-                                    <div className={`block w-12 h-7 rounded-full transition-colors ${localSettings.requireApproval !== false ? 'bg-[#34C759]' : 'bg-[#E5E5EA]'}`}></div>
-                                    <div className={`absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition-transform ${localSettings.requireApproval !== false ? 'transform translate-x-5' : ''} shadow-sm`}></div>
+                                    <div className={`block w-14 h-8 rounded-full transition-colors ${localSettings.requireApproval !== false ? 'bg-[#34C759]' : 'bg-[#E5E5EA]'}`}></div>
+                                    <div className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${localSettings.requireApproval !== false ? 'transform translate-x-6' : ''} shadow-sm`}></div>
                                   </div>
                                 </label>
                               </div>
@@ -1199,58 +1354,60 @@
                         </div>
 
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Identitas Pembeli</h3>
-                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                            <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Utama</div><div className="w-2/3"><input type="text" value={localSettings.companyName || ''} onChange={(e) => setLocalSettings({...localSettings, companyName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-medium bg-transparent"/></div></div>
-                            <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Nama Penerima</div><div className="w-2/3"><input type="text" value={localSettings.branchName || ''} onChange={(e) => setLocalSettings({...localSettings, branchName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
-                            <div className="flex items-start justify-between p-4"><div className="w-1/3 text-[15px] font-medium text-[#1C1C1E]">Alamat</div><div className="w-2/3"><textarea rows="2" value={localSettings.branchAddress || ''} onChange={(e) => setLocalSettings({...localSettings, branchAddress: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent resize-none"/></div></div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Identitas Perusahaan Anda</h3>
+                          <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-bold text-[#1C1C1E]">Nama Utama</div><div className="w-2/3"><input type="text" value={localSettings.companyName || ''} onChange={(e) => setLocalSettings({...localSettings, companyName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-medium bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/3 text-[15px] font-bold text-[#1C1C1E]">Nama Penerima / Cabang</div><div className="w-2/3"><input type="text" value={localSettings.branchName || ''} onChange={(e) => setLocalSettings({...localSettings, branchName: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                            <div className="flex items-start justify-between p-5"><div className="w-1/3 text-[15px] font-bold text-[#1C1C1E]">Alamat Lengkap</div><div className="w-2/3"><textarea rows="2" value={localSettings.branchAddress || ''} onChange={(e) => setLocalSettings({...localSettings, branchAddress: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent resize-none"/></div></div>
                           </div>
                         </div>
 
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Konfigurasi Nomor PO</h3>
-                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                            <div className="flex items-center justify-between p-4 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Prefix PO</div><div className="w-1/2"><input type="text" value={localSettings.username || ''} onChange={(e) => setLocalSettings({...localSettings, username: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
-                            <div className="flex items-center justify-between p-4"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Nomor Selanjutnya</div><div className="w-1/2"><input type="number" value={localSettings.nextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, nextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
-                          </div>
-                          <p className="text-xs text-[#8E8E93] mt-2 ml-4">Contoh: {localSettings.username || 'PO'}/{new Date().getFullYear()}/{String(new Date().getMonth() + 1).padStart(2, '0')}/...</p>
-                        </div>
-
-                        <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Dokumen</h3>
-                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                            <div className="flex items-center justify-between p-4"><div className="w-1/2 text-[15px] font-medium text-[#1C1C1E]">Penandatangan</div><div className="w-1/2"><input type="text" value={localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Konfigurasi Nomor</h3>
+                          <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Prefix PO (Contoh: PO)</div><div className="w-1/2"><input type="text" value={localSettings.username || ''} onChange={(e) => setLocalSettings({...localSettings, username: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Nomor Selanjutnya PO</div><div className="w-1/2"><input type="number" value={localSettings.nextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, nextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Prefix SJ (Contoh: SJ)</div><div className="w-1/2"><input type="text" value={localSettings.sjUsername || ''} onChange={(e) => setLocalSettings({...localSettings, sjUsername: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Nomor Selanjutnya SJ</div><div className="w-1/2"><input type="number" value={localSettings.sjNextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, sjNextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
                           </div>
                         </div>
 
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Integrasi Spreadsheet</h3>
-                          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E5E5EA]">
-                            <div className="flex flex-col p-4">
-                              <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Google Apps Script Webhook URL</div>
-                              <input type="text" value={localSettings.webhookUrl || ''} onChange={(e) => setLocalSettings({...localSettings, webhookUrl: e.target.value})} onFocus={(e) => e.target.select()} placeholder="https://script.google.com/macros/s/.../exec" className="w-full text-left outline-none text-[15px] text-[#007AFF] bg-[#F2F2F7] p-3 rounded-xl border-none"/>
-                              <p className="text-xs text-[#8E8E93] mt-3">*Aplikasi akan mengirimkan data PO (JSON) ke URL di atas saat simpan. Kosongkan jika tidak menggunakan Spreadsheet.</p>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Dokumen</h3>
+                          <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-5"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Penandatangan Dokumen</div><div className="w-1/2"><input type="text" value={localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Integrasi Spreadsheet</h3>
+                          <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex flex-col p-6">
+                              <div className="text-[15px] font-bold text-[#1C1C1E] mb-3">Google Apps Script Webhook URL</div>
+                              <input type="text" value={localSettings.webhookUrl || ''} onChange={(e) => setLocalSettings({...localSettings, webhookUrl: e.target.value})} onFocus={(e) => e.target.select()} placeholder="https://script.google.com/macros/s/.../exec" className="w-full text-left outline-none text-[15px] text-[#007AFF] bg-[#F2F2F7] px-6 py-4 rounded-full border-none"/>
+                              <p className="text-sm text-[#8E8E93] mt-4">*Aplikasi akan mengirimkan data (JSON) ke URL di atas saat simpan. Kosongkan jika tidak menggunakan Spreadsheet.</p>
                               
-                              <details className="mt-4 border-t border-[#F2F2F7] pt-4 cursor-pointer group">
-                                  <summary className="text-sm font-bold text-[#007AFF] outline-none hover:underline">Cara Menghubungkan ke Spreadsheet (Klik untuk membuka)</summary>
-                                  <div className="mt-3 text-sm text-[#1C1C1E] space-y-2 cursor-auto leading-relaxed">
+                              <details className="mt-6 border-t border-[#F2F2F7] pt-5 cursor-pointer group">
+                                  <summary className="text-[15px] font-bold text-[#007AFF] outline-none hover:underline">Cara Menghubungkan ke Spreadsheet (Klik untuk membuka)</summary>
+                                  <div className="mt-4 text-[15px] text-[#1C1C1E] space-y-3 cursor-auto leading-relaxed">
                                       <p>1. Buat <b>Google Spreadsheet</b> baru di akun Google Anda.</p>
                                       <p>2. Di menu atas, klik <b>Ekstensi</b> &gt; <b>Apps Script</b>.</p>
                                       <p>3. Hapus semua kode bawaan, lalu <i>paste</i> (tempel) kode berikut:</p>
-                                      <div className="bg-[#F2F2F7] p-3 rounded-lg text-xs overflow-x-auto border border-[#E5E5EA] font-mono text-[#E3242B]">
+                                      <div className="bg-[#F2F2F7] p-5 rounded-3xl text-[13px] overflow-x-auto border border-[#E5E5EA] font-mono text-[#E3242B]">
 {`function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSheet();
     var data = JSON.parse(e.postData.contents);
     
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Tanggal", "No. PO", "Vendor", "Total", "Status", "Pembayaran", "PPN"]);
+      sheet.appendRow(["Tipe", "Tanggal", "Nomor", "Mitra", "Total", "Status", "Pembayaran", "PPN"]);
     }
     
-    var poDate = new Date(data.date).toLocaleDateString('id-ID');
+    var docDate = new Date(data.date).toLocaleDateString('id-ID');
     
     sheet.appendRow([
-      poDate, 
+      data.documentType,
+      docDate, 
       data.poNumber, 
       data.vendor.name, 
       data.total, 
