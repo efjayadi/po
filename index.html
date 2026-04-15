@@ -86,7 +86,7 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            // --- KOMPONEN AUTENTIKASI ---
+            // --- KOMPONEN AUTENTIKASI (LANDING PAGE SEAMLESS SPLIT-SCREEN) ---
             function AuthScreen() {
               const [isLogin, setIsLogin] = useState(true);
               const [email, setEmail] = useState('');
@@ -137,45 +137,77 @@
               };
 
               return (
-                <div className="min-h-screen w-full flex flex-col lg:flex-row font-sans text-[#1C1C1E] bg-white">
+                <div className="min-h-screen w-full flex flex-col lg:flex-row font-sans text-[#1C1C1E] bg-[#F4F5F7] relative overflow-hidden">
                   
-                  {/* Bagian Kiri - Copywriting & Branding */}
-                  <div className="lg:w-1/2 w-full p-8 sm:p-12 lg:p-24 flex flex-col justify-center relative overflow-hidden bg-white">
-                    {/* Elemen Latar Belakang Estetik */}
-                    <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#007AFF] opacity-5 rounded-full blur-3xl pointer-events-none"></div>
-                    <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#34C759] opacity-5 rounded-full blur-3xl pointer-events-none"></div>
-                    
-                    <div className="relative z-10 max-w-xl mx-auto lg:mx-0">
-                        <div className="w-12 h-12 bg-[#007AFF] rounded-2xl flex items-center justify-center text-white font-bold text-xl mb-8 shadow-[0_4px_14px_rgba(0,122,255,0.39)]">PO</div>
-                        
-                        <h1 className="text-4xl lg:text-[3.5rem] font-black tracking-tight text-[#1C1C1E] mb-6 leading-[1.1]">
-                          Sistem Purchasing,<br/>Dibuat oleh <span className="text-[#007AFF]">Purchasing</span>.
+                  {/* Animasi Background Kecepatan Cahaya (Ultrasonic Light Streaks) yang Seamless menutupi seluruh layar */}
+                  <style>{`
+                    @keyframes shoot {
+                      0% { transform: translateX(-100vw) scaleX(1); opacity: 0; }
+                      10% { opacity: 1; }
+                      80% { opacity: 1; }
+                      100% { transform: translateX(100vw) scaleX(4); opacity: 0; }
+                    }
+                    .fast-streak {
+                      position: absolute;
+                      height: 2px;
+                      background: linear-gradient(90deg, transparent, rgba(0,122,255,0.7), rgba(52,199,89,0.9), transparent);
+                      filter: blur(1px);
+                      animation: shoot linear infinite;
+                      z-index: 0;
+                    }
+                    .streak-1 { top: 15%; width: 15vw; animation-duration: 0.9s; animation-delay: 0.1s; }
+                    .streak-2 { top: 30%; width: 25vw; animation-duration: 0.6s; animation-delay: 0.4s; background: linear-gradient(90deg, transparent, rgba(0,122,255,0.9), transparent); }
+                    .streak-3 { top: 45%; width: 10vw; animation-duration: 1.2s; animation-delay: 0.2s; }
+                    .streak-4 { top: 60%; width: 30vw; animation-duration: 0.7s; animation-delay: 0.6s; }
+                    .streak-5 { top: 75%; width: 20vw; animation-duration: 0.85s; animation-delay: 0.3s; }
+                    .streak-6 { top: 90%; width: 35vw; animation-duration: 1.1s; animation-delay: 0.7s; background: linear-gradient(90deg, transparent, rgba(52,199,89,0.8), transparent); }
+                    .streak-7 { top: 10%; width: 18vw; animation-duration: 0.75s; animation-delay: 0.8s; }
+                    .streak-8 { top: 85%; width: 22vw; animation-duration: 0.65s; animation-delay: 0.15s; }
+                  `}</style>
+                  
+                  <div className="fast-streak streak-1"></div>
+                  <div className="fast-streak streak-2"></div>
+                  <div className="fast-streak streak-3"></div>
+                  <div className="fast-streak streak-4"></div>
+                  <div className="fast-streak streak-5"></div>
+                  <div className="fast-streak streak-6"></div>
+                  <div className="fast-streak streak-7"></div>
+                  <div className="fast-streak streak-8"></div>
+
+                  {/* Bagian Kiri - Copywriting Genius Marketing */}
+                  <div className="lg:w-1/2 w-full p-8 sm:p-12 lg:p-24 flex flex-col justify-center relative z-10">
+                    <div className="max-w-xl mx-auto lg:mx-0">
+                        <h1 className="text-4xl lg:text-[4rem] font-black tracking-tight mb-5 leading-[1.05]">
+                          <span className="text-[#007AFF]">Sistem Purchasing,</span><br/>
+                          <span className="text-[#1C1C1E]">Dibuat oleh Purchasing.</span>
                         </h1>
                         
                         <p className="text-lg text-[#8E8E93] mb-12 leading-relaxed font-medium">
-                          Software ERP tradisional seringkali kaku dan dipenuhi fitur basi yang memperlambat kerja. Sistem kami lahir langsung dari pengalaman nyata di lapangan dengan satu tujuan: <b>Kecepatan eksekusi</b>.
+                          Berbekal 4 tahun pengalaman di lapangan, inilah sistem yang murni berfokus pada esensi pekerjaan Anda. Tanpa fitur ribet yang tak pernah dipakai, dan pastinya tanpa waktu <i>loading</i> lemot yang menyita waktu Anda.
                         </p>
 
-                        <div className="space-y-8">
-                          <div className="flex items-start gap-5">
-                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0"><Zap size={24} /></div>
+                        <div className="space-y-4">
+                          <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/60 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-1 group border border-transparent hover:border-white/50 cursor-default">
+                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300"><Zap size={24} /></div>
                             <div>
-                              <h3 className="font-bold text-[#1C1C1E] text-lg">Kecepatan Tanpa Kompromi</h3>
-                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed">Tidak ada formulir berbelit. Buka, ketik, simpan, cetak. Alur kerja super mulus yang menghemat waktu Anda hingga 80%.</p>
+                              <h3 className="font-bold text-[#1C1C1E] text-lg">Sat-Set & Langsung Cetak</h3>
+                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed group-hover:text-[#555] transition-colors">Satu halaman tanpa loading. Ketik, simpan, dan cetak dalam hitungan detik.</p>
                             </div>
                           </div>
-                          <div className="flex items-start gap-5">
-                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0"><Target size={24} /></div>
+                          
+                          <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/60 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-1 group border border-transparent hover:border-white/50 cursor-default">
+                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300"><Target size={24} /></div>
                             <div>
-                              <h3 className="font-bold text-[#1C1C1E] text-lg">Tanpa Fitur Basi</h3>
-                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed">Kami membuang semua menu kompleks yang tidak Anda butuhkan. Antarmuka ala iOS yang langsung dipahami dalam 3 menit.</p>
+                              <h3 className="font-bold text-[#1C1C1E] text-lg">Anti Ribet</h3>
+                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed group-hover:text-[#555] transition-colors">Antarmuka sangat bersih dan mudah dipahami. Siapapun bisa pakai tanpa perlu panduan khusus.</p>
                             </div>
                           </div>
-                          <div className="flex items-start gap-5">
-                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0"><ShieldCheck size={24} /></div>
+                          
+                          <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white/60 backdrop-blur-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 transform hover:-translate-y-1 group border border-transparent hover:border-white/50 cursor-default">
+                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0 group-hover:scale-110 group-hover:bg-[#007AFF] group-hover:text-white transition-all duration-300"><ShieldCheck size={24} /></div>
                             <div>
-                              <h3 className="font-bold text-[#1C1C1E] text-lg">Integrasi Otomatis</h3>
-                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed">Satu ruang kerja tim. Persetujuan instan antara Staff dan Direktur secara real-time, lengkap dengan sinkronisasi ke Google Spreadsheet.</p>
+                              <h3 className="font-bold text-[#1C1C1E] text-lg">Otomatis Rekap</h3>
+                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed group-hover:text-[#555] transition-colors">Persetujuan instan antar tim. Data aman terpusat dan terhubung otomatis ke Google Sheets.</p>
                             </div>
                           </div>
                         </div>
@@ -183,8 +215,8 @@
                   </div>
 
                   {/* Bagian Kanan - Formulir Login */}
-                  <div className="lg:w-1/2 w-full bg-[#F2F2F7] flex flex-col justify-center items-center p-6 sm:p-12 min-h-screen border-l border-[#E5E5EA]">
-                     <div className="bg-white w-full max-w-[420px] rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 sm:p-10 relative overflow-hidden border border-[#E5E5EA]">
+                  <div className="lg:w-1/2 w-full flex flex-col justify-center items-center p-6 sm:p-12 relative z-10">
+                     <div className="bg-white/80 backdrop-blur-2xl w-full max-w-[420px] rounded-[2rem] shadow-[0_8px_40px_rgba(0,0,0,0.06)] p-8 sm:p-10 relative border border-white hover:shadow-[0_16px_50px_rgba(0,122,255,0.12)] transition-shadow duration-500">
                         
                         <div className="text-center mb-8">
                           <h2 className="text-2xl font-bold tracking-tight text-[#1C1C1E]">Selamat Datang</h2>
@@ -196,32 +228,46 @@
                           <button onClick={() => setIsLogin(false)} className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${!isLogin ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#1C1C1E]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}>Buat Akun</button>
                         </div>
 
-                        {error && <div className="bg-[#FFE5E5] text-[#FF3B30] text-sm p-3.5 rounded-xl mb-6 text-center border border-[#FFD1D1] font-medium">{error}</div>}
+                        {error && <div className="bg-[#FFE5E5] text-[#FF3B30] text-sm p-3.5 rounded-xl mb-6 text-center border border-[#FFD1D1] font-medium animate-pulse">{error}</div>}
 
                         <form onSubmit={handleEmailAuth} className="space-y-4">
                           <div>
-                            <input type="email" placeholder="Alamat Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" required />
+                            <input 
+                              type="email" 
+                              placeholder="Alamat Email" 
+                              value={email} 
+                              onChange={(e) => setEmail(e.target.value)} 
+                              className="w-full bg-[#F2F2F7] hover:bg-[#E5E5EA] focus:bg-white border border-transparent rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" 
+                              required 
+                            />
                           </div>
                           <div>
-                            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" required />
+                            <input 
+                              type="password" 
+                              placeholder="Password" 
+                              value={password} 
+                              onChange={(e) => setPassword(e.target.value)} 
+                              className="w-full bg-[#F2F2F7] hover:bg-[#E5E5EA] focus:bg-white border border-transparent rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" 
+                              required 
+                            />
                           </div>
-                          <button type="submit" disabled={loading} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-4 rounded-xl transition-colors shadow-sm flex justify-center items-center mt-2">
-                            {loading ? <Loader size={20} /> : (isLogin ? 'Masuk ke Sistem' : 'Buat Akun Gratis')}
+                          <button type="submit" disabled={loading} className="w-full bg-[#007AFF] hover:bg-[#0056b3] hover:scale-[1.02] active:scale-[0.98] text-white font-bold py-4 rounded-xl transition-all shadow-sm flex justify-center items-center mt-2">
+                            {loading ? <Loader size={20} /> : (isLogin ? 'Mulai Eksekusi' : 'Daftar Sekarang')}
                           </button>
                         </form>
 
                         <div className="flex items-center my-7">
                           <div className="flex-1 border-t border-[#E5E5EA]"></div>
-                          <span className="px-4 text-[#8E8E93] text-xs font-bold uppercase tracking-widest">Atau</span>
+                          <span className="px-4 text-[#8E8E93] text-xs font-bold uppercase tracking-widest">Akses Kilat</span>
                           <div className="flex-1 border-t border-[#E5E5EA]"></div>
                         </div>
 
                         <div className="space-y-3.5">
-                          <button onClick={handleGoogleAuth} className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E] font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-3">
+                          <button onClick={handleGoogleAuth} className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] hover:border-[#C7C7CC] text-[#1C1C1E] font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-3">
                             <Google size={20} /> Lanjutkan dengan Google
                           </button>
-                          <button onClick={handleAnonAuth} className="w-full bg-transparent hover:bg-black/5 text-[#8E8E93] hover:text-[#1C1C1E] font-bold py-4 rounded-xl transition-colors text-[15px]">
-                            Masuk Sebagai Tamu (Uji Coba)
+                          <button onClick={handleAnonAuth} className="w-full bg-transparent hover:bg-[#E5F1FF] text-[#007AFF] font-bold py-4 rounded-xl transition-colors text-[15px]">
+                            Masuk Sebagai Tamu (Uji Coba Langsung)
                           </button>
                         </div>
 
@@ -513,12 +559,12 @@
                     input[type=number] { -moz-appearance: textfield; }
                   `}</style>
 
+                  {/* Navigasi (Bilah Atas) - Tanpa Logo PO */}
                   <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 print:hidden z-10 sticky top-0">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                       <div className="flex justify-between items-center h-16">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-[#007AFF] rounded-lg flex items-center justify-center text-white font-bold text-sm">PO</div>
-                          <span className="font-bold text-gray-800 tracking-tight text-lg hidden sm:block">System</span>
+                          <span className="font-bold text-gray-800 tracking-tight text-xl">PO System</span>
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${userRole === 'Boss' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'}`}>
                              {userRole}
                           </span>
@@ -989,9 +1035,16 @@
               const [formData, setFormData] = useState({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
 
               const openAddForm = () => {
-                setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
-                setIsEditing(false);
-                setIsFormOpen(!isFormOpen && !isEditing ? false : true); 
+                if (isEditing) {
+                  // Jika sedang mode edit, rubah jadi add form tanpa menutup
+                  setIsEditing(false);
+                  setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
+                  setIsFormOpen(true);
+                } else {
+                  // Jika normal, toggle state (Buka/Tutup)
+                  setIsFormOpen(!isFormOpen);
+                  setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
+                }
               };
 
               const openEditForm = (sup) => {
