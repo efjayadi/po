@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Purchase Order & Surat Jalan</title>
+    <title>Sistem Dokumen Terpadu</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,6 +14,9 @@
     
     <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- html2pdf.js for Quick Save as PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Firebase SDK (ES Modules) -->
     <script type="module">
@@ -62,10 +65,11 @@
           Target: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>,
           ShieldCheck: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>,
           UserShield: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>,
-          UserCheck: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+          UserCheck: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>,
+          FileDown: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="M12 18v-6"></path><path d="M9 15l3 3 3-3"></path></svg>
         };
 
-        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, LogOut, Google, Loader, Building, UserPlus, Edit2, Zap, Target, ShieldCheck, UserShield, UserCheck } = Icons;
+        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, LogOut, Google, Loader, Building, UserPlus, Edit2, Zap, Target, ShieldCheck, UserShield, UserCheck, FileDown } = Icons;
 
         const renderApp = () => {
             const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, getFirestore, collection, doc, setDoc, getDoc, onSnapshot, deleteDoc } = window.firebaseAPI;
@@ -381,9 +385,14 @@
                          nextNumber: 1,
                          sjUsername: 'SJ',
                          sjNextNumber: 1,
-                         signatureName: 'Nama Direktur',
+                         invUsername: 'INV',
+                         invNextNumber: 1,
+                         signatureNamePO: 'Nama Lengkap',
+                         signatureNameSJ: 'Nama Lengkap',
+                         signatureNameINV: 'Nama Lengkap',
                          webhookUrl: '',
-                         requireApproval: true
+                         requireApproval: true,
+                         enablePPN: false
                      });
                      
                      onComplete({ companyId: newCompanyId, role: 'Boss' });
@@ -481,21 +490,23 @@
               const [userProfile, setUserProfile] = useState(null); 
               const [isLoadingAuth, setIsLoadingAuth] = useState(true);
               
-              // App Modes: 'PO' (Purchase Order) or 'SJ' (Surat Jalan)
+              // App Modes: 'PO' (Purchase Order), 'SJ' (Surat Jalan), 'INV' (Invoice)
               const [appMode, setAppMode] = useState('PO');
               const [activeTab, setActiveTab] = useState('create');
               const [editingDoc, setEditingDoc] = useState(null);
               
               const [settings, setSettings] = useState({
                 companyName: 'NAMA PERUSAHAAN', branchName: 'CABANG', branchAddress: '', 
-                username: 'PO', nextNumber: 1, sjUsername: 'SJ', sjNextNumber: 1, 
-                signatureName: '', webhookUrl: '', requireApproval: true
+                username: 'PO', nextNumber: 1, sjUsername: 'SJ', sjNextNumber: 1, invUsername: 'INV', invNextNumber: 1,
+                signatureNamePO: 'Nama Lengkap', signatureNameSJ: 'Nama Lengkap', signatureNameINV: 'Nama Lengkap', 
+                webhookUrl: '', requireApproval: true, enablePPN: false
               });
               
               const [suppliers, setSuppliers] = useState([]);
               const [customers, setCustomers] = useState([]);
               const [pos, setPos] = useState([]);
               const [sjs, setSjs] = useState([]);
+              const [invs, setInvs] = useState([]);
 
               useEffect(() => {
                 const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -555,8 +566,14 @@
                   const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                   setSjs(data.sort((a,b) => new Date(b.date) - new Date(a.date))); 
                 }, console.error);
+                
+                const invsRef = collection(db, 'artifacts', appId, 'public', 'data', `invs_${companyId}`);
+                const unsubInvs = onSnapshot(invsRef, (snap) => {
+                  const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                  setInvs(data.sort((a,b) => new Date(b.date) - new Date(a.date))); 
+                }, console.error);
 
-                return () => { unsubSet(); unsubSup(); unsubCust(); unsubPos(); unsubSjs(); };
+                return () => { unsubSet(); unsubSup(); unsubCust(); unsubPos(); unsubSjs(); unsubInvs(); };
               }, [userProfile]);
 
               const handleLogout = async () => {
@@ -582,7 +599,9 @@
                 const date = new Date();
                 const year = date.getFullYear();
                 const month = String(date.getMonth() + 1).padStart(2, '0');
-                const prefix = mode === 'PO' ? (settings.username || 'PO') : (settings.sjUsername || 'SJ');
+                let prefix = settings.username || 'PO';
+                if (mode === 'SJ') prefix = settings.sjUsername || 'SJ';
+                if (mode === 'INV') prefix = settings.invUsername || 'INV';
                 return `${prefix}/${year}/${month}/${String(num).padStart(3, '0')}`;
               };
 
@@ -601,16 +620,17 @@
 
               const onSaveDoc = async (docData, isUpdate, mode) => {
                 try {
-                  const collectionName = mode === 'PO' ? `pos_${companyId}` : `sjs_${companyId}`;
+                  let collectionName = `pos_${companyId}`;
+                  if (mode === 'SJ') collectionName = `sjs_${companyId}`;
+                  if (mode === 'INV') collectionName = `invs_${companyId}`;
+                  
                   await setDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, docData.id), docData);
                   
                   if (!isUpdate) {
                     const newSettings = { ...settings };
-                    if (mode === 'PO') {
-                        newSettings.nextNumber = (settings.nextNumber || 1) + 1;
-                    } else {
-                        newSettings.sjNextNumber = (settings.sjNextNumber || 1) + 1;
-                    }
+                    if (mode === 'PO') newSettings.nextNumber = (settings.nextNumber || 1) + 1;
+                    if (mode === 'SJ') newSettings.sjNextNumber = (settings.sjNextNumber || 1) + 1;
+                    if (mode === 'INV') newSettings.invNextNumber = (settings.invNextNumber || 1) + 1;
                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), newSettings);
                   }
                   
@@ -622,8 +642,11 @@
               const onUpdateStatusDoc = async (id, status, mode) => {
                  if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya atasan yang dapat mengubah status.");
                  try {
-                   const collectionName = mode === 'PO' ? `pos_${companyId}` : `sjs_${companyId}`;
-                   const sourceArray = mode === 'PO' ? pos : sjs;
+                   let collectionName = `pos_${companyId}`;
+                   let sourceArray = pos;
+                   if (mode === 'SJ') { collectionName = `sjs_${companyId}`; sourceArray = sjs; }
+                   if (mode === 'INV') { collectionName = `invs_${companyId}`; sourceArray = invs; }
+                   
                    const docToUpdate = sourceArray.find(p => p.id === id);
                    
                    if (docToUpdate) {
@@ -687,13 +710,19 @@
                               onClick={() => { setAppMode('PO'); setEditingDoc(null); setActiveTab('create'); }} 
                               className={`px-4 py-1.5 rounded-full transition-all ${appMode === 'PO' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#007AFF]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}
                             >
-                              Purchase Order
+                              PO
                             </button>
                             <button 
                               onClick={() => { setAppMode('SJ'); setEditingDoc(null); setActiveTab('create'); }} 
-                              className={`px-4 py-1.5 rounded-full transition-all ${appMode === 'SJ' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#34C759]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}
+                              className={`px-4 py-1.5 rounded-full transition-all ${appMode === 'SJ' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#FF9500]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}
                             >
-                              Surat Jalan
+                              SJ
+                            </button>
+                            <button 
+                              onClick={() => { setAppMode('INV'); setEditingDoc(null); setActiveTab('create'); }} 
+                              className={`px-4 py-1.5 rounded-full transition-all ${appMode === 'INV' ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#34C759]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}
+                            >
+                              Invoice
                             </button>
                           </div>
 
@@ -704,7 +733,7 @@
                         
                         <div className="flex gap-2 sm:gap-6 overflow-x-auto hide-scrollbar h-full items-end">
                           <NavButton active={activeTab === 'create'} onClick={() => { setActiveTab('create'); setEditingDoc(null); }} icon={<FileText size={16} />} label={`Buat ${appMode}`} />
-                          <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label={`Daftar ${appMode}`} badge={settings.requireApproval !== false ? (appMode === 'PO' ? pos : sjs).filter(p => p.status === 'Pending').length : 0} />
+                          <NavButton active={activeTab === 'approve'} onClick={() => setActiveTab('approve')} icon={<ClipboardList size={16} />} label={`Daftar ${appMode}`} badge={settings.requireApproval !== false ? (appMode === 'PO' ? pos : appMode === 'SJ' ? sjs : invs).filter(p => p.status === 'Pending').length : 0} />
                           <NavButton active={activeTab === 'partners'} onClick={() => setActiveTab('partners')} icon={<Users size={16} />} label={appMode === 'PO' ? 'Supplier' : 'Customer'} />
                           <NavButton active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} icon={<Settings size={16} />} label={userRole === 'Boss' ? "Pengaturan" : "Profil"} />
                         </div>
@@ -725,17 +754,17 @@
                     {activeTab === 'approve' && (
                       <DocListView 
                         appMode={appMode}
-                        docs={appMode === 'PO' ? pos : sjs} 
+                        docs={appMode === 'PO' ? pos : appMode === 'SJ' ? sjs : invs} 
                         onLoadDoc={(doc) => { setEditingDoc(doc); setActiveTab('create'); }} 
-                        onUpdateStatus={onUpdateStatusDoc} userRole={userRole} 
+                        onUpdateStatus={onUpdateStatusDoc} userRole={userRole} settings={settings}
                       />
                     )}
                     {activeTab === 'partners' && (
                       <PartnerView 
                         appMode={appMode}
                         partners={appMode === 'PO' ? suppliers : customers} 
-                        docs={appMode === 'PO' ? pos : sjs} 
-                        onAddPartner={onAddPartner} onEditPartner={onEditPartner} onDeletePartner={onDeletePartner} 
+                        docs={appMode === 'PO' ? pos : appMode === 'SJ' ? sjs : invs} 
+                        onAddPartner={onAddPartner} onEditPartner={onEditPartner} onDeletePartner={onDeletePartner} settings={settings}
                       />
                     )}
                     {activeTab === 'settings' && (
@@ -778,13 +807,24 @@
               const [discountModalId, setDiscountModalId] = useState(null);
               const [tempDiscounts, setTempDiscounts] = useState(['', '', '', '']);
 
-              const docTitle = appMode === 'PO' ? 'Purchase Order' : 'Surat Jalan';
-              const docLabel = appMode === 'PO' ? 'PO' : 'SJ';
-              const partnerLabel = appMode === 'PO' ? 'Vendor' : 'Customer';
+              let docTitle = 'Purchase Order';
+              let docLabel = 'PO';
+              let partnerLabel = 'Vendor';
+              
+              if (appMode === 'SJ') { docTitle = 'Surat Jalan'; docLabel = 'SJ'; partnerLabel = 'Customer'; }
+              if (appMode === 'INV') { docTitle = 'Invoice'; docLabel = 'INV'; partnerLabel = 'Customer'; }
 
               const selectedPartner = partners.find(s => s.id === partnerId) || {};
-              const currentDocNumber = generateDocNumber(appMode === 'PO' ? (settings.nextNumber || 1) : (settings.sjNextNumber || 1), appMode);
+              
+              let currentNextNumber = settings.nextNumber || 1;
+              if (appMode === 'SJ') currentNextNumber = settings.sjNextNumber || 1;
+              if (appMode === 'INV') currentNextNumber = settings.invNextNumber || 1;
+              
+              const currentDocNumber = generateDocNumber(currentNextNumber, appMode);
               const isApproved = editingDoc && editingDoc.status === 'Approved';
+
+              const currentSignatureKey = appMode === 'PO' ? 'signatureNamePO' : appMode === 'SJ' ? 'signatureNameSJ' : 'signatureNameINV';
+              const currentSignature = settings[currentSignatureKey] || settings.signatureName || '';
 
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
               const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -827,7 +867,7 @@
 
               useEffect(() => {
                 if (editingDoc) {
-                  setPartnerId(editingDoc.vendor.id); // Keeping property name as vendor internally for compatibility
+                  setPartnerId(editingDoc.vendor.id); 
                   setItems(editingDoc.items);
                   setDate(new Date(editingDoc.date));
                   setNote(editingDoc.note || '');
@@ -837,7 +877,7 @@
                   setDate(new Date());
                   setNote('');
                 }
-              }, [editingDoc, partners]);
+              }, [editingDoc, partners, appMode]);
 
               const total = items.reduce((sum, item) => sum + (item.qty * calculateNetPrice(item.price, item.discounts)), 0);
               const isFormValid = partnerId && items.length > 0 && items.every(i => i.desc.trim() !== '' && i.qty > 0);
@@ -846,11 +886,11 @@
                 if (!isFormValid) return;
                 const docData = {
                   id: editingDoc ? editingDoc.id : Date.now().toString(),
-                  poNumber: editingDoc ? editingDoc.poNumber : currentDocNumber, // Using poNumber key internally for backwards compatibility
+                  poNumber: editingDoc ? editingDoc.poNumber : currentDocNumber, 
                   date: date.toISOString(), 
                   vendor: selectedPartner, 
                   items: items, 
-                  total: total, 
+                  total: appMode === 'SJ' ? 0 : total, 
                   note: note,
                   status: editingDoc ? editingDoc.status : (settings.requireApproval !== false ? 'Pending' : 'Approved'),
                   createdByRole: userRole
@@ -863,14 +903,33 @@
                 setDate(new Date());
               };
 
+              const handleSavePdf = () => {
+                  if (!isApproved) {
+                      alert(`Simpan PDF hanya tersedia untuk ${docLabel} yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar.`);
+                      return;
+                  }
+                  const element = document.getElementById('printable-canvas');
+                  const filename = `${editingDoc ? editingDoc.poNumber : currentDocNumber}.pdf`.replace(/\//g, '-');
+                  const opt = {
+                    margin:       0,
+                    filename:     filename,
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: [9.5, 5.5], orientation: 'landscape' }
+                  };
+                  html2pdf().set(opt).from(element).save();
+              };
+
               return (
                 <div className="max-w-5xl mx-auto flex flex-col gap-6 relative">
                   <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-50 print:hidden">
-                    <button onClick={(e) => { if (!isApproved) { e.preventDefault(); alert(`Cetak hanya tersedia untuk ${docLabel} yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar.`); return; } window.print(); }} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><Printer size={18} /> Cetak</button>
-                    <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? (appMode === 'PO' ? 'bg-[#007AFF] hover:bg-[#0056b3]' : 'bg-[#34C759] hover:bg-[#2DB34A]') + ' text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
+                    <button onClick={handleSavePdf} disabled={!isApproved} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><FileDown size={18} /> PDF</button>
+                    <button onClick={(e) => { if (!isApproved) { e.preventDefault(); alert(`Cetak hanya tersedia untuk ${docLabel} yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar.`); return; } window.print(); }} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><Printer size={18} /> Cetak</button>
+                    <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? (appMode === 'PO' ? 'bg-[#007AFF] hover:bg-[#0056b3]' : appMode === 'SJ' ? 'bg-[#FF9500] hover:bg-[#E08300]' : 'bg-[#34C759] hover:bg-[#2DB34A]') + ' text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
                   </div>
 
-                  <div className="bg-white p-6 shadow-md rounded-3xl print:rounded-none print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
+                  {/* Kertas Dokumen Tanpa Border Radius */}
+                  <div id="printable-canvas" className="bg-white p-6 shadow-md print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <h1 className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}>
@@ -883,8 +942,8 @@
                         <table className="text-sm">
                           <tbody>
                             <tr><td className="pr-4 py-0.5 text-left">{docLabel}</td><td className="pr-2 py-0.5">:</td><td className="text-left font-medium">{editingDoc ? editingDoc.poNumber : currentDocNumber}</td></tr>
-                            <tr><td className="pr-4 py-0.5 text-left">Payment</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedPartner.payment || '-'}</td></tr>
-                            <tr><td className="pr-4 py-0.5 text-left">PPN</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedPartner.ppn || '-'}</td></tr>
+                            {appMode !== 'SJ' && <tr><td className="pr-4 py-0.5 text-left">Payment</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedPartner.payment || '-'}</td></tr>}
+                            {appMode !== 'SJ' && settings.enablePPN !== false && <tr><td className="pr-4 py-0.5 text-left">PPN</td><td className="pr-2 py-0.5">:</td><td className="text-left">{selectedPartner.ppn || '-'}</td></tr>}
                           </tbody>
                         </table>
                       </div>
@@ -932,8 +991,8 @@
                             <th className="py-1 px-2 text-left font-bold">DESKRIPSI ITEM</th>
                             <th className="py-1 px-2 text-center font-bold w-12">Qty</th>
                             <th className="py-1 px-2 text-center font-bold w-16">UNIT</th>
-                            <th className="py-1 px-2 text-right font-bold w-28">UNIT PRICE</th>
-                            <th className="py-1 px-2 text-right font-bold w-32">SUB TOTAL</th>
+                            {appMode !== 'SJ' && <th className="py-1 px-2 text-right font-bold w-28">UNIT PRICE</th>}
+                            {appMode !== 'SJ' && <th className="py-1 px-2 text-right font-bold w-32">SUB TOTAL</th>}
                             <th className="py-1 px-0 w-8 print:hidden"></th>
                           </tr>
                         </thead>
@@ -944,25 +1003,32 @@
                               <td className="py-1 px-2 align-top"><input type="text" value={item.desc} onChange={(e) => handleItemChange(item.id, 'desc', e.target.value)} onFocus={(e) => e.target.select()} className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none uppercase" placeholder="Masukkan deskripsi barang..." /></td>
                               <td className="py-1 px-2 align-top text-center"><input type="number" value={item.qty} onChange={(e) => handleItemChange(item.id, 'qty', Number(e.target.value))} onFocus={(e) => e.target.select()} className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none text-center" min="1" /></td>
                               <td className="py-1 px-2 align-top text-center"><input type="text" value={item.unit} onChange={(e) => handleItemChange(item.id, 'unit', e.target.value)} onFocus={(e) => e.target.select()} className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 print:border-none text-center uppercase" /></td>
-                              <td className="py-1 px-2 align-top text-right">
-                                <div className="flex flex-col items-end gap-1 print:hidden">
-                                  <div className="flex items-center justify-end gap-1 w-full">
-                                    <button onClick={() => openDiscountModal(item)} className="p-1 text-[#007AFF] hover:bg-[#E5F1FF] rounded-full transition-colors" title="Atur Diskon">%</button>
-                                    <input type="number" value={item.price || ''} onChange={(e) => handleItemChange(item.id, 'price', Number(e.target.value))} onFocus={(e) => e.target.select()} className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 text-right" step="100" placeholder="0" />
-                                  </div>
-                                </div>
-                                <div className="hidden print:block text-right">{formatCurrency(calculateNetPrice(item.price, item.discounts))}</div>
-                              </td>
-                              <td className="py-1.5 px-2 align-top text-right font-medium">{formatCurrency(item.qty * calculateNetPrice(item.price, item.discounts))}</td>
+                              
+                              {appMode !== 'SJ' && (
+                                  <td className="py-1 px-2 align-top text-right">
+                                    <div className="flex flex-col items-end gap-1 print:hidden">
+                                      <div className="flex items-center justify-end gap-1 w-full">
+                                        <button onClick={() => openDiscountModal(item)} className="p-1 text-[#007AFF] hover:bg-[#E5F1FF] rounded-full transition-colors" title="Atur Diskon">%</button>
+                                        <input type="number" value={item.price || ''} onChange={(e) => handleItemChange(item.id, 'price', Number(e.target.value))} onFocus={(e) => e.target.select()} className="w-full bg-transparent outline-none border-b border-transparent focus:border-gray-300 text-right" step="100" placeholder="0" />
+                                      </div>
+                                    </div>
+                                    <div className="hidden print:block text-right">{formatCurrency(calculateNetPrice(item.price, item.discounts))}</div>
+                                  </td>
+                              )}
+                              
+                              {appMode !== 'SJ' && (
+                                  <td className="py-1.5 px-2 align-top text-right font-medium">{formatCurrency(item.qty * calculateNetPrice(item.price, item.discounts))}</td>
+                              )}
+
                               <td className="py-1 px-0 align-top text-center print:hidden"><button onClick={() => handleRemoveItem(item.id)} className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-full" title="Hapus baris"><Trash2 size={16} /></button></td>
                             </tr>
                           ))}
                         </tbody>
-                        <tfoot>
+                        <tfoot className="print:hidden">
                           <tr>
-                            <td colSpan="5" className="pt-2"><button onClick={handleAddItem} className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-3 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-full transition-colors"><Plus size={14} /> TAMBAH BARIS</button></td>
-                            <td className="pt-2 px-2 align-top text-right"><div className="border-t border-black pt-1"><span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span></div></td>
-                            <td className="print:hidden"></td>
+                            <td colSpan={appMode === 'SJ' ? "3" : "5"} className="pt-2"><button onClick={handleAddItem} className="w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-3 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-full transition-colors"><Plus size={14} /> TAMBAH BARIS</button></td>
+                            {appMode !== 'SJ' && <td className="pt-2 px-2 align-top text-right"><div className="border-t border-black pt-1"><span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span></div></td>}
+                            <td></td>
                           </tr>
                         </tfoot>
                       </table>
@@ -974,17 +1040,24 @@
                          <textarea className="w-full bg-transparent border-transparent outline-none resize-none text-sm p-3 hover:bg-gray-50 focus:bg-gray-50 focus:ring-1 focus:ring-blue-100 rounded-3xl transition-all print:resize-none print:p-0 print:border-none" rows="3" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Tambahkan catatan khusus... (opsional)" />
                       </div>
                       <div className="flex flex-col items-end col-start-2">
+                        {appMode !== 'SJ' && (
+                            <div className="w-[140px] mb-6 hidden print:block">
+                              <div className="border-t border-black pt-1 flex justify-end">
+                                <span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span>
+                              </div>
+                            </div>
+                        )}
                         <div className="text-center w-48 relative pr-2">
                           <div className="h-16 mb-2"></div> 
                           <div className="border-t border-black"></div>
                           <div className="mt-1 text-sm font-bold flex items-center justify-center whitespace-nowrap">
                             <span>(</span>
                             <span className="relative inline-flex items-center justify-center">
-                              <span className="invisible whitespace-pre min-w-[1px]">{settings.signatureName || ' '}</span>
+                              <span className="invisible whitespace-pre min-w-[1px]">{currentSignature || ' '}</span>
                               {userRole === 'Boss' ? (
-                                <input type="text" value={settings.signatureName || ''} onChange={(e) => setSettings({...settings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0" />
+                                <input type="text" value={currentSignature} onChange={(e) => setSettings({...settings, [currentSignatureKey]: e.target.value})} onFocus={(e) => e.target.select()} className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0" />
                               ) : (
-                                <div className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0">{settings.signatureName}</div>
+                                <div className="absolute inset-0 w-full h-full bg-transparent border-none text-center outline-none p-0 m-0">{currentSignature}</div>
                               )}
                             </span>
                             <span>)</span>
@@ -1024,15 +1097,17 @@
             }
 
             // --- 2. DOC LIST VIEW ---
-            function DocListView({ appMode, docs, onLoadDoc, onUpdateStatus, userRole }) {
+            function DocListView({ appMode, docs, onLoadDoc, onUpdateStatus, userRole, settings }) {
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num);
               const [expandedId, setExpandedId] = useState(null);
               const [searchTerm, setSearchTerm] = useState('');
               const [isExportModalOpen, setIsExportModalOpen] = useState(false);
               const [exportFilter, setExportFilter] = useState({ startDate: '', endDate: '', tax: 'Semua' });
 
-              const docTitle = appMode === 'PO' ? 'Purchase Order' : 'Surat Jalan';
-              const partnerLabel = appMode === 'PO' ? 'Vendor' : 'Customer';
+              let docTitle = 'Purchase Order';
+              let partnerLabel = 'Vendor';
+              if (appMode === 'SJ') { docTitle = 'Surat Jalan'; partnerLabel = 'Customer'; }
+              if (appMode === 'INV') { docTitle = 'Invoice'; partnerLabel = 'Customer'; }
 
               const toggleExpand = (id) => setExpandedId(expandedId === id ? null : id);
               const filteredDocs = docs.filter(doc => doc.poNumber.toLowerCase().includes(searchTerm.toLowerCase()) || doc.vendor.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -1051,12 +1126,21 @@
 
                 let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>';
                 html += `<h2>Laporan ${docTitle}</h2>`;
-                html += `<p>Periode: ${exportFilter.startDate || 'Awal'} s/d ${exportFilter.endDate || 'Akhir'} | Filter Pajak: ${exportFilter.tax}</p>`;
+                html += `<p>Periode: ${exportFilter.startDate || 'Awal'} s/d ${exportFilter.endDate || 'Akhir'} ${settings.enablePPN !== false && appMode !== 'SJ' ? '| Filter Pajak: ' + exportFilter.tax : ''}</p>`;
                 html += '<table border="1" style="border-collapse: collapse;">';
-                html += `<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. ${appMode}</th><th>Nama ${partnerLabel}</th><th>Pembayaran</th><th>Status Pajak</th><th>Subtotal</th><th>Status</th></tr>`;
-                exportedData.forEach(doc => {
-                    html += `<tr><td>${new Date(doc.date).toLocaleDateString('id-ID')}</td><td>${doc.poNumber}</td><td>${doc.vendor.name}</td><td>${doc.vendor.payment}</td><td>${doc.vendor.ppn}</td><td>${doc.total}</td><td>${doc.status}</td></tr>`;
-                });
+                
+                if (appMode === 'SJ') {
+                    html += `<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. ${appMode}</th><th>Nama ${partnerLabel}</th><th>Status</th></tr>`;
+                    exportedData.forEach(doc => {
+                        html += `<tr><td>${new Date(doc.date).toLocaleDateString('id-ID')}</td><td>${doc.poNumber}</td><td>${doc.vendor.name}</td><td>${doc.status}</td></tr>`;
+                    });
+                } else {
+                    html += `<tr style="background-color: #f2f2f2;"><th>Tanggal</th><th>No. ${appMode}</th><th>Nama ${partnerLabel}</th><th>Pembayaran</th>${settings.enablePPN !== false ? '<th>Status Pajak</th>' : ''}<th>Subtotal</th><th>Status</th></tr>`;
+                    exportedData.forEach(doc => {
+                        html += `<tr><td>${new Date(doc.date).toLocaleDateString('id-ID')}</td><td>${doc.poNumber}</td><td>${doc.vendor.name}</td><td>${doc.vendor.payment}</td>${settings.enablePPN !== false ? '<td>' + doc.vendor.ppn + '</td>' : ''}<td>${doc.total}</td><td>${doc.status}</td></tr>`;
+                    });
+                }
+                
                 html += '</table></body></html>';
 
                 const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
@@ -1098,10 +1182,14 @@
                               </div>
                             </div>
                             <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto w-full">
-                              <div className="text-right">
-                                <div className="text-xs text-[#8E8E93] uppercase font-bold tracking-wider mb-1">Total</div>
-                                <div className="font-bold text-[#1C1C1E] text-xl">Rp {formatCurrency(doc.total)}</div>
-                              </div>
+                              
+                              {appMode !== 'SJ' && (
+                                  <div className="text-right">
+                                    <div className="text-xs text-[#8E8E93] uppercase font-bold tracking-wider mb-1">Total</div>
+                                    <div className="font-bold text-[#1C1C1E] text-xl">Rp {formatCurrency(doc.total)}</div>
+                                  </div>
+                              )}
+
                               <div className="flex items-center gap-3">
                                 {userRole === 'Boss' && doc.status === 'Pending' && (
                                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
@@ -1120,7 +1208,12 @@
                               <div className="overflow-x-auto">
                                 <table className="w-full text-sm text-left">
                                   <thead className="text-xs text-[#8E8E93] uppercase bg-white/50 border-b border-[#E5E5EA]">
-                                    <tr><th className="px-4 py-3 rounded-tl-[1.5rem]">Deskripsi</th><th className="px-4 py-3 text-center">Qty</th><th className="px-4 py-3 text-right">Harga</th><th className="px-4 py-3 text-right rounded-tr-[1.5rem]">Subtotal</th></tr>
+                                    <tr>
+                                        <th className="px-4 py-3 rounded-tl-[1.5rem]">Deskripsi</th>
+                                        <th className="px-4 py-3 text-center">Qty</th>
+                                        {appMode !== 'SJ' && <th className="px-4 py-3 text-right">Harga</th>}
+                                        {appMode !== 'SJ' && <th className="px-4 py-3 text-right rounded-tr-[1.5rem]">Subtotal</th>}
+                                    </tr>
                                   </thead>
                                   <tbody className="divide-y divide-[#F2F2F7]">
                                     {doc.items.map((item, idx) => {
@@ -1129,8 +1222,8 @@
                                         <tr key={idx} className="bg-white hover:bg-white/80 transition-colors">
                                           <td className="px-4 py-4 font-semibold text-[#1C1C1E]">{item.desc}</td>
                                           <td className="px-4 py-4 text-center text-[#8E8E93]">{item.qty} {item.unit}</td>
-                                          <td className="px-4 py-4 text-right text-[#8E8E93]">Rp {formatCurrency(item.price)}</td>
-                                          <td className="px-4 py-4 text-right font-bold text-[#1C1C1E]">Rp {formatCurrency(item.qty * netPrice)}</td>
+                                          {appMode !== 'SJ' && <td className="px-4 py-4 text-right text-[#8E8E93]">Rp {formatCurrency(item.price)}</td>}
+                                          {appMode !== 'SJ' && <td className="px-4 py-4 text-right font-bold text-[#1C1C1E]">Rp {formatCurrency(item.qty * netPrice)}</td>}
                                         </tr>
                                       );
                                     })}
@@ -1169,12 +1262,15 @@
                               <input type="date" value={exportFilter.endDate} onChange={e => setExportFilter({...exportFilter, endDate: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-full px-5 py-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]" />
                             </div>
                           </div>
-                          <div>
-                            <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Status Pajak</label>
-                            <select value={exportFilter.tax} onChange={e => setExportFilter({...exportFilter, tax: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-full px-5 py-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]">
-                              <option value="Semua">Semua (PPN & Non-PPN)</option><option value="PPN">Hanya PPN</option><option value="Non-PPN">Hanya Non-PPN</option>
-                            </select>
-                          </div>
+                          
+                          {settings.enablePPN !== false && appMode !== 'SJ' && (
+                              <div>
+                                <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider block mb-2">Status Pajak</label>
+                                <select value={exportFilter.tax} onChange={e => setExportFilter({...exportFilter, tax: e.target.value})} className="w-full bg-[#F2F2F7] border-none rounded-full px-5 py-3 text-sm text-[#1C1C1E] outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                  <option value="Semua">Semua (PPN & Non-PPN)</option><option value="PPN">Hanya PPN</option><option value="Non-PPN">Hanya Non-PPN</option>
+                                </select>
+                              </div>
+                          )}
                           <button onClick={handleExportExcel} className="w-full bg-[#34C759] hover:bg-[#2DB34A] text-white font-bold py-4 rounded-full transition-colors shadow-sm flex items-center justify-center gap-2 mt-4"><Download size={18} /> Unduh (.xls)</button>
                         </div>
                       </div>
@@ -1185,7 +1281,7 @@
             }
 
             // --- 3. PARTNER LIST VIEW ---
-            function PartnerView({ appMode, partners, docs, onAddPartner, onEditPartner, onDeletePartner }) {
+            function PartnerView({ appMode, partners, docs, onAddPartner, onEditPartner, onDeletePartner, settings }) {
               const [isFormOpen, setIsFormOpen] = useState(false);
               const [isEditing, setIsEditing] = useState(false);
               const [formData, setFormData] = useState({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
@@ -1239,18 +1335,23 @@
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="space-y-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Nama {partnerLabel} *</label><input required type="text" className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder={`PT. Nama ${partnerLabel}`} value={formData.name} onChange={e => setFormData({...formData, name: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} /></div>
                         <div className="space-y-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">No. Telepon</label><input type="text" className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="0812..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} onFocus={(e) => e.target.select()} /></div>
+                        
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Pembayaran</label>
                           <select className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.payment} onChange={e => setFormData({...formData, payment: e.target.value})}>
                             <option value="Cash">Cash</option><option value="Tempo">Tempo</option>
                           </select>
                         </div>
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Status Pajak</label>
-                          <select className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
-                            <option value="Non-PPN">Non-PPN</option><option value="PPN">PPN</option>
-                          </select>
-                        </div>
+                        
+                        {settings.enablePPN !== false && (
+                            <div className="space-y-2">
+                              <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Status Pajak</label>
+                              <select className="w-full bg-[#F2F2F7] rounded-full px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
+                                <option value="Non-PPN">Non-PPN</option><option value="PPN">PPN</option>
+                              </select>
+                            </div>
+                        )}
+
                         <div className="space-y-2 md:col-span-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-2">Alamat (Opsional)</label><textarea className="w-full bg-[#F2F2F7] rounded-[2rem] px-6 py-4 outline-none focus:ring-2 focus:ring-[#007AFF]" rows="3" placeholder="Jl. Raya..." value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} onFocus={(e) => e.target.select()} /></div>
                       </div>
                       <div className="flex justify-end pt-4"><button type="submit" className="px-8 py-4 bg-[#007AFF] text-white rounded-full font-bold shadow-sm hover:bg-[#0056b3] transition-colors">{isEditing ? 'Simpan Perubahan' : `Simpan ${partnerLabel}`}</button></div>
@@ -1267,7 +1368,10 @@
                         <h3 className="font-bold text-xl text-[#1C1C1E] mb-1 pr-20">{sup.name}</h3>
                         <p className="text-[15px] text-[#8E8E93] mb-5">{sup.phone || 'Tidak ada telepon'}</p>
                         <div className="mt-auto">
-                          <div className="flex gap-2 mb-4"><span className="px-3 py-1.5 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-full">{sup.payment}</span><span className="px-3 py-1.5 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-full">{sup.ppn}</span></div>
+                          <div className="flex gap-2 mb-4">
+                            <span className="px-3 py-1.5 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-full">{sup.payment}</span>
+                            {settings.enablePPN !== false && <span className="px-3 py-1.5 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-full">{sup.ppn}</span>}
+                          </div>
                           <p className="text-[15px] text-[#1C1C1E] line-clamp-2">{sup.address || '-'}</p>
                         </div>
                       </div>
@@ -1333,8 +1437,23 @@
                     {userRole === 'Boss' && (
                       <>
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Alur Kerja (Workflow)</h3>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Alur Kerja & Perpajakan</h3>
                           <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
+                            <div className="flex items-center justify-between p-6 border-b border-[#F2F2F7]">
+                              <div className="w-3/4 pr-4">
+                                <div className="text-[17px] font-bold text-[#1C1C1E]">Perusahaan PKP (Aktifkan PPN)</div>
+                                <div className="text-sm text-[#8E8E93] mt-1">Jika dimatikan, opsi dan tampilan tabel terkait PPN akan disembunyikan sepenuhnya dari sistem.</div>
+                              </div>
+                              <div className="w-1/4 flex justify-end">
+                                <label className="flex items-center cursor-pointer">
+                                  <div className="relative">
+                                    <input type="checkbox" className="sr-only" checked={localSettings.enablePPN === true} onChange={(e) => setLocalSettings({...localSettings, enablePPN: e.target.checked})} />
+                                    <div className={`block w-14 h-8 rounded-full transition-colors ${localSettings.enablePPN === true ? 'bg-[#34C759]' : 'bg-[#E5E5EA]'}`}></div>
+                                    <div className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${localSettings.enablePPN === true ? 'transform translate-x-6' : ''} shadow-sm`}></div>
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
                             <div className="flex items-center justify-between p-6">
                               <div className="w-3/4 pr-4">
                                 <div className="text-[17px] font-bold text-[#1C1C1E]">Wajib Persetujuan (Approval)</div>
@@ -1363,19 +1482,25 @@
                         </div>
 
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Konfigurasi Nomor</h3>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Konfigurasi Nomor Dokumen</h3>
                           <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
                             <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Prefix PO (Contoh: PO)</div><div className="w-1/2"><input type="text" value={localSettings.username || ''} onChange={(e) => setLocalSettings({...localSettings, username: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
                             <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Nomor Selanjutnya PO</div><div className="w-1/2"><input type="number" value={localSettings.nextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, nextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
+                            
                             <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Prefix SJ (Contoh: SJ)</div><div className="w-1/2"><input type="text" value={localSettings.sjUsername || ''} onChange={(e) => setLocalSettings({...localSettings, sjUsername: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
-                            <div className="flex items-center justify-between p-5"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Nomor Selanjutnya SJ</div><div className="w-1/2"><input type="number" value={localSettings.sjNextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, sjNextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Nomor Selanjutnya SJ</div><div className="w-1/2"><input type="number" value={localSettings.sjNextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, sjNextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
+
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Prefix Invoice</div><div className="w-1/2"><input type="text" value={localSettings.invUsername || ''} onChange={(e) => setLocalSettings({...localSettings, invUsername: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Nomor Selanjutnya Invoice</div><div className="w-1/2"><input type="number" value={localSettings.invNextNumber || 1} onChange={(e) => setLocalSettings({...localSettings, invNextNumber: Number(e.target.value)})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] font-mono bg-transparent" min="1"/></div></div>
                           </div>
                         </div>
 
                         <div>
-                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Dokumen</h3>
+                          <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-3 ml-4">Penandatangan Dokumen</h3>
                           <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-[#E5E5EA]">
-                            <div className="flex items-center justify-between p-5"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Penandatangan Dokumen</div><div className="w-1/2"><input type="text" value={localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureName: e.target.value})} onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Penandatangan PO</div><div className="w-1/2"><input type="text" value={localSettings.signatureNamePO !== undefined ? localSettings.signatureNamePO : localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureNamePO: e.target.value})} placeholder="Nama Lengkap" onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5 border-b border-[#F2F2F7]"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Penandatangan SJ</div><div className="w-1/2"><input type="text" value={localSettings.signatureNameSJ !== undefined ? localSettings.signatureNameSJ : localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureNameSJ: e.target.value})} placeholder="Nama Lengkap" onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
+                            <div className="flex items-center justify-between p-5"><div className="w-1/2 text-[15px] font-bold text-[#1C1C1E]">Penandatangan Invoice</div><div className="w-1/2"><input type="text" value={localSettings.signatureNameINV !== undefined ? localSettings.signatureNameINV : localSettings.signatureName || ''} onChange={(e) => setLocalSettings({...localSettings, signatureNameINV: e.target.value})} placeholder="Nama Lengkap" onFocus={(e) => e.target.select()} className="w-full text-right outline-none text-[15px] text-[#8E8E93] bg-transparent"/></div></div>
                           </div>
                         </div>
 
