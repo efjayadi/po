@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Purchase Order - Universal</title>
+    <title>Sistem Purchase Order Profesional</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -56,10 +56,16 @@
           Google: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" /><path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" /><path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" /><path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" /></svg>,
           Loader: ({size=24, className=""}) => <svg className={`animate-spin ${className}`} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>,
           Building: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>,
-          UserPlus: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+          UserPlus: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>,
+          Edit2: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>,
+          Zap: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
+          Target: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>,
+          ShieldCheck: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>,
+          UserShield: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>,
+          UserCheck: ({size=24, className=""}) => <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
         };
 
-        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, LogOut, Google, Loader, Building, UserPlus } = Icons;
+        const { Printer, Save, Plus, Trash2, CheckCircle, XCircle, Settings, Users, FileText, ClipboardList, ChevronDown, ChevronUp, Search, Download, LogOut, Google, Loader, Building, UserPlus, Edit2, Zap, Target, ShieldCheck, UserShield, UserCheck } = Icons;
 
         const renderApp = () => {
             const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, getFirestore, collection, doc, setDoc, getDoc, onSnapshot, deleteDoc } = window.firebaseAPI;
@@ -74,7 +80,6 @@
                 appId: "1:744030550441:web:b60090ce280cceb1c1acb8"
             };
 
-            // Menggunakan appId agar sesuai dengan aturan keamanan Firebase
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'Aplikasi_PO_YenBangunan'; 
             
             const app = initializeApp(firebaseConfig);
@@ -120,85 +125,143 @@
                 }
               };
 
+              const handleAnonAuth = async () => {
+                setError('');
+                setLoading(true);
+                try {
+                  await signInAnonymously(auth);
+                } catch (err) {
+                  setError(err.message);
+                  setLoading(false);
+                }
+              };
+
               return (
-                <div className="min-h-screen bg-[#F2F2F7] flex flex-col justify-center items-center p-4 font-sans text-[#1C1C1E]">
-                  <div className="bg-white w-full max-w-md rounded-3xl shadow-lg p-8 relative overflow-hidden border border-[#E5E5EA]">
+                <div className="min-h-screen w-full flex flex-col lg:flex-row font-sans text-[#1C1C1E] bg-white">
+                  
+                  {/* Bagian Kiri - Copywriting & Branding */}
+                  <div className="lg:w-1/2 w-full p-8 sm:p-12 lg:p-24 flex flex-col justify-center relative overflow-hidden bg-white">
+                    {/* Elemen Latar Belakang Estetik */}
+                    <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-[#007AFF] opacity-5 rounded-full blur-3xl pointer-events-none"></div>
+                    <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-[#34C759] opacity-5 rounded-full blur-3xl pointer-events-none"></div>
                     
-                    <div className="text-center mb-8">
-                      <div className="w-14 h-14 bg-[#007AFF] rounded-2xl flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4 shadow-md">PO</div>
-                      <h1 className="text-2xl font-bold tracking-tight">PO System</h1>
-                      <p className="text-[#8E8E93] text-sm mt-1">Sistem Manajemen Purchase Order</p>
+                    <div className="relative z-10 max-w-xl mx-auto lg:mx-0">
+                        <div className="w-12 h-12 bg-[#007AFF] rounded-2xl flex items-center justify-center text-white font-bold text-xl mb-8 shadow-[0_4px_14px_rgba(0,122,255,0.39)]">PO</div>
+                        
+                        <h1 className="text-4xl lg:text-[3.5rem] font-black tracking-tight text-[#1C1C1E] mb-6 leading-[1.1]">
+                          Sistem Purchasing,<br/>Dibuat oleh <span className="text-[#007AFF]">Purchasing</span>.
+                        </h1>
+                        
+                        <p className="text-lg text-[#8E8E93] mb-12 leading-relaxed font-medium">
+                          Software ERP tradisional seringkali kaku dan dipenuhi fitur basi yang memperlambat kerja. Sistem kami lahir langsung dari pengalaman nyata di lapangan dengan satu tujuan: <b>Kecepatan eksekusi</b>.
+                        </p>
+
+                        <div className="space-y-8">
+                          <div className="flex items-start gap-5">
+                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0"><Zap size={24} /></div>
+                            <div>
+                              <h3 className="font-bold text-[#1C1C1E] text-lg">Kecepatan Tanpa Kompromi</h3>
+                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed">Tidak ada formulir berbelit. Buka, ketik, simpan, cetak. Alur kerja super mulus yang menghemat waktu Anda hingga 80%.</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-5">
+                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0"><Target size={24} /></div>
+                            <div>
+                              <h3 className="font-bold text-[#1C1C1E] text-lg">Tanpa Fitur Basi</h3>
+                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed">Kami membuang semua menu kompleks yang tidak Anda butuhkan. Antarmuka ala iOS yang langsung dipahami dalam 3 menit.</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-5">
+                            <div className="bg-[#E5F1FF] text-[#007AFF] p-3 rounded-2xl shrink-0"><ShieldCheck size={24} /></div>
+                            <div>
+                              <h3 className="font-bold text-[#1C1C1E] text-lg">Integrasi Otomatis</h3>
+                              <p className="text-[#8E8E93] text-[15px] mt-1 leading-relaxed">Satu ruang kerja tim. Persetujuan instan antara Staff dan Direktur secara real-time, lengkap dengan sinkronisasi ke Google Spreadsheet.</p>
+                            </div>
+                          </div>
+                        </div>
                     </div>
+                  </div>
 
-                    <div className="flex bg-[#F2F2F7] rounded-xl p-1 mb-6">
-                      <button onClick={() => setIsLogin(true)} className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${isLogin ? 'bg-white shadow-sm text-[#1C1C1E]' : 'text-[#8E8E93]'}`}>Masuk</button>
-                      <button onClick={() => setIsLogin(false)} className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${!isLogin ? 'bg-white shadow-sm text-[#1C1C1E]' : 'text-[#8E8E93]'}`}>Daftar</button>
-                    </div>
+                  {/* Bagian Kanan - Formulir Login */}
+                  <div className="lg:w-1/2 w-full bg-[#F2F2F7] flex flex-col justify-center items-center p-6 sm:p-12 min-h-screen border-l border-[#E5E5EA]">
+                     <div className="bg-white w-full max-w-[420px] rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-8 sm:p-10 relative overflow-hidden border border-[#E5E5EA]">
+                        
+                        <div className="text-center mb-8">
+                          <h2 className="text-2xl font-bold tracking-tight text-[#1C1C1E]">Selamat Datang</h2>
+                          <p className="text-[#8E8E93] text-[15px] mt-1.5">Masuk untuk mengelola Purchase Order</p>
+                        </div>
 
-                    {error && <div className="bg-[#FFE5E5] text-[#FF3B30] text-sm p-3 rounded-xl mb-4 text-center border border-[#FFD1D1]">{error}</div>}
+                        <div className="flex bg-[#F2F2F7] rounded-xl p-1.5 mb-8">
+                          <button onClick={() => setIsLogin(true)} className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${isLogin ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#1C1C1E]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}>Masuk</button>
+                          <button onClick={() => setIsLogin(false)} className={`flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${!isLogin ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#1C1C1E]' : 'text-[#8E8E93] hover:text-[#1C1C1E]'}`}>Buat Akun</button>
+                        </div>
 
-                    <form onSubmit={handleEmailAuth} className="space-y-4">
-                      <div>
-                        <input type="email" placeholder="Alamat Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all" required />
-                      </div>
-                      <div>
-                        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all" required />
-                      </div>
-                      <button type="submit" disabled={loading} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-3.5 rounded-xl transition-colors shadow-sm flex justify-center items-center">
-                        {loading ? <Loader size={20} /> : (isLogin ? 'Masuk' : 'Buat Akun')}
-                      </button>
-                    </form>
+                        {error && <div className="bg-[#FFE5E5] text-[#FF3B30] text-sm p-3.5 rounded-xl mb-6 text-center border border-[#FFD1D1] font-medium">{error}</div>}
 
-                    <div className="flex items-center my-6">
-                      <div className="flex-1 border-t border-[#E5E5EA]"></div>
-                      <span className="px-3 text-[#8E8E93] text-sm font-medium">ATAU</span>
-                      <div className="flex-1 border-t border-[#E5E5EA]"></div>
-                    </div>
+                        <form onSubmit={handleEmailAuth} className="space-y-4">
+                          <div>
+                            <input type="email" placeholder="Alamat Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" required />
+                          </div>
+                          <div>
+                            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-4 text-[15px] outline-none focus:ring-2 focus:ring-[#007AFF] transition-all placeholder-[#8E8E93]" required />
+                          </div>
+                          <button type="submit" disabled={loading} className="w-full bg-[#007AFF] hover:bg-[#0056b3] text-white font-bold py-4 rounded-xl transition-colors shadow-sm flex justify-center items-center mt-2">
+                            {loading ? <Loader size={20} /> : (isLogin ? 'Masuk ke Sistem' : 'Buat Akun Gratis')}
+                          </button>
+                        </form>
 
-                    <div className="space-y-3">
-                      <button onClick={handleGoogleAuth} className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E] font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-3">
-                        <Google size={20} /> Lanjutkan dengan Google
-                      </button>
-                    </div>
+                        <div className="flex items-center my-7">
+                          <div className="flex-1 border-t border-[#E5E5EA]"></div>
+                          <span className="px-4 text-[#8E8E93] text-xs font-bold uppercase tracking-widest">Atau</span>
+                          <div className="flex-1 border-t border-[#E5E5EA]"></div>
+                        </div>
 
+                        <div className="space-y-3.5">
+                          <button onClick={handleGoogleAuth} className="w-full bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E] font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-3">
+                            <Google size={20} /> Lanjutkan dengan Google
+                          </button>
+                          <button onClick={handleAnonAuth} className="w-full bg-transparent hover:bg-black/5 text-[#8E8E93] hover:text-[#1C1C1E] font-bold py-4 rounded-xl transition-colors text-[15px]">
+                            Masuk Sebagai Tamu (Uji Coba)
+                          </button>
+                        </div>
+
+                     </div>
                   </div>
                 </div>
               );
             }
 
-            // --- KOMPONEN ONBOARDING (PILIH BUAT ATAU GABUNG PERUSAHAAN) ---
+            // --- KOMPONEN ONBOARDING (PILIH BUAT ATAU GABUNG TIM) ---
             function OnboardingScreen({ user, onComplete, onLogout }) {
                const [loading, setLoading] = useState(false);
                const [joinCode, setJoinCode] = useState('');
                const [mode, setMode] = useState('select'); // 'select', 'join'
 
-               const generateCompanyId = () => "COMP-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+               const generateCompanyId = () => "TIM-" + Math.random().toString(36).substr(2, 6).toUpperCase();
 
                const handleCreateCompany = async () => {
                   setLoading(true);
                   const newCompanyId = generateCompanyId();
                   try {
-                     // Simpan profile pengguna sebagai Boss dari company baru
                      await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'), { 
                          companyId: newCompanyId, 
                          role: 'Boss' 
                      });
                      
-                     // Setup pengaturan default untuk company tersebut
                      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${newCompanyId}`, 'main'), {
                          companyName: 'NAMA PERUSAHAAN',
                          branchName: 'NAMA CABANG',
                          branchAddress: 'Alamat Cabang Perusahaan Anda',
                          username: 'PO',
                          nextNumber: 1,
-                         signatureName: 'Nama Boss',
+                         signatureName: 'Nama Direktur',
                          webhookUrl: ''
                      });
                      
                      onComplete({ companyId: newCompanyId, role: 'Boss' });
                   } catch(e) {
                      console.error(e);
-                     alert("Gagal membuat perusahaan. Cek koneksi Anda.");
+                     alert("Gagal menginisiasi sistem. Cek koneksi Anda.");
                      setLoading(false);
                   }
                };
@@ -208,15 +271,11 @@
                   if(!joinCode.trim()) return;
                   setLoading(true);
                   try {
-                     // Ubah format agar seragam uppercase
                      const formattedCode = joinCode.trim().toUpperCase();
-                     
-                     // Simpan profile pengguna sebagai Staff
                      await setDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'), { 
                          companyId: formattedCode, 
                          role: 'Staff' 
                      });
-                     
                      onComplete({ companyId: formattedCode, role: 'Staff' });
                   } catch(e) {
                      console.error(e);
@@ -231,7 +290,7 @@
                     
                     <div className="text-center mb-8">
                       <h2 className="text-2xl font-bold tracking-tight mb-2">Selamat Datang!</h2>
-                      <p className="text-[#8E8E93] text-sm">Masuk sebagai: <b>{user.email}</b></p>
+                      <p className="text-[#8E8E93] text-sm">Masuk sebagai: <b>{user.email || 'Akun Tamu'}</b></p>
                     </div>
 
                     {mode === 'select' && (
@@ -243,8 +302,8 @@
                             >
                               <div className="bg-[#007AFF] text-white p-3 rounded-full"><Building size={24}/></div>
                               <div>
-                                 <div className="font-bold text-[#1C1C1E] text-lg">Buat Perusahaan Baru</div>
-                                 <div className="text-sm text-[#8E8E93]">Saya adalah Boss / Pengelola.</div>
+                                 <div className="font-bold text-[#1C1C1E] text-lg">Setup Sistem PO Baru</div>
+                                 <div className="text-sm text-[#8E8E93]">Saya adalah Pengelola / Boss.</div>
                               </div>
                            </button>
 
@@ -255,8 +314,8 @@
                             >
                               <div className="bg-[#34C759] text-white p-3 rounded-full"><UserPlus size={24}/></div>
                               <div>
-                                 <div className="font-bold text-[#1C1C1E] text-lg">Gabung Perusahaan</div>
-                                 <div className="text-sm text-[#8E8E93]">Saya memiliki Kode Invite dari Boss.</div>
+                                 <div className="font-bold text-[#1C1C1E] text-lg">Gabung ke Tim</div>
+                                 <div className="text-sm text-[#8E8E93]">Saya memiliki Kode Akses Tim.</div>
                               </div>
                            </button>
                         </div>
@@ -264,10 +323,10 @@
 
                     {mode === 'join' && (
                         <form onSubmit={handleJoinCompany} className="mb-8">
-                            <p className="text-sm font-medium mb-2 text-center text-[#8E8E93]">Masukkan Kode Perusahaan (Minta ke Boss Anda)</p>
+                            <p className="text-sm font-medium mb-2 text-center text-[#8E8E93]">Masukkan Kode Akses Tim (Minta ke atasan Anda)</p>
                             <input 
                                 type="text" 
-                                placeholder="Contoh: COMP-XXXXX" 
+                                placeholder="Contoh: TIM-XXXXX" 
                                 value={joinCode}
                                 onChange={(e) => setJoinCode(e.target.value)}
                                 className="w-full bg-[#F2F2F7] border-none rounded-xl px-4 py-3.5 text-center font-bold text-lg tracking-widest uppercase outline-none focus:ring-2 focus:ring-[#34C759] transition-all mb-4"
@@ -291,20 +350,18 @@
             // --- MAIN APP COMPONENT ---
             function App() {
               const [user, setUser] = useState(null);
-              const [userProfile, setUserProfile] = useState(null); // { companyId, role }
+              const [userProfile, setUserProfile] = useState(null); 
               const [isLoadingAuth, setIsLoadingAuth] = useState(true);
               
               const [activeTab, setActiveTab] = useState('create');
               const [editingPo, setEditingPo] = useState(null);
               
-              // Global States (Default akan ditimpa oleh data server)
               const [settings, setSettings] = useState({
                 companyName: 'NAMA PERUSAHAAN', branchName: 'CABANG', branchAddress: '', username: 'PO', nextNumber: 1, signatureName: '', webhookUrl: ''
               });
               const [suppliers, setSuppliers] = useState([]);
               const [pos, setPos] = useState([]);
 
-              // 1. Pantau Status Login
               useEffect(() => {
                 const unsubscribe = onAuthStateChanged(auth, (u) => {
                   setUser(u);
@@ -313,7 +370,6 @@
                 return () => unsubscribe();
               }, []);
 
-              // 2. Fetch Profile dari Global Router
               useEffect(() => {
                 if (!user) return;
 
@@ -333,25 +389,21 @@
                 return () => unsubProfile();
               }, [user]);
 
-              // 3. Fetch Data Perusahaan Spesifik (Berdasarkan CompanyId)
               useEffect(() => {
                 if (!userProfile || userProfile === 'UNASSIGNED') return;
 
                 const companyId = userProfile.companyId;
 
-                // Sync Pengaturan
                 const setRef = doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main');
                 const unsubSet = onSnapshot(setRef, (snap) => {
                   if (snap.exists()) setSettings(snap.data());
                 }, console.error);
 
-                // Sync Supplier
                 const supRef = collection(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`);
                 const unsubSup = onSnapshot(supRef, (snap) => {
                   setSuppliers(snap.docs.map(d => ({ id: d.id, ...d.data() })));
                 }, console.error);
 
-                // Sync POs
                 const posRef = collection(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`);
                 const unsubPos = onSnapshot(posRef, (snap) => {
                   const data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -361,7 +413,6 @@
                 return () => { unsubSet(); unsubSup(); unsubPos(); };
               }, [userProfile]);
 
-              // Fungsi Logout
               const handleLogout = async () => {
                  if(confirm("Apakah Anda yakin ingin keluar?")) {
                     await signOut(auth);
@@ -369,7 +420,7 @@
                  }
               };
 
-              if (isLoadingAuth) {
+              if (isLoadingAuth || (user && !userProfile)) {
                   return <div className="h-screen w-full flex flex-col items-center justify-center bg-[#F2F2F7] text-[#8E8E93]"><Loader size={40} className="mb-4 text-[#007AFF]"/>Memuat Sistem...</div>;
               }
 
@@ -379,10 +430,8 @@
                  return <OnboardingScreen user={user} onComplete={setUserProfile} onLogout={handleLogout} />;
               }
 
-              // Data Perusahaan
               const { companyId, role: userRole } = userProfile;
 
-              // Fungsi Generate PO
               const generatePoNumber = (num) => {
                 const date = new Date();
                 const year = date.getFullYear();
@@ -390,7 +439,6 @@
                 return `${settings.username || 'PO'}/${year}/${month}/${String(num).padStart(3, '0')}`;
               };
 
-              // --- FUNGSI MUTASI FIREBASE KE COMPANY DATA ---
               const syncToSpreadsheet = async (poData) => {
                  if (!settings.webhookUrl || settings.webhookUrl.trim() === '') return;
                  try {
@@ -416,7 +464,7 @@
               };
 
               const onUpdateStatusPO = async (id, status) => {
-                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya Boss yang dapat mengubah status.");
+                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya atasan yang dapat mengubah status.");
                  try {
                    const poToUpdate = pos.find(p => p.id === id);
                    if (poToUpdate) {
@@ -424,36 +472,36 @@
                       await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `pos_${companyId}`, id), updatedPO);
                       syncToSpreadsheet(updatedPO);
                    }
-                 } catch(err) { console.error(err); }
+                 } catch(err) { console.error(err); alert("Gagal update status: " + err.message); }
               };
 
               const onAddSupplier = async (newSup) => {
                  try {
-                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, newSup.id.toString()), newSup);
-                 } catch(err) {
-                     console.error("Gagal tambah supplier:", err);
-                     alert("Gagal menambahkan supplier.");
-                 }
+                     const cleanSup = Object.fromEntries(Object.entries(newSup).filter(([_, v]) => v !== undefined));
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, newSup.id.toString()), cleanSup);
+                 } catch(err) { console.error("Gagal tambah supplier:", err); alert("Gagal menambahkan supplier: " + err.message); }
+              };
+
+              const onEditSupplier = async (updatedSup) => {
+                 try {
+                     const cleanSup = Object.fromEntries(Object.entries(updatedSup).filter(([_, v]) => v !== undefined));
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, updatedSup.id.toString()), cleanSup);
+                 } catch(err) { console.error("Gagal edit supplier:", err); alert("Gagal mengedit supplier: " + err.message); }
               };
 
               const onDeleteSupplier = async (id) => {
                  try {
                      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', `suppliers_${companyId}`, id.toString()));
-                 } catch(err) {
-                     console.error("Gagal hapus supplier:", err);
-                     alert("Gagal menghapus supplier.");
-                 }
+                 } catch(err) { console.error("Gagal hapus supplier:", err); alert("Gagal menghapus supplier: " + err.message); }
               };
 
               const onSaveSettings = async (newSettings) => {
-                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya Boss yang dapat mengubah pengaturan.");
+                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya atasan yang dapat mengubah pengaturan.");
                  try {
-                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), newSettings);
+                     const cleanSettings = Object.fromEntries(Object.entries(newSettings).filter(([_, v]) => v !== undefined));
+                     await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), cleanSettings);
                      alert("Pengaturan Berhasil Disimpan!");
-                 } catch(err) {
-                     console.error("Gagal simpan setting:", err);
-                     alert("Gagal menyimpan pengaturan.");
-                 }
+                 } catch(err) { console.error("Gagal simpan setting:", err); alert("Gagal menyimpan pengaturan: " + err.message); }
               };
 
               return (
@@ -465,14 +513,12 @@
                     input[type=number] { -moz-appearance: textfield; }
                   `}</style>
 
-                  {/* Navigation */}
                   <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 print:hidden z-10 sticky top-0">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                       <div className="flex justify-between items-center h-16">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-[#007AFF] rounded-lg flex items-center justify-center text-white font-bold text-sm">PO</div>
                           <span className="font-bold text-gray-800 tracking-tight text-lg hidden sm:block">System</span>
-                          {/* Role Badge Indicator */}
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${userRole === 'Boss' ? 'bg-[#007AFF]/10 text-[#007AFF]' : 'bg-[#34C759]/10 text-[#34C759]'}`}>
                              {userRole}
                           </span>
@@ -488,7 +534,6 @@
                     </div>
                   </nav>
 
-                  {/* Main Content Area */}
                   <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8 print:p-0 print:bg-white pb-32">
                     {activeTab === 'create' && (
                       <CreatePOView 
@@ -500,7 +545,7 @@
                       <ApprovalView pos={pos} onLoadPO={(po) => { setEditingPo(po); setActiveTab('create'); }} onUpdateStatus={onUpdateStatusPO} userRole={userRole} />
                     )}
                     {activeTab === 'suppliers' && (
-                      <SupplierView suppliers={suppliers} onAddSupplier={onAddSupplier} onDeleteSupplier={onDeleteSupplier} userRole={userRole} />
+                      <SupplierView suppliers={suppliers} pos={pos} onAddSupplier={onAddSupplier} onEditSupplier={onEditSupplier} onDeleteSupplier={onDeleteSupplier} />
                     )}
                     {activeTab === 'settings' && (
                       <SettingsView settings={settings} onSaveSettings={onSaveSettings} user={user} userRole={userRole} companyId={companyId} onLogout={handleLogout} />
@@ -621,32 +666,11 @@
 
               return (
                 <div className="max-w-5xl mx-auto flex flex-col gap-6 relative">
-                  
-                  {/* Floating Action Bar */}
                   <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-50 print:hidden">
-                    <button 
-                      onClick={(e) => {
-                        if (!isApproved) {
-                          e.preventDefault();
-                          alert("Cetak hanya tersedia untuk PO yang sudah disetujui (Approved). Silakan buka dari tab Persetujuan.");
-                          return;
-                        }
-                        window.print();
-                      }} 
-                      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}
-                    >
-                      <Printer size={18} /> Cetak
-                    </button>
-                    <button 
-                      onClick={handleSave} 
-                      disabled={!isFormValid}
-                      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? 'bg-[#007AFF] hover:bg-[#0056b3] text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
-                    >
-                      <Save size={18} /> Simpan
-                    </button>
+                    <button onClick={(e) => { if (!isApproved) { e.preventDefault(); alert("Cetak hanya tersedia untuk PO yang sudah disetujui (Approved). Silakan buka dari tab Persetujuan."); return; } window.print(); }} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-[#F2F2F7] border border-[#D1D1D6] hover:bg-[#E5E5EA] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><Printer size={18} /> Cetak</button>
+                    <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? 'bg-[#007AFF] hover:bg-[#0056b3] text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
                   </div>
 
-                  {/* 9.5 x 5.5 Inch Paper */}
                   <div className="bg-white p-6 shadow-md rounded-[2px] print:shadow-none print:p-0 w-[9.5in] min-h-[5.5in] h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border" style={{ fontFamily: 'Arial, sans-serif' }}>
                     <div className="flex justify-between items-start mb-6">
                       <div>
@@ -693,7 +717,7 @@
                           )}
                         </div>
                         <div className="font-bold mb-1 hidden print:block uppercase text-base">{selectedVendor.name || 'PILIH VENDOR'}</div>
-                        <div className="text-gray-800 pr-12">{selectedVendor.address || 'Alamat Vendor (opsional)'}</div>
+                        <div className="text-gray-800 pr-12">{selectedVendor.address ? selectedVendor.address : <span className="print:hidden text-[#C7C7CC]">Alamat Vendor (opsional)</span>}</div>
                       </div>
                       <div>
                         <div className="font-bold mb-1 uppercase text-base">{settings.branchName || 'CABANG'}</div>
@@ -731,17 +755,13 @@
                                 <div className="hidden print:block text-right">{formatCurrency(calculateNetPrice(item.price, item.discounts))}</div>
                               </td>
                               <td className="py-1.5 px-2 align-top text-right font-medium">{formatCurrency(item.qty * calculateNetPrice(item.price, item.discounts))}</td>
-                              <td className="py-1 px-0 align-top text-center print:hidden">
-                                <button onClick={() => handleRemoveItem(item.id)} className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-md" title="Hapus baris"><Trash2 size={16} /></button>
-                              </td>
+                              <td className="py-1 px-0 align-top text-center print:hidden"><button onClick={() => handleRemoveItem(item.id)} className="text-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[#FFE5E5] rounded-md" title="Hapus baris"><Trash2 size={16} /></button></td>
                             </tr>
                           ))}
                         </tbody>
                         <tfoot>
                           <tr>
-                            <td colSpan="5" className="pt-2">
-                              <button onClick={handleAddItem} className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-2 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-md transition-colors"><Plus size={14} /> TAMBAH BARIS</button>
-                            </td>
+                            <td colSpan="5" className="pt-2"><button onClick={handleAddItem} className="print:hidden w-[80%] text-xs flex items-center justify-center gap-1.5 text-[#007AFF] font-bold px-2 py-2.5 bg-[#F2F2F7] hover:bg-[#E5E5EA] rounded-md transition-colors"><Plus size={14} /> TAMBAH BARIS</button></td>
                             <td className="pt-2 px-2 align-top text-right"><div className="border-t border-black pt-1"><span className="font-bold text-base tracking-wide">{formatCurrency(total)}</span></div></td>
                             <td className="print:hidden"></td>
                           </tr>
@@ -881,7 +901,6 @@
                                 <div className="font-bold text-[#1C1C1E] text-lg">Rp {formatCurrency(po.total)}</div>
                               </div>
                               <div className="flex items-center gap-3">
-                                {/* HANYA BOSS YANG BISA MELIHAT TOMBOL SETUJUI / TOLAK */}
                                 {userRole === 'Boss' && po.status === 'Pending' && (
                                   <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                                     <button onClick={() => onUpdateStatus(po.id, 'Approved')} className="w-10 h-10 flex items-center justify-center bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759] hover:text-white rounded-full transition-colors" title="Setujui PO"><CheckCircle size={22} /></button>
@@ -964,55 +983,79 @@
             }
 
             // --- 3. SUPPLIER LIST VIEW ---
-            function SupplierView({ suppliers, onAddSupplier, onDeleteSupplier }) {
-              const [isAdding, setIsAdding] = useState(false);
+            function SupplierView({ suppliers, pos, onAddSupplier, onEditSupplier, onDeleteSupplier }) {
+              const [isFormOpen, setIsFormOpen] = useState(false);
+              const [isEditing, setIsEditing] = useState(false);
               const [formData, setFormData] = useState({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
+
+              const openAddForm = () => {
+                setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
+                setIsEditing(false);
+                setIsFormOpen(!isFormOpen && !isEditing ? false : true); 
+              };
+
+              const openEditForm = (sup) => {
+                setFormData(sup);
+                setIsEditing(true);
+                setIsFormOpen(true);
+              };
 
               const handleSave = (e) => {
                 e.preventDefault();
                 if (!formData.name) return alert("Nama PT wajib diisi!");
-                onAddSupplier({ ...formData, id: Date.now() });
+                if (isEditing) { onEditSupplier(formData); } else { onAddSupplier({ ...formData, id: Date.now() }); }
                 setFormData({ id: '', name: '', payment: 'Cash', ppn: 'Non-PPN', address: '', phone: '' });
-                setIsAdding(false);
+                setIsFormOpen(false); setIsEditing(false);
               };
 
-              const handleDelete = (id) => { if(confirm("Hapus supplier ini?")) onDeleteSupplier(id); };
+              const handleDelete = (id) => {
+                const isUsed = pos.some(p => p.vendor && p.vendor.id === id);
+                if (isUsed) { return alert("PENTING: Tidak dapat menghapus supplier ini karena sudah pernah digunakan di dalam dokumen PO."); }
+                if(confirm("Hapus supplier ini secara permanen?")) onDeleteSupplier(id); 
+              };
 
               return (
                 <div className="max-w-4xl mx-auto space-y-6">
                   <div className="flex items-center justify-between">
                     <h2 className="text-2xl font-bold text-[#1C1C1E]">Daftar Supplier</h2>
-                    <button onClick={() => setIsAdding(!isAdding)} className="flex items-center justify-center w-10 h-10 bg-[#007AFF] text-white rounded-full shadow-sm transition-transform hover:scale-105">{isAdding ? <XCircle size={20} /> : <Plus size={20} />}</button>
+                    <button onClick={openAddForm} className="flex items-center justify-center w-10 h-10 bg-[#007AFF] text-white rounded-full shadow-sm transition-transform hover:scale-105">{isFormOpen && !isEditing ? <XCircle size={20} /> : <Plus size={20} />}</button>
                   </div>
 
-                  {isAdding && (
+                  {isFormOpen && (
                     <form onSubmit={handleSave} className="bg-white p-6 rounded-2xl shadow-sm border border-[#E5E5EA] space-y-4">
+                      <div className="flex items-center justify-between border-b border-[#F2F2F7] pb-3 mb-2">
+                          <h3 className="font-bold text-[#1C1C1E]">{isEditing ? 'Edit Informasi Supplier' : 'Tambah Supplier Baru'}</h3>
+                          <button type="button" onClick={() => setIsFormOpen(false)} className="text-[#8E8E93] hover:text-[#FF3B30]"><XCircle size={20}/></button>
+                      </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-1.5"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Nama Vendor *</label><input required type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="PT. Nama Vendor" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value.toUpperCase()})} onFocus={(e) => e.target.select()} /></div>
                         <div className="space-y-1.5"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">No. Telepon</label><input type="text" className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF] transition-shadow" placeholder="0812..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} onFocus={(e) => e.target.select()} /></div>
                         <div className="space-y-1.5">
                           <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Pembayaran</label>
                           <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.payment} onChange={e => setFormData({...formData, payment: e.target.value})}>
-                            <option value="Cash">Cash</option><option value="Tempo">Tempo</option><option value="Tempo 14 Hari">Tempo 14 Hari</option><option value="Tempo 30 Hari">Tempo 30 Hari</option>
+                            <option value="Cash">Cash</option><option value="Tempo">Tempo</option>
                           </select>
                         </div>
                         <div className="space-y-1.5">
                           <label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Status Pajak</label>
                           <select className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" value={formData.ppn} onChange={e => setFormData({...formData, ppn: e.target.value})}>
-                            <option value="Non-PPN">Non-PPN</option><option value="PPN">PPN</option><option value="PPN 11%">PPN 11%</option>
+                            <option value="Non-PPN">Non-PPN</option><option value="PPN">PPN</option>
                           </select>
                         </div>
                         <div className="space-y-1.5 md:col-span-2"><label className="text-xs font-bold text-[#8E8E93] uppercase tracking-wider ml-1">Alamat (Opsional)</label><textarea className="w-full bg-[#F2F2F7] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#007AFF]" rows="2" placeholder="Jl. Raya..." value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} onFocus={(e) => e.target.select()} /></div>
                       </div>
-                      <div className="flex justify-end pt-2"><button type="submit" className="px-6 py-3 bg-[#007AFF] text-white rounded-xl font-bold shadow-sm hover:bg-[#0056b3] transition-colors">Simpan Supplier</button></div>
+                      <div className="flex justify-end pt-2"><button type="submit" className="px-6 py-3 bg-[#007AFF] text-white rounded-xl font-bold shadow-sm hover:bg-[#0056b3] transition-colors">{isEditing ? 'Simpan Perubahan' : 'Simpan Supplier'}</button></div>
                     </form>
                   )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {suppliers.map(sup => (
-                      <div key={sup.id} className="bg-white rounded-2xl p-5 shadow-sm border border-[#E5E5EA] flex flex-col relative group">
-                        <button onClick={() => handleDelete(sup.id)} className="absolute top-4 right-4 text-[#C7C7CC] hover:text-[#FF3B30] transition-colors"><Trash2 size={20} /></button>
-                        <h3 className="font-bold text-lg text-[#1C1C1E] mb-1 pr-8">{sup.name}</h3>
+                      <div key={sup.id} className="bg-white rounded-2xl p-5 shadow-sm border border-[#E5E5EA] flex flex-col relative group hover:border-[#007AFF] transition-colors">
+                        <div className="absolute top-4 right-4 flex items-center gap-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={() => openEditForm(sup)} className="p-1.5 text-[#007AFF] bg-[#E5F1FF] hover:bg-[#007AFF] hover:text-white rounded-lg transition-colors"><Edit2 size={16} /></button>
+                            <button onClick={() => handleDelete(sup.id)} className="p-1.5 text-[#FF3B30] bg-[#FFE5E5] hover:bg-[#FF3B30] hover:text-white rounded-lg transition-colors"><Trash2 size={16} /></button>
+                        </div>
+                        <h3 className="font-bold text-lg text-[#1C1C1E] mb-1 pr-20">{sup.name}</h3>
                         <p className="text-sm text-[#8E8E93] mb-4">{sup.phone || 'Tidak ada telepon'}</p>
                         <div className="mt-auto">
                           <div className="flex gap-2 mb-3"><span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.payment}</span><span className="px-2.5 py-1 bg-[#F2F2F7] text-[#1C1C1E] text-xs font-bold rounded-lg">{sup.ppn}</span></div>
@@ -1031,11 +1074,8 @@
               useEffect(() => { setLocalSettings(settings); }, [settings]);
               const handleSave = () => { onSaveSettings(localSettings); };
 
-              // Copy Company ID function
               const handleCopyId = () => {
-                  navigator.clipboard.writeText(companyId).then(() => {
-                      alert("Kode Perusahaan disalin!");
-                  });
+                  navigator.clipboard.writeText(companyId).then(() => { alert("Kode Akses Tim disalin!"); });
               };
 
               return (
@@ -1048,7 +1088,6 @@
                   </div>
 
                   <div className="space-y-6">
-                    
                     {/* Akun */}
                     <div>
                       <h3 className="text-sm font-bold text-[#8E8E93] uppercase tracking-wider mb-2 ml-4">Akun & Sesi</h3>
@@ -1067,7 +1106,7 @@
                         </div>
                         {userRole === 'Boss' && (
                             <div className="flex flex-col p-4 bg-[#F9F9FB]">
-                              <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Kode Invite Perusahaan Anda</div>
+                              <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Kode Akses Tim Anda</div>
                               <div className="flex items-center gap-3">
                                   <div className="flex-1 text-center font-mono text-lg font-bold tracking-widest text-[#007AFF] bg-[#E5F1FF] py-3 rounded-xl border border-[#B3D7FF]">
                                     {companyId}
@@ -1075,14 +1114,13 @@
                                   <button onClick={handleCopyId} className="bg-white border border-[#D1D1D6] text-[#1C1C1E] font-semibold py-3 px-6 rounded-xl hover:bg-[#F2F2F7] transition-colors whitespace-nowrap">Salin Kode</button>
                               </div>
                               <p className="text-xs text-[#8E8E93] mt-3">
-                                *Berikan kode di atas kepada Staff Anda. Saat Staff login dan memilih "Gabung Perusahaan", mereka harus memasukkan kode ini agar dapat bekerja di data perusahaan Anda.
+                                *Berikan kode di atas kepada Tim Anda. Saat masuk dan memilih "Gabung ke Tim", mereka harus memasukkan kode ini agar dapat bekerja di data yang sama.
                               </p>
                             </div>
                         )}
                       </div>
                     </div>
 
-                    {/* BLOK PENGATURAN BERIKUT HANYA BISA DILIHAT OLEH BOSS */}
                     {userRole === 'Boss' && (
                       <>
                         <div>
@@ -1117,6 +1155,50 @@
                               <div className="text-[15px] font-medium text-[#1C1C1E] mb-2">Google Apps Script Webhook URL</div>
                               <input type="text" value={localSettings.webhookUrl || ''} onChange={(e) => setLocalSettings({...localSettings, webhookUrl: e.target.value})} onFocus={(e) => e.target.select()} placeholder="https://script.google.com/macros/s/.../exec" className="w-full text-left outline-none text-[15px] text-[#007AFF] bg-[#F2F2F7] p-3 rounded-xl border-none"/>
                               <p className="text-xs text-[#8E8E93] mt-3">*Aplikasi akan mengirimkan data PO (JSON) ke URL di atas saat simpan. Kosongkan jika tidak menggunakan Spreadsheet.</p>
+                              
+                              <details className="mt-4 border-t border-[#F2F2F7] pt-4 cursor-pointer group">
+                                  <summary className="text-sm font-bold text-[#007AFF] outline-none hover:underline">Cara Menghubungkan ke Spreadsheet (Klik untuk membuka)</summary>
+                                  <div className="mt-3 text-sm text-[#1C1C1E] space-y-2 cursor-auto leading-relaxed">
+                                      <p>1. Buat <b>Google Spreadsheet</b> baru di akun Google Anda.</p>
+                                      <p>2. Di menu atas, klik <b>Ekstensi</b> &gt; <b>Apps Script</b>.</p>
+                                      <p>3. Hapus semua kode bawaan, lalu <i>paste</i> (tempel) kode berikut:</p>
+                                      <div className="bg-[#F2F2F7] p-3 rounded-lg text-xs overflow-x-auto border border-[#E5E5EA] font-mono text-[#E3242B]">
+{`function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Tanggal", "No. PO", "Vendor", "Total", "Status", "Pembayaran", "PPN"]);
+    }
+    
+    var poDate = new Date(data.date).toLocaleDateString('id-ID');
+    
+    sheet.appendRow([
+      poDate, 
+      data.poNumber, 
+      data.vendor.name, 
+      data.total, 
+      data.status,
+      data.vendor.payment,
+      data.vendor.ppn
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({error: err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}`}
+                                      </div>
+                                      <p>4. Klik tombol <b>Terapkan (Deploy)</b> warna biru di kanan atas, pilih <b>Deployment baru</b>.</p>
+                                      <p>5. Klik logo gerigi ⚙️ (Pilih Jenis), centang <b>Aplikasi Web</b>.</p>
+                                      <p>6. Pada kolom "Akses", pastikan Anda mengubahnya menjadi <b>Semua Orang (Anyone)</b>. Lalu klik <b>Terapkan</b>.</p>
+                                      <p>7. Jika diminta otorisasi, klik <i>Authorize Access</i>, pilih email Anda, klik <i>Advanced/Lanjutan</i>, lalu <i>Go to Project (Unsafe)</i>.</p>
+                                      <p>8. Salin <b>URL Aplikasi Web</b> yang diberikan, dan tempelkan ke kotak Webhook di atas halaman ini. Jangan lupa klik <b>Simpan Pengaturan</b>!</p>
+                                  </div>
+                              </details>
                             </div>
                           </div>
                         </div>
