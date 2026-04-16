@@ -681,11 +681,10 @@
               };
 
               const onSaveSettings = async (newSettings) => {
-                 if (userRole !== 'Boss') return alert("Akses Ditolak: Hanya atasan yang dapat mengubah pengaturan.");
+                 if (userRole !== 'Boss') return;
                  try {
                      const cleanSettings = Object.fromEntries(Object.entries(newSettings).filter(([_, v]) => v !== undefined));
                      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', `settings_${companyId}`, 'main'), cleanSettings);
-                     alert("Pengaturan Berhasil Disimpan!");
                  } catch(err) { console.error("Gagal simpan setting:", err); alert("Gagal menyimpan pengaturan: " + err.message); }
               };
 
@@ -696,6 +695,17 @@
                     input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
                     input, textarea, select { -webkit-user-select: auto !important; -moz-user-select: auto !important; -ms-user-select: auto !important; user-select: auto !important; }
                     input[type=number] { -moz-appearance: textfield; }
+
+                    /* Simulasi aturan Print Media saat proses Export PDF */
+                    .generating-pdf .print\\:hidden { display: none !important; }
+                    .generating-pdf .print\\:block { display: block !important; }
+                    .generating-pdf .hidden.print\\:block { display: block !important; }
+                    .generating-pdf .print\\:border-none { border: none !important; }
+                    .generating-pdf .print\\:p-0 { padding: 0 !important; }
+                    .generating-pdf .print\\:shadow-none { box-shadow: none !important; }
+                    .generating-pdf .print\\:rounded-none { border-radius: 0 !important; }
+                    .generating-pdf .print\\:resize-none { resize: none !important; }
+                    .generating-pdf .print\\:w-auto { width: auto !important; }
                   `}</style>
 
                   <nav className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200 print:hidden z-10 sticky top-0">
@@ -903,12 +913,16 @@
                 setDate(new Date());
               };
 
-              const handleSavePdf = () => {
+              const handleSavePdf = async () => {
                   if (!isApproved) {
                       alert(`Simpan PDF hanya tersedia untuk ${docLabel} yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar.`);
                       return;
                   }
                   const element = document.getElementById('printable-canvas');
+                  
+                  // Tambahkan class penyamar gaya print sementara saat proses eksport
+                  element.classList.add('generating-pdf');
+                  
                   const filename = `${editingDoc ? editingDoc.poNumber : currentDocNumber}.pdf`.replace(/\//g, '-');
                   const opt = {
                     margin:       0,
@@ -917,7 +931,13 @@
                     html2canvas:  { scale: 2, useCORS: true },
                     jsPDF:        { unit: 'in', format: [9.5, 5.5], orientation: 'landscape' }
                   };
-                  html2pdf().set(opt).from(element).save();
+                  
+                  try {
+                      await html2pdf().set(opt).from(element).save();
+                  } finally {
+                      // Bersihkan style generator ketika selesai diunduh
+                      element.classList.remove('generating-pdf');
+                  }
               };
 
               return (
@@ -1384,8 +1404,33 @@
             // --- 4. SETTINGS VIEW ---
             function SettingsView({ settings, onSaveSettings, user, userRole, companyId, onLogout }) {
               const [localSettings, setLocalSettings] = useState(settings);
-              useEffect(() => { setLocalSettings(settings); }, [settings]);
-              const handleSave = () => { onSaveSettings(localSettings); };
+              const [isSaving, setIsSaving] = useState(false);
+              const timeoutRef = React.useRef(null);
+
+              // Sinkronisasi data saat pertama dimuat atau jika ada perubahan dari server
+              useEffect(() => { 
+                if (JSON.stringify(settings) !== JSON.stringify(localSettings)) {
+                   setLocalSettings(settings); 
+                }
+              }, [settings]);
+
+              // Logika Auto-Save (Simpan Otomatis) dengan Debounce 1 detik
+              useEffect(() => {
+                if (JSON.stringify(settings) === JSON.stringify(localSettings)) {
+                    setIsSaving(false);
+                    return;
+                }
+                
+                setIsSaving(true);
+                if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                
+                timeoutRef.current = setTimeout(() => {
+                    onSaveSettings(localSettings);
+                    setIsSaving(false);
+                }, 1000);
+
+                return () => clearTimeout(timeoutRef.current);
+              }, [localSettings]);
 
               const handleCopyId = () => {
                   navigator.clipboard.writeText(companyId).then(() => { alert("Kode Akses Tim disalin!"); });
@@ -1394,10 +1439,15 @@
               return (
                 <div className="max-w-3xl mx-auto space-y-8 pb-12">
                   <div className="flex justify-between items-center mb-6">
-                     <h2 className="text-2xl font-bold text-[#1C1C1E]">{userRole === 'Boss' ? "Pengaturan Sistem" : "Profil Saya"}</h2>
-                     {userRole === 'Boss' && (
-                        <button onClick={handleSave} className="bg-[#007AFF] hover:bg-[#0056b3] text-white px-6 py-3 rounded-full font-bold shadow-sm transition-colors text-[15px]">Simpan Pengaturan</button>
-                     )}
+                     <div className="flex items-center gap-4">
+                       <h2 className="text-2xl font-bold text-[#1C1C1E]">{userRole === 'Boss' ? "Pengaturan Sistem" : "Profil Saya"}</h2>
+                       {isSaving && userRole === 'Boss' && (
+                         <span className="flex items-center gap-1.5 text-xs font-bold text-[#8E8E93] bg-white px-3 py-1.5 rounded-full shadow-sm border border-[#E5E5EA]">
+                           <svg className="animate-spin text-[#007AFF]" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                           Menyimpan...
+                         </span>
+                       )}
+                     </div>
                   </div>
 
                   <div className="space-y-8">
