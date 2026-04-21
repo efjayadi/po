@@ -916,12 +916,10 @@
               const currentPaperSizeKey = appMode === 'PO' ? 'paperSizePO' : appMode === 'SJ' ? 'paperSizeSJ' : 'paperSizeINV';
               const currentPaperSize = settings[currentPaperSizeKey] || 'Continuous Form';
               
-              // PERBAIKAN: Ubah 9.5in menjadi 8.5in (Lebar bersih tanpa lubang traktor)
+              // Ukuran statis untuk layar monitor & PDF
               const paperStyles = currentPaperSize === 'A4' 
                 ? { width: '210mm', minHeight: '297mm' }
-                : { width: '8.5in', minHeight: '5.5in' }; 
-              
-              const pageCss = currentPaperSize === 'A4' ? 'A4 portrait' : '8.5in 5.5in';
+                : { width: '9.5in', minHeight: '5.5in' }; 
 
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
               const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -1007,19 +1005,21 @@
                   }
                   const element = document.getElementById('printable-canvas');
                   
-                  // Tambahkan class penyamar gaya print sementara saat proses eksport
+                  // Tambahkan class untuk style khusus render PDF
                   element.classList.add('generating-pdf');
                   
                   const filename = `${editingDoc ? editingDoc.poNumber : currentDocNumber}.pdf`.replace(/\//g, '-');
+                  
+                  // PERBAIKAN: Set orientasi landscape agar jsPDF tidak memutar 9.5x5.5 menjadi terbalik.
+                  const pdfFormat = currentPaperSize === 'A4' ? 'a4' : [9.5, 5.5];
+                  const pdfOrientation = currentPaperSize === 'A4' ? 'portrait' : 'landscape';
+
                   const opt = {
-                    margin:       0.15, // Beri sedikit margin agar tidak terlalu mepet tepi di PDF
+                    margin:       0,
                     filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                    // PERBAIKAN: Kembalikan orientasi ke landscape untuk Continuous agar tidak distorsi
-                    jsPDF:        currentPaperSize === 'A4' 
-                                    ? { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                                    : { unit: 'in', format: [9.5, 5.5], orientation: 'landscape' }
+                    jsPDF:        { unit: currentPaperSize === 'A4' ? 'mm' : 'in', format: pdfFormat, orientation: pdfOrientation }
                   };
                   
                   try {
@@ -1031,39 +1031,53 @@
               };
 
               return (
-                <div className="max-w-5xl mx-auto flex flex-col gap-6 relative">
+                <div className="max-w-5xl mx-auto flex flex-col gap-6 relative print:w-full print:max-w-full print:m-0 print:p-0">
                   <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-50 print:hidden">
                     <button onClick={handleSavePdf} disabled={!isApproved} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><FileDown size={18} /> PDF</button>
                     <button onClick={(e) => { if (!isApproved) { e.preventDefault(); alert(`Cetak hanya tersedia untuk ${docLabel} yang sudah tersimpan dan disetujui. Silakan buka dari tab Daftar.`); return; } window.print(); }} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isApproved ? 'bg-white border border-[#D1D1D6] hover:bg-[#F2F2F7] text-[#1C1C1E]' : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'}`}><Printer size={18} /> Cetak</button>
                     <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? (appMode === 'PO' ? 'bg-[#007AFF] hover:bg-[#0056b3]' : appMode === 'SJ' ? 'bg-[#FF9500] hover:bg-[#E08300]' : 'bg-[#34C759] hover:bg-[#2DB34A]') + ' text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
                   </div>
 
-                  {/* --- SOLUSI: STYLING KHUSUS PRINTER DOT MATRIX --- */}
+                  {/* --- SOLUSI EXCEL TRICK KHUSUS DOT MATRIX --- */}
                   <style>{`
+                    /* Saat membuat PDF, paksa ukuran tetap agar gambar tangkapan layar akurat */
+                    .generating-pdf #printable-canvas {
+                       width: ${currentPaperSize === 'A4' ? '210mm' : '9.5in'} !important;
+                       min-height: ${currentPaperSize === 'A4' ? '297mm' : '5.5in'} !important;
+                    }
+
                     @media print { 
                       @page { 
+                        /* Tidak mendefinisikan 'size' agar System Dialog Windows yang mengontrol orientasi kertas */
                         margin: 0 !important; 
                       } 
-                      body { 
+                      body, html, #root { 
                         -webkit-print-color-adjust: exact; 
                         print-color-adjust: exact; 
                         margin: 0 !important;
                         padding: 0 !important;
+                        background: white !important;
                       }
-                      /* PERBAIKAN: Gunakan width 100% agar Chrome TIDAK menyusutkan gambar ke 70% */
+                      
+                      /* EXCEL TRICK: Timpa ukuran inci statis (9.5in) dengan lebar 100% dinamis.
+                         Ini mencegah Browser (Chrome/Edge) menyusutkan gambar ke 70% karena mengira
+                         dokumen melebihi batas area cetak driver printer. */
                       #printable-canvas { 
+                        display: block !important;
                         width: 100% !important; 
                         max-width: 100% !important;
-                        min-height: ${currentPaperSize === 'A4' ? '297mm' : '5.5in'} !important; 
+                        min-height: auto !important; 
                         margin: 0 !important;
-                        padding: 0.15in 0.2in !important; /* Margin fisik tipis agar teks aman */
+                        padding: 0.15in 0.2in !important; /* Margin fisik aman dari gigi traktor Dot Matrix */
                         box-shadow: none !important;
                         zoom: 1 !important;
                         transform: scale(1) !important;
                       }
-                      /* Memaksa ukuran font menggunakan Poin (pt) untuk resolusi Dot Matrix */
+                      
+                      /* Memaksa ukuran font menggunakan Poin (pt) untuk resolusi tinta pita Dot Matrix */
                       * {
                         font-family: Arial, sans-serif !important;
+                        color: #000 !important;
                       }
                       .text-sm { font-size: 11pt !important; line-height: 1.3 !important; }
                       .text-base { font-size: 12pt !important; line-height: 1.3 !important; }
@@ -1072,12 +1086,11 @@
                       .text-\\[1\\.925rem\\] { 
                         font-size: 22pt !important; 
                         font-weight: bold !important;
-                        transform: none !important; /* Matikan animasi web di print */
+                        transform: none !important; /* Matikan efek animasi web */
                       }
                       input, textarea {
                         background: transparent !important;
                         border: none !important;
-                        color: #000 !important;
                       }
                     }
                   `}</style>
