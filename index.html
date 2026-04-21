@@ -915,10 +915,13 @@
 
               const currentPaperSizeKey = appMode === 'PO' ? 'paperSizePO' : appMode === 'SJ' ? 'paperSizeSJ' : 'paperSizeINV';
               const currentPaperSize = settings[currentPaperSizeKey] || 'Continuous Form';
+              
+              // PERBAIKAN: Ubah 9.5in menjadi 8.5in (Lebar bersih tanpa lubang traktor)
               const paperStyles = currentPaperSize === 'A4' 
                 ? { width: '210mm', minHeight: '297mm' }
-                : { width: '9.5in', minHeight: '5.5in' };
-              const pageCss = currentPaperSize === 'A4' ? 'A4 portrait' : '9.5in 5.5in';
+                : { width: '8.5in', minHeight: '5.5in' }; 
+              
+              const pageCss = currentPaperSize === 'A4' ? 'A4 portrait' : '8.5in 5.5in';
 
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
               const formatDate = (date) => date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -1013,9 +1016,10 @@
                     filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                    // PERBAIKAN: Sesuaikan PDF dengan lebar area cetak aktual
                     jsPDF:        currentPaperSize === 'A4' 
                                     ? { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                                    : { unit: 'in', format: [9.5, 5.5], orientation: 'landscape' }
+                                    : { unit: 'in', format: [8.5, 5.5], orientation: 'portrait' }
                   };
                   
                   try {
@@ -1034,22 +1038,24 @@
                     <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? (appMode === 'PO' ? 'bg-[#007AFF] hover:bg-[#0056b3]' : appMode === 'SJ' ? 'bg-[#FF9500] hover:bg-[#E08300]' : 'bg-[#34C759] hover:bg-[#2DB34A]') + ' text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
                   </div>
 
+                  {/* --- SOLUSI: STYLING KHUSUS PRINTER DOT MATRIX --- */}
                   <style>{`
                     @media print { 
                       @page { 
-                        size: ${pageCss}; 
+                        /* Dihapus: 'size' CSS agar browser tidak memaksa Landscape otomatis. 
+                           Biarkan Driver Printer (System Dialog) yang mengontrol Portrait! */
                         margin: 0 !important; 
                       } 
                       body { 
                         -webkit-print-color-adjust: exact; 
                         print-color-adjust: exact; 
                       }
-                      /* Memaksa elemen kanvas menggunakan ukuran fisik (inci/mm) agar tidak dikecilkan printer */
+                      /* Memaksa elemen kanvas menggunakan ukuran fisik (inci/mm) agar tidak disusutkan printer */
                       #printable-canvas { 
-                        width: ${currentPaperSize === 'A4' ? '210mm' : '9.5in'} !important; 
+                        width: ${currentPaperSize === 'A4' ? '210mm' : '8.5in'} !important; 
                         min-height: ${currentPaperSize === 'A4' ? '297mm' : '5.5in'} !important; 
-                        margin: 0 !important;
-                        padding: 0.3in !important; /* Margin fisik dalam kertas */
+                        margin: 0 auto !important;
+                        padding: 0.15in 0 !important; /* Margin fisik di kertas (atas/bawah) */
                         box-shadow: none !important;
                         zoom: 1 !important;
                         transform: scale(1) !important;
@@ -1065,7 +1071,7 @@
                       .text-\\[1\\.925rem\\] { 
                         font-size: 22pt !important; 
                         font-weight: bold !important;
-                        transform: none !important; /* Matikan animasi/transform web di print */
+                        transform: none !important; /* Matikan animasi web di print */
                       }
                       input, textarea {
                         background: transparent !important;
