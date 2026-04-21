@@ -1012,14 +1012,14 @@
                   
                   const filename = `${editingDoc ? editingDoc.poNumber : currentDocNumber}.pdf`.replace(/\//g, '-');
                   const opt = {
-                    margin:       0,
+                    margin:       0.15, // Beri sedikit margin agar tidak terlalu mepet tepi di PDF
                     filename:     filename,
                     image:        { type: 'jpeg', quality: 1 },
                     html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                    // PERBAIKAN: Sesuaikan PDF dengan lebar area cetak aktual
+                    // PERBAIKAN: Kembalikan orientasi ke landscape untuk Continuous agar tidak distorsi
                     jsPDF:        currentPaperSize === 'A4' 
                                     ? { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                                    : { unit: 'in', format: [8.5, 5.5], orientation: 'portrait' }
+                                    : { unit: 'in', format: [9.5, 5.5], orientation: 'landscape' }
                   };
                   
                   try {
@@ -1042,20 +1042,21 @@
                   <style>{`
                     @media print { 
                       @page { 
-                        /* Dihapus: 'size' CSS agar browser tidak memaksa Landscape otomatis. 
-                           Biarkan Driver Printer (System Dialog) yang mengontrol Portrait! */
                         margin: 0 !important; 
                       } 
                       body { 
                         -webkit-print-color-adjust: exact; 
                         print-color-adjust: exact; 
+                        margin: 0 !important;
+                        padding: 0 !important;
                       }
-                      /* Memaksa elemen kanvas menggunakan ukuran fisik (inci/mm) agar tidak disusutkan printer */
+                      /* PERBAIKAN: Gunakan width 100% agar Chrome TIDAK menyusutkan gambar ke 70% */
                       #printable-canvas { 
-                        width: ${currentPaperSize === 'A4' ? '210mm' : '8.5in'} !important; 
+                        width: 100% !important; 
+                        max-width: 100% !important;
                         min-height: ${currentPaperSize === 'A4' ? '297mm' : '5.5in'} !important; 
-                        margin: 0 auto !important;
-                        padding: 0.15in 0 !important; /* Margin fisik di kertas (atas/bawah) */
+                        margin: 0 !important;
+                        padding: 0.15in 0.2in !important; /* Margin fisik tipis agar teks aman */
                         box-shadow: none !important;
                         zoom: 1 !important;
                         transform: scale(1) !important;
