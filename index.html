@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Dokumen Terpadudu</title>
+    <title>Sistem Dokumen Terpadu</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -916,8 +916,8 @@
               const currentPaperSizeKey = appMode === 'PO' ? 'paperSizePO' : appMode === 'SJ' ? 'paperSizeSJ' : 'paperSizeINV';
               const currentPaperSize = settings[currentPaperSizeKey] || 'Continuous Form';
               const paperStyles = currentPaperSize === 'A4' 
-                ? { width: '210mm', minHeight: '297mm', fontFamily: 'Arial, sans-serif' }
-                : { width: '9.5in', minHeight: '5.5in', fontFamily: 'Arial, sans-serif' };
+                ? { width: '210mm', minHeight: '297mm' }
+                : { width: '9.5in', minHeight: '5.5in' };
               const pageCss = currentPaperSize === 'A4' ? 'A4 portrait' : '9.5in 5.5in';
 
               const formatCurrency = (num) => new Intl.NumberFormat('id-ID').format(num || 0);
@@ -1011,8 +1011,8 @@
                   const opt = {
                     margin:       0,
                     filename:     filename,
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, useCORS: true },
+                    image:        { type: 'jpeg', quality: 1 },
+                    html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
                     jsPDF:        currentPaperSize === 'A4' 
                                     ? { unit: 'mm', format: 'a4', orientation: 'portrait' }
                                     : { unit: 'in', format: [9.5, 5.5], orientation: 'landscape' }
@@ -1034,13 +1034,52 @@
                     <button onClick={handleSave} disabled={!isFormValid} className={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition-all shadow-lg ${isFormValid ? (appMode === 'PO' ? 'bg-[#007AFF] hover:bg-[#0056b3]' : appMode === 'SJ' ? 'bg-[#FF9500] hover:bg-[#E08300]' : 'bg-[#34C759] hover:bg-[#2DB34A]') + ' text-white cursor-pointer' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}><Save size={18} /> Simpan</button>
                   </div>
 
-                  <style>{`@media print { @page { size: ${pageCss}; margin: 0; } }`}</style>
+                  <style>{`
+                    @media print { 
+                      @page { 
+                        size: ${pageCss}; 
+                        margin: 0 !important; 
+                      } 
+                      body { 
+                        -webkit-print-color-adjust: exact; 
+                        print-color-adjust: exact; 
+                      }
+                      /* Memaksa elemen kanvas menggunakan ukuran fisik (inci/mm) agar tidak dikecilkan printer */
+                      #printable-canvas { 
+                        width: ${currentPaperSize === 'A4' ? '210mm' : '9.5in'} !important; 
+                        min-height: ${currentPaperSize === 'A4' ? '297mm' : '5.5in'} !important; 
+                        margin: 0 !important;
+                        padding: 0.3in !important; /* Margin fisik dalam kertas */
+                        box-shadow: none !important;
+                        zoom: 1 !important;
+                        transform: scale(1) !important;
+                      }
+                      /* Memaksa ukuran font menggunakan Poin (pt) untuk resolusi Dot Matrix */
+                      * {
+                        font-family: Arial, sans-serif !important;
+                      }
+                      .text-sm { font-size: 11pt !important; line-height: 1.3 !important; }
+                      .text-base { font-size: 12pt !important; line-height: 1.3 !important; }
+                      .text-lg { font-size: 14pt !important; line-height: 1.3 !important; }
+                      .text-xl { font-size: 16pt !important; font-weight: bold !important; }
+                      .text-\\[1\\.925rem\\] { 
+                        font-size: 22pt !important; 
+                        font-weight: bold !important;
+                        transform: none !important; /* Matikan animasi/transform web di print */
+                      }
+                      input, textarea {
+                        background: transparent !important;
+                        border: none !important;
+                        color: #000 !important;
+                      }
+                    }
+                  `}</style>
 
                   {/* Kertas Dokumen */}
-                  <div id="printable-canvas" className="bg-white p-6 shadow-md print:shadow-none print:p-0 h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border transition-all duration-300" style={paperStyles}>
+                  <div id="printable-canvas" className="bg-white p-6 shadow-md print:shadow-none print:p-0 h-auto flex flex-col mx-auto relative overflow-hidden text-black font-sans box-border transition-all duration-300" style={{ ...paperStyles, fontFamily: 'Arial, sans-serif' }}>
                     <div className="flex justify-between items-start mb-6">
                       <div>
-                        <h1 className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}>
+                        <h1 className="text-[1.925rem] uppercase tracking-tight leading-none inline-block origin-top-left" style={{ fontFamily: 'Arial, sans-serif', fontWeight: '800', transform: 'scaleY(1.1)', transformOrigin: 'left top' }}>
                           {settings.companyName || 'NAMA PERUSAHAAN'}
                         </h1>
                       </div>
